@@ -1,0 +1,25 @@
+deploy_contract_v2_tuner_first:
+  rollout_mode: tuner_first
+  v2_capable_components:
+    - tuner
+  sync_only_components:
+    - starter
+    - autoswitch
+    - bridge
+    - fun-line
+  tuner_phases:
+    - preflight
+    - install
+    - configure
+    - activate
+    - healthcheck
+    - state_write
+  tuner_required_repo_artifacts:
+    - components/scale-radio-tuner/install.sh
+    - components/scale-radio-tuner/configure.sh
+    - components/scale-radio-tuner/healthcheck.sh
+    - components/scale-radio-tuner/runtime_manifest.yaml
+  state_files:
+    phase_file: /opt/scale-radio/state/tuner.last_phase
+    ref_file: /opt/scale-radio/state/tuner.last_ref
+    success_ref_file: /opt/scale-radio/state/last_successful_ref
