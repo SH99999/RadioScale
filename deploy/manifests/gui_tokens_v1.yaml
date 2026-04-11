@@ -1,0 +1,42 @@
+gui_tokens_v1:
+  design_character:
+    - appliance_like
+    - analog_inspired
+    - calm
+    - high_end_hifi
+    - restrained
+  zones:
+    primary_scale_zone: zone_a
+    right_info_zone: zone_b
+    bottom_hardware_label_zone: zone_c
+    overlay_zone: zone_d
+  typography:
+    primary_role: ui_labels_and_metadata
+    numeric_role: optional_scale_support
+    rules:
+      - avoid_excessive_font_variety
+      - avoid_decorative_novelty_fonts
+      - preserve_distance_readability
+  color_tokens:
+    - background_base
+    - background_elevated
+    - scale_print_primary
+    - scale_print_secondary
+    - marker_accent
+    - active_highlight
+    - metadata_primary
+    - metadata_secondary
+    - disabled_text
+    - warning
+    - error
+    - fun_accent
+  motion_rules:
+    - restrained_motion_only
+    - pointer_snap_allowed
+    - overlay_transition_controlled
+    - no_chaotic_motion
+  fixed_rules:
+    - primary_screen_zoning_is_global
+    - right_metadata_zone_is_canonical_secondary_area
+    - bottom_hardware_label_zone_is_canonical_tertiary_area
+    - no_component_local_color_systems
