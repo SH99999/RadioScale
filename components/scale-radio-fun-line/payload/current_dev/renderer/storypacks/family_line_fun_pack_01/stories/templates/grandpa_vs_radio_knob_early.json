@@ -1,0 +1,43 @@
+{
+  "id": "grandpa_vs_radio_knob_early",
+  "title_de": "Opa gegen Radio-Knopf – zu früh",
+  "title_en": "Opa Gegen Radio Knopf (zu früh)",
+  "category": "retro",
+  "duration_sec": 19,
+  "prop": "radio",
+  "cast_hint": [
+    "grandpa",
+    "child",
+    "dog"
+  ],
+  "beats": [
+    {
+      "type": "setup",
+      "motion": "point_and_pose",
+      "secs": 4
+    },
+    {
+      "type": "approach",
+      "motion": "point_and_pose",
+      "secs": 5
+    },
+    {
+      "type": "twist",
+      "motion": "trip_forward",
+      "secs": 4
+    },
+    {
+      "type": "reaction",
+      "motion": "laugh_recoil",
+      "secs": 4
+    },
+    {
+      "type": "button",
+      "motion": "shrug",
+      "secs": 2
+    }
+  ],
+  "safe_rating": "PG-12",
+  "double_meaning_light": false,
+  "engine_contract": "scene_template_v1"
+}

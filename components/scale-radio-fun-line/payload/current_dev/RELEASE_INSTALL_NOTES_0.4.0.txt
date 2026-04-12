@@ -1,0 +1,42 @@
+Fun Linea 0.4.0 - Release / Install Notes
+=========================================
+
+Recommended install order
+-------------------------
+1. Uninstall older Fun Linea Overlay / Source if present.
+2. Install `fun_linea_overlay_0.4.0.zip`
+3. Install `fun_linea_source_0.4.0.zip`
+4. Reboot Volumio once
+
+Release target
+--------------
+This release focuses on the visual side while keeping the stable 0.3.2 technical path:
+- safe no-ALSA renderer runtime
+- hidden standby / resident renderer path remains available
+- hard La-Linea visual lock defaults
+
+Important defaults
+------------------
+- `storyPackId = la_linea_audio_lock_01`
+- `baselineYRatio = 0.905`
+- `actorScale = 1.82`
+- `lineThickness = 6`
+- `residentRendererServiceEnabled = false`
+
+Relevant GPIO / rotary mappings
+-------------------------------
+Open from GPIO 13 / custom button:
+`{"endpoint":"user_interface/fun_linea_overlay","method":"gpio13OpenFun","data":""}`
+
+Open from encoder short press:
+`{"endpoint":"user_interface/fun_linea_overlay","method":"encoder1ShortPress","data":""}`
+
+Close / return to Volumio:
+`{"endpoint":"user_interface/fun_linea_overlay","method":"encoder1LongPress","data":""}`
+
+Operational notes
+-----------------
+- the renderer does not intentionally claim ALSA / MPD output
+- local SFX remain disabled by default
+- the resident service file is shipped but not force-enabled by install
+- config page should remain available through the plugin UI

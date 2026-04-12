@@ -1,0 +1,12 @@
+Fun Linea Overlay 0.4.1
+========================
+
+Hotfix release for the 0.4.0 launch regression.
+
+Highlights
+----------
+- fixes plugin-managed resident renderer launch
+- tile-open and GPIO/encoder-open path restored
+- service flag gate limited to real systemd service mode
+- direct launcher now also exports `SDL_AUDIODRIVER=dummy`
+- keeps the 0.4.0 hard La-Linea visual lock changes

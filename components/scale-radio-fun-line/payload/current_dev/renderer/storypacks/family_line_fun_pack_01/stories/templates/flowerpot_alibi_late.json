@@ -1,0 +1,43 @@
+{
+  "id": "flowerpot_alibi_late",
+  "title_de": "Blumentopf-Alibi – zu spät",
+  "title_en": "Blumentopf Alibi (zu spät)",
+  "category": "silent_gag",
+  "duration_sec": 20,
+  "prop": "flowerpot",
+  "cast_hint": [
+    "cat",
+    "neighbor",
+    "child"
+  ],
+  "beats": [
+    {
+      "type": "setup",
+      "motion": "point_and_pose",
+      "secs": 4
+    },
+    {
+      "type": "approach",
+      "motion": "hide_behind_prop",
+      "secs": 5
+    },
+    {
+      "type": "twist",
+      "motion": "jump_arc",
+      "secs": 4
+    },
+    {
+      "type": "reaction",
+      "motion": "shrug",
+      "secs": 4
+    },
+    {
+      "type": "button",
+      "motion": "shrug",
+      "secs": 2
+    }
+  ],
+  "safe_rating": "PG-12",
+  "double_meaning_light": false,
+  "engine_contract": "scene_template_v1"
+}

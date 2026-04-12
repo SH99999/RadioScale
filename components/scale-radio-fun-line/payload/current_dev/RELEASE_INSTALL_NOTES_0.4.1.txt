@@ -1,0 +1,48 @@
+Fun Linea 0.4.1 - Release / Install Notes
+=======================================
+
+Purpose
+-------
+Hotfix for the 0.4.0 launch regression. In 0.4.0 the plugin-managed resident path incorrectly used the service-gated launcher and therefore waited for a service flag that was never written when systemd service mode was disabled. Result: the tile and GPIO/encoder open paths did not start the overlay.
+
+What 0.4.1 fixes
+-----------------
+- Restores plugin-managed resident launch for normal installs where `residentRendererServiceEnabled=false`.
+- Keeps the service-flag gate only for the true systemd service path.
+- Adds `SDL_AUDIODRIVER=dummy` to the direct launcher as well.
+- Keeps the 0.4.0 visual lock changes.
+
+Install order
+-------------
+1. Remove old Fun Linea overlay/source if needed.
+2. Install `fun_linea_overlay_0.4.1.zip`
+3. Install `fun_linea_source_0.4.1.zip`
+4. Reboot Volumio
+
+Important runtime modes
+-----------------------
+- `residentRendererEnabled=true` and `residentRendererServiceEnabled=false`
+  - plugin-managed resident path
+  - renderer starts from plugin logic without waiting for the service flag
+- `residentRendererEnabled=true` and `residentRendererServiceEnabled=true`
+  - systemd-managed resident path
+  - daemon launcher still waits for `runtime/service_enabled.flag`
+
+Relevant GPIO / rotary mapping
+------------------------------
+- GPIO 13 open:
+  `{"endpoint":"user_interface/fun_linea_overlay","method":"gpio13OpenFun","data":""}`
+- Encoder 1 short press open:
+  `{"endpoint":"user_interface/fun_linea_overlay","method":"encoder1ShortPress","data":""}`
+- Encoder 1 long press close:
+  `{"endpoint":"user_interface/fun_linea_overlay","method":"encoder1LongPress","data":""}`
+
+Validation performed locally
+----------------------------
+- `node --check index.js` on overlay and source
+- package structure checked after rebuild
+
+Not validated here
+------------------
+- live installation on the user's Pi
+- actual Volumio GUI click path on device

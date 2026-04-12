@@ -1,0 +1,78 @@
+Fun Linea 0.4.2 - Performance Coordination Hotfix
+================================================
+
+Purpose
+-------
+This release hardens Fun Linea against CPU starvation when Scale FM and Fun Linea are both installed.
+The main issue observed on-device was not ALSA locking any more, but two Python renderers drawing at the
+same time:
+- Scale FM renderer active in the background
+- Fun Linea renderer active in the foreground
+
+This release reduces Fun Linea CPU use and adds temporary coordination with the Scale FM renderer.
+
+Install order
+-------------
+1. Install **Fun Linea Overlay 0.4.2**
+2. Install **Fun Linea Source 0.4.2**
+3. Reboot Volumio
+
+What changed in 0.4.2
+---------------------
+- Fun Linea no longer preloads itself automatically on plugin start by default.
+- Visible render FPS is capped lower for Pi 4 stability.
+- Hidden standby enters deeper sleep and reloads runtime files less often.
+- A shared active-overlay marker is written to `/tmp/mediastreamer_active_overlay.json`.
+- When Fun Linea opens, it temporarily sends `SIGSTOP` to the Scale FM renderer PID if present.
+- When Fun Linea closes, it sends `SIGCONT` to the Scale FM renderer PID.
+- This is a coordination hotfix, not yet the final cross-overlay owner implementation.
+
+Current Rotary Encoder II mapping for Fun Linea
+-----------------------------------------------
+Open Fun Linea:
+{"endpoint":"user_interface/fun_linea_overlay","method":"gpio13OpenFun","data":""}
+
+Compatibility open alias:
+{"endpoint":"user_interface/fun_linea_overlay","method":"encoder1ShortPress","data":""}
+
+Close Fun Linea and return to browse root:
+{"endpoint":"user_interface/fun_linea_overlay","method":"encoder1LongPress","data":""}
+
+Important Radio Scale / Scale FM notes for the other chat
+---------------------------------------------------------
+Scale FM 1.10.0 currently uses a resident renderer service (`scale_fm_renderer.service`) and its control
+plane is based on `runtime/state.json`, `runtime/settings.json`, `runtime/renderer_ready.json`, and
+`runtime/renderer.pid`. GPIO 13 short press maps to `radio_scale_peppy -> gpio13OpenScale`, and encoder 1
+long press maps to `radio_scale_peppy -> encoder1LongPress`.
+
+What Radio Scale needs next
+---------------------------
+Please carry these requirements to the Scale FM chat:
+1. Hidden standby must become real deep idle:
+   - no draw loop while hidden
+   - no full-frame redraw while hidden
+   - runtime reload interval >= 1000 ms while hidden
+   - target hidden CPU ~0-2%
+2. Visible FPS must be capped to a Pi-safe level:
+   - target 20-25 fps max
+3. Scale FM should honor the shared overlay owner file:
+   - `/tmp/mediastreamer_active_overlay.json`
+   - render actively only when owner is `scale_fm`
+   - enter deep idle when owner is `fun_linea`
+4. Keep existing Scale FM open/close methods and service path unchanged.
+5. Do not change existing GPIO / encoder method names.
+
+Operational notes
+-----------------
+- This 0.4.2 release is meant to improve stability immediately on the user's Pi.
+- The SIGSTOP/SIGCONT coordination is intentionally conservative and only targets the Scale FM renderer
+  PID from `radio_scale_peppy/runtime/renderer.pid`.
+- If Scale FM is not installed or has no PID marker, Fun Linea still works normally.
+
+Validation performed locally
+----------------------------
+- `node --check index.js`
+- `python3 -m py_compile renderer/fun_linea_renderer.py`
+- ZIP structure checked locally
+
+Still requires on-device validation.

@@ -1,0 +1,43 @@
+{
+  "id": "gift_box_wrong_owner_late",
+  "title_de": "Geschenk für den Falschen – zu spät",
+  "title_en": "Geschenk Für Den Falschen (zu spät)",
+  "category": "warm",
+  "duration_sec": 20,
+  "prop": "gift_box",
+  "cast_hint": [
+    "child",
+    "kid_friend",
+    "grandma"
+  ],
+  "beats": [
+    {
+      "type": "setup",
+      "motion": "point_and_pose",
+      "secs": 4
+    },
+    {
+      "type": "approach",
+      "motion": "hide_behind_prop",
+      "secs": 5
+    },
+    {
+      "type": "twist",
+      "motion": "jump_arc",
+      "secs": 4
+    },
+    {
+      "type": "reaction",
+      "motion": "shrug",
+      "secs": 4
+    },
+    {
+      "type": "button",
+      "motion": "shrug",
+      "secs": 2
+    }
+  ],
+  "safe_rating": "PG-12",
+  "double_meaning_light": false,
+  "engine_contract": "scene_template_v1"
+}

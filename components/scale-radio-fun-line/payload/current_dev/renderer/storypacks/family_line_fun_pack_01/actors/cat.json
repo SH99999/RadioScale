@@ -1,0 +1,30 @@
+{
+  "id": "cat",
+  "label_de": "Katze",
+  "label_en": "Cat",
+  "rig_class": "animal",
+  "archetype": "silent_judge",
+  "poses": [
+    "idle",
+    "walk",
+    "run",
+    "tiptoe",
+    "point",
+    "surprise",
+    "laugh",
+    "trip",
+    "jump",
+    "land"
+  ],
+  "preferred_tempo_bpm": [
+    72,
+    84,
+    96,
+    108
+  ],
+  "voice_style": "silent_linea",
+  "safe_rating": "PG-12",
+  "can_lead": true,
+  "can_speak_bubble": false,
+  "animal_logic": true
+}

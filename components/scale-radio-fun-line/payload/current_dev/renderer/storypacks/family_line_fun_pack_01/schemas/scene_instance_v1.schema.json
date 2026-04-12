@@ -1,0 +1,44 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "scene_instance_v1",
+  "type": "object",
+  "required": [
+    "scene_id",
+    "template_id",
+    "cast",
+    "prop",
+    "beats",
+    "tempo_bpm"
+  ],
+  "properties": {
+    "scene_id": {
+      "type": "string"
+    },
+    "template_id": {
+      "type": "string"
+    },
+    "cast": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "maxItems": 4
+    },
+    "prop": {
+      "type": "string"
+    },
+    "beats": {
+      "type": "array",
+      "minItems": 3
+    },
+    "tempo_bpm": {
+      "type": "integer",
+      "minimum": 60,
+      "maximum": 140
+    },
+    "double_meaning_light": {
+      "type": "boolean"
+    }
+  }
+}

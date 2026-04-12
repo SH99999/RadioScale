@@ -1,0 +1,15 @@
+Fun Linea Overlay 0.4.0 Hotfix
+==============================
+
+Fixes
+-----
+- restores overlay activation by adding the missing service-flag helper methods
+- fixes uninstall/onStop crash caused by missing removeServiceEnableFlag()
+- keeps the overlay configuration page reachable again once the plugin activates
+- disables automatic systemd enable/start during install; service mode remains optional
+- safer default: residentRendererServiceEnabled = false
+
+Notes
+-----
+- renderer audio remains disabled (SDL_AUDIODRIVER=dummy / no ALSA ownership)
+- resident hidden-standby still works via plugin-managed preload path

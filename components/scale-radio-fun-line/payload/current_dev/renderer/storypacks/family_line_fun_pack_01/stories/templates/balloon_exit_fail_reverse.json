@@ -1,0 +1,43 @@
+{
+  "id": "balloon_exit_fail_reverse",
+  "title_de": "Ballon-Flucht misslingt – umgekehrt",
+  "title_en": "Ballon Flucht Misslingt (umgekehrt)",
+  "category": "party",
+  "duration_sec": 18,
+  "prop": "balloon",
+  "cast_hint": [
+    "child",
+    "kid_friend",
+    "dog"
+  ],
+  "beats": [
+    {
+      "type": "setup",
+      "motion": "point_and_pose",
+      "secs": 4
+    },
+    {
+      "type": "approach",
+      "motion": "jump_arc",
+      "secs": 5
+    },
+    {
+      "type": "twist",
+      "motion": "jump_arc",
+      "secs": 4
+    },
+    {
+      "type": "reaction",
+      "motion": "laugh_recoil",
+      "secs": 4
+    },
+    {
+      "type": "button",
+      "motion": "shrug",
+      "secs": 2
+    }
+  ],
+  "safe_rating": "PG-12",
+  "double_meaning_light": false,
+  "engine_contract": "scene_template_v1"
+}

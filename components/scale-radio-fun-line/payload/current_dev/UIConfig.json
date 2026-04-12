@@ -1,0 +1,204 @@
+{
+  "page": {
+    "label": "Fun Linea Overlay",
+    "icon": "fa fa-child"
+  },
+  "sections": [
+    {
+      "id": "visual",
+      "element": "section",
+      "label": "Visual",
+      "description": "Visual tuning for Dog Line overlay and full-stage playback.",
+      "onSave": {
+        "type": "controller",
+        "endpoint": "user_interface/fun_linea_overlay",
+        "method": "setUIConfig"
+      },
+      "saveButton": {
+        "label": "Save",
+        "data": [
+          "storyPackId",
+          "storyMode",
+          "fullModeBackgroundPreset",
+          "overlayBackgroundMode",
+          "lineColorPreset",
+          "baselineYRatio",
+          "actorScale",
+          "lineThickness",
+          "showTrackInfo",
+          "showSceneLabel"
+        ]
+      },
+      "content": [
+        {
+          "id": "storyPackId",
+          "element": "select",
+          "label": "Active story pack",
+          "options": [
+            {
+              "value": "dog_line_visual_01",
+              "label": "Dog Line Visual Pack 01"
+            }
+          ],
+          "value": "dog_line_visual_01"
+        },
+        {
+          "id": "storyMode",
+          "element": "select",
+          "label": "Scene order",
+          "options": [
+            {
+              "value": "auto",
+              "label": "Auto rotate"
+            },
+            {
+              "value": "sequential",
+              "label": "Sequential"
+            }
+          ],
+          "value": "auto"
+        },
+        {
+          "id": "fullModeBackgroundPreset",
+          "element": "select",
+          "label": "Full-stage background",
+          "options": [
+            {
+              "value": "dark_blue",
+              "label": "Dark blue"
+            },
+            {
+              "value": "dark_gray",
+              "label": "Dark gray"
+            },
+            {
+              "value": "dark_green",
+              "label": "Dark green"
+            }
+          ],
+          "value": "dark_blue"
+        },
+        {
+          "id": "overlayBackgroundMode",
+          "element": "select",
+          "label": "Overlay background",
+          "options": [
+            {
+              "value": "transparent_hint",
+              "label": "Transparent hint"
+            },
+            {
+              "value": "solid",
+              "label": "Solid"
+            }
+          ],
+          "value": "transparent_hint"
+        },
+        {
+          "id": "lineColorPreset",
+          "element": "select",
+          "label": "Line colour",
+          "options": [
+            {
+              "value": "auto",
+              "label": "Auto"
+            },
+            {
+              "value": "warm_white",
+              "label": "Warm white"
+            },
+            {
+              "value": "cool_white",
+              "label": "Cool white"
+            },
+            {
+              "value": "mint",
+              "label": "Mint"
+            },
+            {
+              "value": "amber",
+              "label": "Amber"
+            }
+          ],
+          "value": "auto"
+        },
+        {
+          "id": "baselineYRatio",
+          "element": "input",
+          "label": "Baseline height ratio",
+          "value": 0.9
+        },
+        {
+          "id": "actorScale",
+          "element": "input",
+          "label": "Actor scale",
+          "value": 1.15
+        },
+        {
+          "id": "lineThickness",
+          "element": "input",
+          "label": "Baseline thickness",
+          "value": 4
+        },
+        {
+          "id": "showTrackInfo",
+          "element": "switch",
+          "label": "Show track info",
+          "value": true
+        },
+        {
+          "id": "showSceneLabel",
+          "element": "switch",
+          "label": "Show scene label",
+          "value": false
+        }
+      ]
+    },
+    {
+      "id": "runtime",
+      "element": "section",
+      "label": "Runtime",
+      "description": "Stable Pi-oriented runtime settings. Leave systemd preload disabled unless explicitly testing it.",
+      "onSave": {
+        "type": "controller",
+        "endpoint": "user_interface/fun_linea_overlay",
+        "method": "setUIConfig"
+      },
+      "saveButton": {
+        "label": "Save",
+        "data": [
+          "targetVisibleFps",
+          "pollStateIntervalMs",
+          "residentRendererEnabled",
+          "residentRendererServiceEnabled"
+        ]
+      },
+      "content": [
+        {
+          "id": "targetVisibleFps",
+          "element": "input",
+          "label": "Visible FPS cap",
+          "value": 14
+        },
+        {
+          "id": "pollStateIntervalMs",
+          "element": "input",
+          "label": "State poll interval (ms)",
+          "value": 900
+        },
+        {
+          "id": "residentRendererEnabled",
+          "element": "switch",
+          "label": "Keep renderer warm",
+          "value": true
+        },
+        {
+          "id": "residentRendererServiceEnabled",
+          "element": "switch",
+          "label": "Use systemd preload service",
+          "value": false
+        }
+      ]
+    }
+  ]
+}

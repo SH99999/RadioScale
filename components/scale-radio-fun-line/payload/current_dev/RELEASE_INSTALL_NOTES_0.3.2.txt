@@ -1,0 +1,15 @@
+Fun Linea Overlay 0.4.0 Install Notes
+=====================================
+
+Recommended order
+-----------------
+1. Uninstall older Fun Linea Overlay / Source versions if present.
+2. Install Fun Linea Overlay 0.4.0
+3. Install Fun Linea Source 0.4.0
+4. Reboot Volumio once
+
+Notes
+-----
+- 0.4.0 does not auto-enable/start the systemd renderer service on install.
+- The default runtime path is plugin-managed resident preload with audio-safe dummy SDL audio.
+- Service mode can be enabled later after stability is confirmed.

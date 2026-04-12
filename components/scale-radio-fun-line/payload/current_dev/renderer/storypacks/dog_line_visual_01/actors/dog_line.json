@@ -1,0 +1,7 @@
+{
+  "id": "dog_line",
+  "label_de": "Dog Line",
+  "variant": "dog_line",
+  "rig_class": "asset_pose_actor",
+  "asset_manifest": "../../assets/dog_line/manifest.json"
+}

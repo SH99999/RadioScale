@@ -1,0 +1,43 @@
+{
+  "id": "flowerpot_alibi_reverse",
+  "title_de": "Blumentopf-Alibi – umgekehrt",
+  "title_en": "Blumentopf Alibi (umgekehrt)",
+  "category": "silent_gag",
+  "duration_sec": 21,
+  "prop": "flowerpot",
+  "cast_hint": [
+    "cat",
+    "neighbor",
+    "child"
+  ],
+  "beats": [
+    {
+      "type": "setup",
+      "motion": "point_and_pose",
+      "secs": 4
+    },
+    {
+      "type": "approach",
+      "motion": "hide_behind_prop",
+      "secs": 5
+    },
+    {
+      "type": "twist",
+      "motion": "trip_forward",
+      "secs": 4
+    },
+    {
+      "type": "reaction",
+      "motion": "shrug",
+      "secs": 4
+    },
+    {
+      "type": "button",
+      "motion": "shrug",
+      "secs": 2
+    }
+  ],
+  "safe_rating": "PG-12",
+  "double_meaning_light": false,
+  "engine_contract": "scene_template_v1"
+}

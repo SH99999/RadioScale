@@ -1,0 +1,12 @@
+Fun Linea Overlay 0.4.2
+=======================
+
+Highlights
+----------
+- performance hotfix for Pi 4
+- lower visible FPS cap
+- deeper hidden standby sleep
+- reduced runtime polling cadence
+- active overlay marker support
+- temporary Scale FM renderer pause/resume coordination via SIGSTOP/SIGCONT
+- keeps Fun Linea 0.4.1 visual style baseline

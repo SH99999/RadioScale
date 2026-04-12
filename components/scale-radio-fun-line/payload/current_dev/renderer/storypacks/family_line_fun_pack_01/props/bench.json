@@ -1,0 +1,19 @@
+{
+  "id": "bench",
+  "label_de": "Bank",
+  "collision_shape": "polyline",
+  "anchor_points": [
+    "left",
+    "center",
+    "right",
+    "top"
+  ],
+  "modes": [
+    "idle",
+    "bounce",
+    "shake",
+    "tilt",
+    "fall"
+  ],
+  "safe_rating": "PG-12"
+}

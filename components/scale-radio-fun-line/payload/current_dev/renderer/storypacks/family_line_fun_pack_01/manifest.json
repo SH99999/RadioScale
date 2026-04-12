@@ -1,0 +1,21 @@
+{
+  "pack_id": "family_line_fun_pack_01",
+  "version": "0.2.0-preload",
+  "target_plugin": "fun_linea_overlay",
+  "target_engine_schema": "linea_storypack_v1",
+  "description": "Preload story/actor/asset pack for the next Fun Linea engine release.",
+  "counts": {
+    "actors": 12,
+    "props": 24,
+    "motions": 12,
+    "story_templates": 48,
+    "generated_playable_scenes": 2880,
+    "audio_cues": 12
+  },
+  "safe_rating": "PG-12 / family safe with mild double meanings only",
+  "notes": [
+    "This pack is intentionally engine-first and content-rich; it is not a standalone plugin.",
+    "All vector assets are original simple placeholders designed for later rigging.",
+    "Audio cues are original procedural placeholders and should be replaced or refined in a later polish pass."
+  ]
+}

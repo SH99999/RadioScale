@@ -1,0 +1,8 @@
+Fun Linea Overlay 0.6.0
+-----------------------
+- stable 0.4.2 handler logic kept as base
+- Dog Line production visual pass via shipped raster pose assets
+- overlay + full-stage remain dynamic
+- simplified config page path (direct JSON UI config load)
+- story pack default switched to dog_line_visual_01
+- no importer UI in this release; focus is visual production basis + config reliability

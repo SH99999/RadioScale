@@ -1,0 +1,65 @@
+[
+  {
+    "scene_id": "audio_gap_trip_01",
+    "title_de": "Linienl\u00fccke beim H\u00f6ren",
+    "duration_sec": 18,
+    "kind": "gap_trip",
+    "cast": [
+      "father",
+      "child",
+      "dog"
+    ]
+  },
+  {
+    "scene_id": "audio_speaker_pulse_01",
+    "title_de": "Lautsprecher-Puls",
+    "duration_sec": 18,
+    "kind": "speaker_pulse",
+    "cast": [
+      "father",
+      "dog"
+    ]
+  },
+  {
+    "scene_id": "audio_knob_hill_01",
+    "title_de": "Opa gegen Radioknopf",
+    "duration_sec": 18,
+    "kind": "knob_hill",
+    "cast": [
+      "grandpa",
+      "dog"
+    ]
+  },
+  {
+    "scene_id": "audio_antenna_note_01",
+    "title_de": "Kind, Hund und Note",
+    "duration_sec": 18,
+    "kind": "antenna_note",
+    "cast": [
+      "child",
+      "dog"
+    ]
+  },
+  {
+    "scene_id": "audio_wave_jump_01",
+    "title_de": "Wellenh\u00fcgel",
+    "duration_sec": 18,
+    "kind": "wave_jump",
+    "cast": [
+      "father",
+      "child",
+      "dog"
+    ]
+  },
+  {
+    "scene_id": "audio_bench_listen_01",
+    "title_de": "Bank am Lautsprecher",
+    "duration_sec": 18,
+    "kind": "listen_bench",
+    "cast": [
+      "grandma",
+      "grandpa",
+      "dog"
+    ]
+  }
+]

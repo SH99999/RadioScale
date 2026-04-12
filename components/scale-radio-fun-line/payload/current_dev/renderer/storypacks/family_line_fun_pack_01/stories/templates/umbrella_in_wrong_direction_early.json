@@ -1,0 +1,43 @@
+{
+  "id": "umbrella_in_wrong_direction_early",
+  "title_de": "Schirm im falschen Wind – zu früh",
+  "title_en": "Schirm Im Falschen Wind (zu früh)",
+  "category": "weather",
+  "duration_sec": 22,
+  "prop": "umbrella",
+  "cast_hint": [
+    "aunt",
+    "child",
+    "dog"
+  ],
+  "beats": [
+    {
+      "type": "setup",
+      "motion": "point_and_pose",
+      "secs": 4
+    },
+    {
+      "type": "approach",
+      "motion": "walk_cycle",
+      "secs": 5
+    },
+    {
+      "type": "twist",
+      "motion": "jump_arc",
+      "secs": 4
+    },
+    {
+      "type": "reaction",
+      "motion": "laugh_recoil",
+      "secs": 4
+    },
+    {
+      "type": "button",
+      "motion": "shrug",
+      "secs": 2
+    }
+  ],
+  "safe_rating": "PG-12",
+  "double_meaning_light": false,
+  "engine_contract": "scene_template_v1"
+}

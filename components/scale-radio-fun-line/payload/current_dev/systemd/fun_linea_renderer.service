@@ -1,0 +1,19 @@
+[Unit]
+Description=Fun Linea Resident Renderer
+After=multi-user.target sound.target
+Wants=multi-user.target
+
+[Service]
+Type=simple
+User=volumio
+Environment=DISPLAY=:0
+Environment=XAUTHORITY=/home/volumio/.Xauthority
+Environment=SDL_VIDEODRIVER=x11
+Environment=SDL_AUDIODRIVER=dummy
+Environment=FUN_LINEA_EXPECT_SERVICE_FLAG=1
+ExecStart=/bin/bash /data/plugins/user_interface/fun_linea_overlay/run_renderer_daemon.sh
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target

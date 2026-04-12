@@ -1,0 +1,56 @@
+[
+  {
+    "scene_id": "dog_idle_overlay",
+    "title_de": "Dog Line \u2014 Idle",
+    "duration_sec": 14,
+    "kind": "dog_idle",
+    "cast": [
+      "dog_line"
+    ]
+  },
+  {
+    "scene_id": "dog_sniff_marker",
+    "title_de": "Dog Line \u2014 Schn\u00fcffeln",
+    "duration_sec": 16,
+    "kind": "dog_sniff_marker",
+    "cast": [
+      "dog_line"
+    ]
+  },
+  {
+    "scene_id": "dog_head_tilt",
+    "title_de": "Dog Line \u2014 Kopf schief",
+    "duration_sec": 14,
+    "kind": "dog_head_tilt",
+    "cast": [
+      "dog_line"
+    ]
+  },
+  {
+    "scene_id": "dog_gap_hop",
+    "title_de": "Dog Line \u2014 Linienl\u00fccke",
+    "duration_sec": 12,
+    "kind": "dog_gap_hop",
+    "cast": [
+      "dog_line"
+    ]
+  },
+  {
+    "scene_id": "dog_note_chase",
+    "title_de": "Dog Line \u2014 Notenjagd",
+    "duration_sec": 16,
+    "kind": "dog_note_chase",
+    "cast": [
+      "dog_line"
+    ]
+  },
+  {
+    "scene_id": "dog_sit_watch",
+    "title_de": "Dog Line \u2014 Lauschen",
+    "duration_sec": 16,
+    "kind": "dog_sit_watch",
+    "cast": [
+      "dog_line"
+    ]
+  }
+]

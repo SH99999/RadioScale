@@ -1,0 +1,30 @@
+{
+  "id": "grandma",
+  "label_de": "Oma",
+  "label_en": "Grandma",
+  "rig_class": "elder",
+  "archetype": "warm",
+  "poses": [
+    "idle",
+    "walk",
+    "run",
+    "tiptoe",
+    "point",
+    "surprise",
+    "laugh",
+    "trip",
+    "jump",
+    "land"
+  ],
+  "preferred_tempo_bpm": [
+    72,
+    84,
+    96,
+    108
+  ],
+  "voice_style": "silent_linea",
+  "safe_rating": "PG-12",
+  "can_lead": true,
+  "can_speak_bubble": true,
+  "animal_logic": false
+}

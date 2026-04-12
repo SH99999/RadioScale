@@ -1,0 +1,43 @@
+{
+  "id": "dog_steals_hat_early",
+  "title_de": "Hund schnappt Hut – zu früh",
+  "title_en": "Hund Schnappt Hut (zu früh)",
+  "category": "chase",
+  "duration_sec": 22,
+  "prop": "hat",
+  "cast_hint": [
+    "father",
+    "dog",
+    "child"
+  ],
+  "beats": [
+    {
+      "type": "setup",
+      "motion": "point_and_pose",
+      "secs": 4
+    },
+    {
+      "type": "approach",
+      "motion": "run_cycle",
+      "secs": 5
+    },
+    {
+      "type": "twist",
+      "motion": "jump_arc",
+      "secs": 4
+    },
+    {
+      "type": "reaction",
+      "motion": "laugh_recoil",
+      "secs": 4
+    },
+    {
+      "type": "button",
+      "motion": "shrug",
+      "secs": 2
+    }
+  ],
+  "safe_rating": "PG-12",
+  "double_meaning_light": false,
+  "engine_contract": "scene_template_v1"
+}

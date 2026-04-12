@@ -1,0 +1,43 @@
+{
+  "id": "kite_rescue_reverse",
+  "title_de": "Drachen-Rettung mit Folgen – umgekehrt",
+  "title_en": "Drachen Rettung Mit Folgen (umgekehrt)",
+  "category": "outdoor",
+  "duration_sec": 21,
+  "prop": "kite",
+  "cast_hint": [
+    "child",
+    "kid_friend",
+    "grandpa"
+  ],
+  "beats": [
+    {
+      "type": "setup",
+      "motion": "point_and_pose",
+      "secs": 4
+    },
+    {
+      "type": "approach",
+      "motion": "run_cycle",
+      "secs": 5
+    },
+    {
+      "type": "twist",
+      "motion": "trip_forward",
+      "secs": 4
+    },
+    {
+      "type": "reaction",
+      "motion": "shrug",
+      "secs": 4
+    },
+    {
+      "type": "button",
+      "motion": "shrug",
+      "secs": 2
+    }
+  ],
+  "safe_rating": "PG-12",
+  "double_meaning_light": false,
+  "engine_contract": "scene_template_v1"
+}

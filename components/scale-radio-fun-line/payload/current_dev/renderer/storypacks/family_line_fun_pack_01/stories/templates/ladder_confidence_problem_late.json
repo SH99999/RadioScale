@@ -1,0 +1,43 @@
+{
+  "id": "ladder_confidence_problem_late",
+  "title_de": "Leiter-Selbstvertrauen zu gross – zu spät",
+  "title_en": "Leiter Selbstvertrauen Zu Gross (zu spät)",
+  "category": "slapstick",
+  "duration_sec": 23,
+  "prop": "ladder",
+  "cast_hint": [
+    "father",
+    "neighbor",
+    "dog"
+  ],
+  "beats": [
+    {
+      "type": "setup",
+      "motion": "point_and_pose",
+      "secs": 4
+    },
+    {
+      "type": "approach",
+      "motion": "trip_forward",
+      "secs": 5
+    },
+    {
+      "type": "twist",
+      "motion": "trip_forward",
+      "secs": 4
+    },
+    {
+      "type": "reaction",
+      "motion": "laugh_recoil",
+      "secs": 4
+    },
+    {
+      "type": "button",
+      "motion": "shrug",
+      "secs": 2
+    }
+  ],
+  "safe_rating": "PG-12",
+  "double_meaning_light": false,
+  "engine_contract": "scene_template_v1"
+}

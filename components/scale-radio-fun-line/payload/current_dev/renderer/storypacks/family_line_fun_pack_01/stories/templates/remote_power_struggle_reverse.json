@@ -1,0 +1,43 @@
+{
+  "id": "remote_power_struggle_reverse",
+  "title_de": "Fernbedienung hat eigene Meinung – umgekehrt",
+  "title_en": "Fernbedienung Hat Eigene Meinung (umgekehrt)",
+  "category": "home",
+  "duration_sec": 18,
+  "prop": "remote",
+  "cast_hint": [
+    "father",
+    "child",
+    "dog"
+  ],
+  "beats": [
+    {
+      "type": "setup",
+      "motion": "point_and_pose",
+      "secs": 4
+    },
+    {
+      "type": "approach",
+      "motion": "point_and_pose",
+      "secs": 5
+    },
+    {
+      "type": "twist",
+      "motion": "jump_arc",
+      "secs": 4
+    },
+    {
+      "type": "reaction",
+      "motion": "laugh_recoil",
+      "secs": 4
+    },
+    {
+      "type": "button",
+      "motion": "shrug",
+      "secs": 2
+    }
+  ],
+  "safe_rating": "PG-12",
+  "double_meaning_light": false,
+  "engine_contract": "scene_template_v1"
+}

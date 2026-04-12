@@ -1,0 +1,16 @@
+{
+  "pack_id": "audio_line_fun_pack_01",
+  "version": "0.3.0",
+  "target_plugin": "fun_linea_overlay",
+  "target_engine_schema": "linea_storypack_v2_audio_world",
+  "description": "Curated La-Linea-style audio-world pack for Fun Linea 0.3.0.",
+  "counts": {
+    "actors": 8,
+    "scenes": 6
+  },
+  "safe_rating": "PG-12 / family-safe mild double meaning only",
+  "notes": [
+    "Focused on clean line staging, audio-world props and baseline gags.",
+    "Built for the strict 0.3.0 La-Linea pass with no speech bubbles."
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "name": "fun_linea_overlay",
+  "version": "0.6.0",
+  "description": "Fun Linea Overlay 0.6.0 - production Dog Line visual engine release on the stable 0.4.2 handler/runtime base.",
+  "main": "index.js",
+  "author": "OpenAI for Stefan",
+  "license": "MIT",
+  "volumio_info": {
+    "prettyName": "Fun Linea Overlay",
+    "icon": "fa fa-child",
+    "plugin_type": "user_interface",
+    "boot_priority": 10,
+    "has_alsa_contribution": false,
+    "os": [
+      "bookworm"
+    ],
+    "architectures": [
+      "armhf",
+      "amd64"
+    ],
+    "details": "Fun Linea Overlay 0.6.0 - production Dog Line visual engine release on the stable 0.4.2 handler/runtime base.",
+    "changelog": "0.6.0 - Dog Line production visual engine with asset pose loops, stable 0.4.2 handler base, and simplified config pages.",
+    "pluginName": "Fun Linea Overlay"
+  },
+  "engines": {
+    "node": ">=20",
+    "volumio": ">=4"
+  },
+  "dependencies": {
+    "v-conf": "^1.4.3",
+    "socket.io-client": "1.7.4",
+    "kew": "^0.7.0"
+  }
+}

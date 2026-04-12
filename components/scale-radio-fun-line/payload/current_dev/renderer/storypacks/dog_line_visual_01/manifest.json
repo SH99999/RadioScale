@@ -1,0 +1,7 @@
+{
+  "id": "dog_line_visual_01",
+  "title": "Dog Line Visual Pack 01",
+  "version": "0.6.0",
+  "style": "vector_pose_loops",
+  "notes": "First production Dog Line pack built around asset poses and Pi-friendly loop playback. Overlay + full-stage capable."
+}

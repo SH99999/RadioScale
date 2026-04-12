@@ -1,0 +1,43 @@
+{
+  "id": "sausage_smell_detective_reverse",
+  "title_de": "Wurst-Detektiv – umgekehrt",
+  "title_en": "Wurst Detektiv (umgekehrt)",
+  "category": "food",
+  "duration_sec": 18,
+  "prop": "sausage",
+  "cast_hint": [
+    "dog",
+    "grandpa",
+    "aunt"
+  ],
+  "beats": [
+    {
+      "type": "setup",
+      "motion": "point_and_pose",
+      "secs": 4
+    },
+    {
+      "type": "approach",
+      "motion": "tiptoe_cycle",
+      "secs": 5
+    },
+    {
+      "type": "twist",
+      "motion": "jump_arc",
+      "secs": 4
+    },
+    {
+      "type": "reaction",
+      "motion": "laugh_recoil",
+      "secs": 4
+    },
+    {
+      "type": "button",
+      "motion": "shrug",
+      "secs": 2
+    }
+  ],
+  "safe_rating": "PG-12",
+  "double_meaning_light": false,
+  "engine_contract": "scene_template_v1"
+}

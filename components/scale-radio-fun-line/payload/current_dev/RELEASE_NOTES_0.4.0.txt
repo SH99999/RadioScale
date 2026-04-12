@@ -1,0 +1,38 @@
+Fun Linea Overlay 0.4.0
+=======================
+
+Release focus
+-------------
+Hard La-Linea visual lock release.
+
+What changed
+------------
+- renderer visuals reworked around a stricter single-line language
+- baseline moved lower and actors enlarged by default
+- reduced stray strokes and removed sketch-like decorative fragments
+- audio-world scenes emphasized: gap, speaker pulse, radio knob hill, waveform jump, note chase, bench listen
+- overlay keeps the safe no-ALSA runtime path from 0.3.2
+- dark full-mode backgrounds remain available (dark blue / gray / green)
+- overlay mode keeps contrast line color selection for screen-visible playback overlays
+- new default story pack id: `la_linea_audio_lock_01`
+
+Compatibility
+-------------
+- Volumio 4 / Bookworm target
+- companion source release: Fun Linea Source 0.4.0
+- keeps the same GPIO / Rotary Encoder II method names:
+  - `gpio13OpenFun`
+  - `encoder1ShortPress`
+  - `encoder1LongPress`
+
+Validation performed here
+-------------------------
+- `node --check index.js`
+- `python3 -m py_compile renderer/fun_linea_renderer.py`
+- zip structure inspection
+
+Known limits
+------------
+- not live-tested on the user's Pi from this environment
+- local SFX remain off by default to avoid ALSA / MPD contention
+- overlay transparency is still a robust visual hint, not a compositor-transparent X11 overlay

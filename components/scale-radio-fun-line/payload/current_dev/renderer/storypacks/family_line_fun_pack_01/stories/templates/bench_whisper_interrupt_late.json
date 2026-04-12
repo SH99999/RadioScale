@@ -1,0 +1,43 @@
+{
+  "id": "bench_whisper_interrupt_late",
+  "title_de": "Bank-Geheimnis geplatzt – zu spät",
+  "title_en": "Bank Geheimnis Geplatzt (zu spät)",
+  "category": "double_meaning_light",
+  "duration_sec": 20,
+  "prop": "bench",
+  "cast_hint": [
+    "father",
+    "dad_friend_girlfriend",
+    "dog"
+  ],
+  "beats": [
+    {
+      "type": "setup",
+      "motion": "point_and_pose",
+      "secs": 4
+    },
+    {
+      "type": "approach",
+      "motion": "romantic_interrupt",
+      "secs": 5
+    },
+    {
+      "type": "twist",
+      "motion": "jump_arc",
+      "secs": 4
+    },
+    {
+      "type": "reaction",
+      "motion": "laugh_recoil",
+      "secs": 4
+    },
+    {
+      "type": "button",
+      "motion": "shrug",
+      "secs": 2
+    }
+  ],
+  "safe_rating": "PG-12",
+  "double_meaning_light": true,
+  "engine_contract": "scene_template_v1"
+}

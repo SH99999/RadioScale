@@ -1,0 +1,76 @@
+{
+  "cues": [
+    {
+      "id": "bark_double",
+      "path": "audio/cues/bark_double.wav",
+      "role": "placeholder_sfx",
+      "safe": true
+    },
+    {
+      "id": "bark_short",
+      "path": "audio/cues/bark_short.wav",
+      "role": "placeholder_sfx",
+      "safe": true
+    },
+    {
+      "id": "boing_bed",
+      "path": "audio/cues/boing_bed.wav",
+      "role": "placeholder_sfx",
+      "safe": true
+    },
+    {
+      "id": "boing_soft",
+      "path": "audio/cues/boing_soft.wav",
+      "role": "placeholder_sfx",
+      "safe": true
+    },
+    {
+      "id": "mock_applause",
+      "path": "audio/cues/mock_applause.wav",
+      "role": "placeholder_sfx",
+      "safe": true
+    },
+    {
+      "id": "romantic_interrupt",
+      "path": "audio/cues/romantic_interrupt.wav",
+      "role": "placeholder_sfx",
+      "safe": true
+    },
+    {
+      "id": "snore_short",
+      "path": "audio/cues/snore_short.wav",
+      "role": "placeholder_sfx",
+      "safe": true
+    },
+    {
+      "id": "tada_short",
+      "path": "audio/cues/tada_short.wav",
+      "role": "placeholder_sfx",
+      "safe": true
+    },
+    {
+      "id": "tap_pop",
+      "path": "audio/cues/tap_pop.wav",
+      "role": "placeholder_sfx",
+      "safe": true
+    },
+    {
+      "id": "whistle_down",
+      "path": "audio/cues/whistle_down.wav",
+      "role": "placeholder_sfx",
+      "safe": true
+    },
+    {
+      "id": "whistle_up",
+      "path": "audio/cues/whistle_up.wav",
+      "role": "placeholder_sfx",
+      "safe": true
+    },
+    {
+      "id": "whoops_soft",
+      "path": "audio/cues/whoops_soft.wav",
+      "role": "placeholder_sfx",
+      "safe": true
+    }
+  ]
+}

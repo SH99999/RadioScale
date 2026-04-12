@@ -1,0 +1,65 @@
+[
+  {
+    "scene_id": "gap_trip_lock",
+    "title_de": "Linienlücke",
+    "duration_sec": 16,
+    "kind": "gap_trip",
+    "cast": [
+      "father",
+      "child",
+      "dog"
+    ]
+  },
+  {
+    "scene_id": "speaker_pulse_lock",
+    "title_de": "Lautsprecherpuls",
+    "duration_sec": 18,
+    "kind": "speaker_pulse",
+    "cast": [
+      "father",
+      "dog"
+    ]
+  },
+  {
+    "scene_id": "knob_hill_lock",
+    "title_de": "Radioknopf-Hügel",
+    "duration_sec": 18,
+    "kind": "knob_hill",
+    "cast": [
+      "grandpa",
+      "dog"
+    ]
+  },
+  {
+    "scene_id": "antenna_note_lock",
+    "title_de": "Notenjagd",
+    "duration_sec": 18,
+    "kind": "antenna_note",
+    "cast": [
+      "child",
+      "dog"
+    ]
+  },
+  {
+    "scene_id": "wave_jump_lock",
+    "title_de": "Wellenhügel",
+    "duration_sec": 18,
+    "kind": "wave_jump",
+    "cast": [
+      "father",
+      "child",
+      "dog"
+    ]
+  },
+  {
+    "scene_id": "listen_bench_lock",
+    "title_de": "Hörbank",
+    "duration_sec": 18,
+    "kind": "listen_bench",
+    "cast": [
+      "grandpa",
+      "father",
+      "dog"
+    ]
+  }
+]

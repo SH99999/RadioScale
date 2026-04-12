@@ -1,0 +1,102 @@
+{
+  "enabled": {
+    "type": "boolean",
+    "value": true
+  },
+  "showTrackInfo": {
+    "type": "boolean",
+    "value": true
+  },
+  "showHelpText": {
+    "type": "boolean",
+    "value": false
+  },
+  "showSceneLabel": {
+    "type": "boolean",
+    "value": false
+  },
+  "pollStateIntervalMs": {
+    "type": "number",
+    "value": 900
+  },
+  "loopDurationSec": {
+    "type": "number",
+    "value": 180
+  },
+  "rendererReadyWaitMs": {
+    "type": "number",
+    "value": 1600
+  },
+  "residentRendererEnabled": {
+    "type": "boolean",
+    "value": true
+  },
+  "residentRendererServiceEnabled": {
+    "type": "boolean",
+    "value": false
+  },
+  "preloadRendererOnPluginStart": {
+    "type": "boolean",
+    "value": false
+  },
+  "residentRendererRetryMs": {
+    "type": "number",
+    "value": 7000
+  },
+  "screenWidth": {
+    "type": "number",
+    "value": 1920
+  },
+  "screenHeight": {
+    "type": "number",
+    "value": 550
+  },
+  "fullscreen": {
+    "type": "boolean",
+    "value": true
+  },
+  "storyPackId": {
+    "type": "string",
+    "value": "dog_line_visual_01"
+  },
+  "storyMode": {
+    "type": "string",
+    "value": "auto"
+  },
+  "lineThickness": {
+    "type": "number",
+    "value": 4
+  },
+  "baselineYRatio": {
+    "type": "number",
+    "value": 0.9
+  },
+  "actorScale": {
+    "type": "number",
+    "value": 1.15
+  },
+  "fullModeBackgroundPreset": {
+    "type": "string",
+    "value": "dark_blue"
+  },
+  "overlayBackgroundMode": {
+    "type": "string",
+    "value": "transparent_hint"
+  },
+  "lineColorPreset": {
+    "type": "string",
+    "value": "auto"
+  },
+  "targetVisibleFps": {
+    "type": "number",
+    "value": 14
+  },
+  "hiddenSleepMs": {
+    "type": "number",
+    "value": 350
+  },
+  "hiddenReloadMs": {
+    "type": "number",
+    "value": 1200
+  }
+}

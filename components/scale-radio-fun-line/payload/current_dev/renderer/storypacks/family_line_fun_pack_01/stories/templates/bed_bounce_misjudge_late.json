@@ -1,0 +1,42 @@
+{
+  "id": "bed_bounce_misjudge_late",
+  "title_de": "Bett-Feder falsch eingeschätzt – zu spät",
+  "title_en": "Bett Feder Falsch Eingeschätzt (zu spät)",
+  "category": "slapstick",
+  "duration_sec": 20,
+  "prop": "bed",
+  "cast_hint": [
+    "child",
+    "dog"
+  ],
+  "beats": [
+    {
+      "type": "setup",
+      "motion": "point_and_pose",
+      "secs": 4
+    },
+    {
+      "type": "approach",
+      "motion": "jump_arc",
+      "secs": 5
+    },
+    {
+      "type": "twist",
+      "motion": "jump_arc",
+      "secs": 4
+    },
+    {
+      "type": "reaction",
+      "motion": "laugh_recoil",
+      "secs": 4
+    },
+    {
+      "type": "button",
+      "motion": "shrug",
+      "secs": 2
+    }
+  ],
+  "safe_rating": "PG-12",
+  "double_meaning_light": false,
+  "engine_contract": "scene_template_v1"
+}

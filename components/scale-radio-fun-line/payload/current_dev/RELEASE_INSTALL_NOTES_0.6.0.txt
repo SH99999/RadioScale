@@ -1,0 +1,51 @@
+Fun Linea 0.6.0 - Dog Line Production Visual Engine
+===================================================
+
+Scope of this release
+---------------------
+- keeps the stable open/close/encoder/GPIO/background handler logic from the validated 0.4.2 base
+- replaces the previous runtime doodle look with a first production Dog Line visual actor using shipped pose assets
+- keeps overlay mode and full-stage mode dynamic
+- keeps audio safety / no-ALSA runtime path
+- simplifies both plugin config pages to reduce the 'Configuration not available' failure mode
+
+Included
+--------
+1. fun_linea_overlay_0.6.0.zip
+2. fun_linea_source_0.6.0.zip
+3. fun_linea_dog_line_visual_pack_01.zip (standalone content pack reference)
+
+Install order
+-------------
+1. Uninstall previous Fun Linea overlay + source if needed.
+2. Install Fun Linea Overlay 0.6.0.
+3. Install Fun Linea Source 0.6.0.
+4. Reboot Volumio.
+
+Important runtime notes
+-----------------------
+- Default story pack: dog_line_visual_01
+- systemd preload service remains disabled by default
+- resident renderer stays on the stable warm/hidden path
+- local audio output remains untouched by the renderer
+
+GPIO / Rotary mapping
+---------------------
+Open from GPIO 13:
+{"endpoint":"user_interface/fun_linea_overlay","method":"gpio13OpenFun","data":""}
+
+Open from encoder short press:
+{"endpoint":"user_interface/fun_linea_overlay","method":"encoder1ShortPress","data":""}
+
+Close / return to Volumio browse root:
+{"endpoint":"user_interface/fun_linea_overlay","method":"encoder1LongPress","data":""}
+
+What changed visually
+---------------------
+- Dog Line now uses shipped asset poses rather than runtime primitive doodles
+- initial shipped loops: idle, sniff marker, head tilt, gap hop, note chase, sit watch
+- works in both full-stage and overlay usage
+
+Current honest limitation
+-------------------------
+This is the production visual basis for one actor, not the full future catalog. It is intentionally scoped to Dog Line so the stable runtime path is preserved while the future actor/pack architecture stays open.

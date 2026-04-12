@@ -1,0 +1,43 @@
+{
+  "id": "skateboard_bravery_early",
+  "title_de": "Skateboard-Mutprobe – zu früh",
+  "title_en": "Skateboard Mutprobe (zu früh)",
+  "category": "play",
+  "duration_sec": 19,
+  "prop": "skateboard",
+  "cast_hint": [
+    "child",
+    "kid_friend",
+    "dog"
+  ],
+  "beats": [
+    {
+      "type": "setup",
+      "motion": "point_and_pose",
+      "secs": 4
+    },
+    {
+      "type": "approach",
+      "motion": "run_cycle",
+      "secs": 5
+    },
+    {
+      "type": "twist",
+      "motion": "trip_forward",
+      "secs": 4
+    },
+    {
+      "type": "reaction",
+      "motion": "laugh_recoil",
+      "secs": 4
+    },
+    {
+      "type": "button",
+      "motion": "shrug",
+      "secs": 2
+    }
+  ],
+  "safe_rating": "PG-12",
+  "double_meaning_light": false,
+  "engine_contract": "scene_template_v1"
+}

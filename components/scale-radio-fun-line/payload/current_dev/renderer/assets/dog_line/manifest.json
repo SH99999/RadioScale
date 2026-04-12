@@ -1,0 +1,13 @@
+{
+  "id": "dog_line_visual_assets_01",
+  "version": "0.6.0",
+  "actor": "dog_line",
+  "poses": [
+    "idle",
+    "sniff",
+    "head_tilt",
+    "hop",
+    "sit"
+  ],
+  "notes": "Production-pass Dog Line raster poses derived from the approved visual preview sheet. Designed for Pi-friendly loop animation and future actor-pack expansion."
+}
