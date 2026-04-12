@@ -1,0 +1,12 @@
+[Unit]
+Description=Revox Tape Auto Switch
+After=sound.target
+
+[Service]
+ExecStart=/home/volumio/revox_autoswitch.sh
+Restart=always
+RestartSec=2
+User=volumio
+
+[Install]
+WantedBy=multi-user.target
