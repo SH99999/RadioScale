@@ -1,0 +1,18 @@
+performance_status_matrix_v1:
+  phases:
+    - pre_deploy
+    - post_deploy
+  hard_fail_rules:
+    - volumio_not_active_after_deploy
+    - rootfs_used_percent_gte_95
+    - failed_unit_count_increase
+  warning_rules:
+    - loadavg1_delta_gt_2_0
+    - mem_available_drop_mb_gt_250
+    - rootfs_used_mb_delta_gt_200
+  required_services:
+    - volumio
+    - volumio-kiosk
+    - mediastreamer-hybrid.service
+    - scale_fm_renderer.service
+    - revox-autoswitch.service

@@ -1,0 +1,73 @@
+name: component-dev-fast-loop-v2
+
+on:
+  push:
+    branches:
+      - dev/tuner
+      - dev/bridge
+  workflow_dispatch:
+    inputs:
+      component:
+        description: "tuner or bridge"
+        required: true
+        default: "bridge"
+      ref:
+        description: "Git ref to deploy; use latest for current main"
+        required: true
+        default: "latest"
+
+jobs:
+  deploy_component:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install deploy tools on runner host
+        shell: bash
+        run: |
+          bash deploy/pi/install.sh
+
+      - name: Resolve component and ref
+        id: resolve
+        shell: bash
+        run: |
+          COMPONENT="${{ inputs.component }}"
+          REF_INPUT="${{ inputs.ref }}"
+          if [[ "${{ github.event_name }}" == "push" ]]; then
+            case "${{ github.ref_name }}" in
+              dev/tuner) COMPONENT="tuner" ;;
+              dev/bridge) COMPONENT="bridge" ;;
+            esac
+            REF_INPUT="${{ github.ref_name }}"
+          fi
+          echo "component=$COMPONENT" >> "$GITHUB_OUTPUT"
+          echo "ref=$REF_INPUT" >> "$GITHUB_OUTPUT"
+
+      - name: Collect pre-deploy snapshot
+        id: pre
+        shell: bash
+        run: |
+          SNAPSHOT=$(bash deploy/health/collect_system_snapshot.sh pre_deploy "${{ steps.resolve.outputs.component }}")
+          echo "snapshot=$SNAPSHOT" >> "$GITHUB_OUTPUT"
+
+      - name: Run component fast loop deploy
+        shell: bash
+        run: |
+          bash deploy/v2/sr-component-deploy-v2.sh "${{ steps.resolve.outputs.component }}" "${{ steps.resolve.outputs.ref }}"
+
+      - name: Collect post-deploy snapshot
+        id: post
+        if: always()
+        shell: bash
+        run: |
+          SNAPSHOT=$(bash deploy/health/collect_system_snapshot.sh post_deploy "${{ steps.resolve.outputs.component }}")
+          echo "snapshot=$SNAPSHOT" >> "$GITHUB_OUTPUT"
+
+      - name: Evaluate deployment snapshot delta
+        if: always()
+        shell: bash
+        run: |
+          bash deploy/health/evaluate_system_snapshot.sh "${{ steps.resolve.outputs.component }}" "${{ steps.pre.outputs.snapshot }}" "${{ steps.post.outputs.snapshot }}"
