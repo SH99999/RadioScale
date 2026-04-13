@@ -1,0 +1,31 @@
+name: repo-guard-v2
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  repo_guard:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Run repo guard checks
+        shell: bash
+        run: |
+          bash tools/ci/check_repo_guard_v2.sh
+
+  shell_syntax:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Run shell syntax checks
+        shell: bash
+        run: |
+          bash tools/ci/check_shell_syntax_v2.sh
