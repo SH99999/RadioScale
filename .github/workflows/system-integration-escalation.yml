@@ -1,0 +1,161 @@
+name: system-integration-escalation
+
+on:
+  issues:
+    types: [opened, edited, labeled, reopened]
+  pull_request:
+    types: [opened, edited, synchronize, reopened]
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: read
+
+jobs:
+  escalate_from_issue:
+    if: github.event_name == 'issues'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Escalate system integration relevant issues
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+        run: |
+          python3 - <<'PY'
+          import json, os, re, urllib.request
+
+          repo = os.environ['GITHUB_REPOSITORY']
+          token = os.environ['GITHUB_TOKEN']
+          issue_number = os.environ['ISSUE_NUMBER']
+          base = f'https://api.github.com/repos/{repo}'
+          headers = {'Authorization': f'Bearer {token}','Accept':'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28','User-Agent':'si-escalation-issue'}
+          def req(method, path, data=None):
+            body = None if data is None else json.dumps(data).encode('utf-8')
+            h = dict(headers)
+            if body is not None: h['Content-Type']='application/json'
+            r = urllib.request.Request(base + path, data=body, headers=h, method=method)
+            with urllib.request.urlopen(r) as resp:
+              raw = resp.read().decode('utf-8')
+              return json.loads(raw) if raw else None
+          def paginated(path):
+            page=1; items=[]
+            while True:
+              joiner='&' if '?' in path else '?'
+              batch=req('GET', f'{path}{joiner}per_page=100&page={page}')
+              if not batch: break
+              items.extend(batch)
+              if len(batch) < 100: break
+              page += 1
+            return items
+          issue = req('GET', f'/issues/{issue_number}')
+          if 'pull_request' in issue: raise SystemExit(0)
+          labels = [l['name'] for l in issue.get('labels', [])]
+          should_escalate = ('impact:cross-component' in labels or 'impact:system-wide' in labels or 'agent:system-integration' in labels)
+          if not should_escalate: raise SystemExit(0)
+          key = f'si-escalation:issue:{issue_number}'
+          title = f'SI escalation — issue #{issue_number}'
+          body = '\n'.join([
+            f'<!-- governance-key: {key} -->',
+            '# System integration escalation',
+            '',
+            f'- source issue: #{issue_number}',
+            f'- source title: {issue.get("title")}',
+            f'- source url: {issue.get("html_url")}',
+            f'- source labels: {", ".join(labels)}',
+            '',
+            '## Why this escalated',
+            '- issue carries cross-component or system-wide impact, or is already routed to system integration',
+            '',
+            '## Review context',
+            '- `contracts/repo/system_integration_escalation_contract_v1.md`',
+            '- `journals/system-integration-normalization/STATUS_system_integration_normalization_v5.md`',
+            '- `journals/system-integration-normalization/DECISIONS_system_integration_normalization_v5.md`',
+          ])
+          existing = None
+          for item in paginated('/issues?state=all&labels=component:system-integration,agent:system-integration'):
+            if 'pull_request' in item: continue
+            if f'<!-- governance-key: {key} -->' in (item.get('body') or ''):
+              existing = item; break
+          labels_out = ['governance','component:system-integration','agent:system-integration','type:integration-risk','state:ready-for-agent']
+          if 'impact:system-wide' in labels: labels_out.append('impact:system-wide')
+          else: labels_out.append('impact:cross-component')
+          if existing:
+            req('PATCH', f'/issues/{existing["number"]}', {'title': title, 'body': body, 'labels': labels_out, 'state': 'open'})
+          else:
+            req('POST', '/issues', {'title': title, 'body': body, 'labels': labels_out})
+          PY
+
+  escalate_from_pr:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Escalate system integration relevant pull requests
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          python3 - <<'PY'
+          import json, os, re, urllib.request
+          repo = os.environ['GITHUB_REPOSITORY']
+          token = os.environ['GITHUB_TOKEN']
+          pr_number = os.environ['PR_NUMBER']
+          base = f'https://api.github.com/repos/{repo}'
+          headers = {'Authorization': f'Bearer {token}','Accept':'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28','User-Agent':'si-escalation-pr'}
+          def req(method, path, data=None):
+            body = None if data is None else json.dumps(data).encode('utf-8')
+            h = dict(headers)
+            if body is not None: h['Content-Type']='application/json'
+            r = urllib.request.Request(base + path, data=body, headers=h, method=method)
+            with urllib.request.urlopen(r) as resp:
+              raw = resp.read().decode('utf-8')
+              return json.loads(raw) if raw else None
+          def paginated(path):
+            page=1; items=[]
+            while True:
+              joiner='&' if '?' in path else '?'
+              batch=req('GET', f'{path}{joiner}per_page=100&page={page}')
+              if not batch: break
+              items.extend(batch)
+              if len(batch) < 100: break
+              page += 1
+            return items
+          pr_issue = req('GET', f'/issues/{pr_number}')
+          labels = [l['name'] for l in pr_issue.get('labels', [])]
+          should_escalate = ('impact:cross-component' in labels or 'impact:system-wide' in labels or 'agent:system-integration' in labels)
+          if not should_escalate: raise SystemExit(0)
+          pr = req('GET', f'/pulls/{pr_number}')
+          key = f'si-escalation:pr:{pr_number}'
+          title = f'SI escalation — PR #{pr_number}'
+          body = '\n'.join([
+            f'<!-- governance-key: {key} -->',
+            '# System integration escalation',
+            '',
+            f'- source PR: #{pr_number}',
+            f'- source title: {pr.get("title")}',
+            f'- source url: {pr.get("html_url")}',
+            f'- source labels: {", ".join(labels)}',
+            '',
+            '## Why this escalated',
+            '- PR carries cross-component or system-wide impact, or is already routed to system integration',
+            '',
+            '## Review context',
+            '- `contracts/repo/system_integration_escalation_contract_v1.md`',
+            '- `journals/system-integration-normalization/STATUS_system_integration_normalization_v5.md`',
+            '- `journals/system-integration-normalization/DECISIONS_system_integration_normalization_v5.md`',
+          ])
+          existing = None
+          for item in paginated('/issues?state=all&labels=component:system-integration,agent:system-integration'):
+            if 'pull_request' in item: continue
+            if f'<!-- governance-key: {key} -->' in (item.get('body') or ''):
+              existing = item; break
+          labels_out = ['governance','component:system-integration','agent:system-integration','type:integration-risk','state:ready-for-agent']
+          if 'impact:system-wide' in labels: labels_out.append('impact:system-wide')
+          else: labels_out.append('impact:cross-component')
+          if existing:
+            req('PATCH', f'/issues/{existing["number"]}', {'title': title, 'body': body, 'labels': labels_out, 'state': 'open'})
+          else:
+            req('POST', '/issues', {'title': title, 'body': body, 'labels': labels_out})
+          PY
