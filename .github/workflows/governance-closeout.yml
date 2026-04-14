@@ -1,0 +1,138 @@
+name: governance-closeout
+
+on:
+  pull_request:
+    types: [closed]
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: read
+
+jobs:
+  closeout_governance_issues:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Close out referenced governance issues
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          python3 - <<'PY'
+          import json, os, re, urllib.request, urllib.error
+          from pathlib import Path
+
+          repo = os.environ['GITHUB_REPOSITORY']
+          token = os.environ['GITHUB_TOKEN']
+          pr_number = os.environ['PR_NUMBER']
+          base = f'https://api.github.com/repos/{repo}'
+          workspace = Path(os.environ['GITHUB_WORKSPACE'])
+
+          headers = {
+            'Authorization': f'Bearer {token}',
+            'Accept': 'application/vnd.github+json',
+            'X-GitHub-Api-Version': '2022-11-28',
+            'User-Agent': 'governance-closeout'
+          }
+
+          catalog_path = workspace / 'tools/governance/label_catalog_v1.json'
+          if catalog_path.exists():
+            label_catalog = json.loads(catalog_path.read_text(encoding='utf-8')).get('labels', [])
+          else:
+            label_catalog = []
+
+          def req(method, path, data=None):
+            body = None if data is None else json.dumps(data).encode('utf-8')
+            h = dict(headers)
+            if body is not None:
+              h['Content-Type'] = 'application/json'
+            r = urllib.request.Request(base + path, data=body, headers=h, method=method)
+            with urllib.request.urlopen(r) as resp:
+              raw = resp.read().decode('utf-8')
+              return json.loads(raw) if raw else None
+
+          def paginated(path):
+            page = 1
+            items = []
+            while True:
+              joiner = '&' if '?' in path else '?'
+              batch = req('GET', f'{path}{joiner}per_page=100&page={page}')
+              if not batch:
+                break
+              items.extend(batch)
+              if len(batch) < 100:
+                break
+              page += 1
+            return items
+
+          def ensure_labels():
+            for label in label_catalog:
+              try:
+                req('POST', '/labels', label)
+              except urllib.error.HTTPError as e:
+                if e.code != 422:
+                  raise
+
+          def extract_refs(text):
+            return sorted(set(int(x) for x in re.findall(r'(?<![A-Za-z0-9_])#(\d+)', text or '')))
+
+          def extract_closing_refs(text):
+            pattern = re.compile(r'(?i)\b(?:close|closes|closed|fix|fixes|fixed|resolve|resolves|resolved)\s+#(\d+)')
+            return sorted(set(int(x) for x in pattern.findall(text or '')))
+
+          def is_governance_issue(label_names):
+            prefixes = ('component:', 'impact:', 'type:', 'agent:', 'state:', 'source:')
+            if 'governance' in label_names or 'weekly-governance-report' in label_names:
+              return True
+            return any(name.startswith(prefixes) for name in label_names)
+
+          ensure_labels()
+          pr = req('GET', f'/pulls/{pr_number}')
+          pr_text = '\n'.join([pr.get('title') or '', pr.get('body') or ''])
+          referenced = extract_refs(pr_text)
+          closing = set(extract_closing_refs(pr_text))
+
+          if not referenced:
+            print('no referenced issues found')
+            raise SystemExit(0)
+
+          for issue_number in referenced:
+            issue = req('GET', f'/issues/{issue_number}')
+            if 'pull_request' in issue:
+              continue
+            label_names = [label['name'] for label in issue.get('labels', [])]
+            if not is_governance_issue(label_names):
+              continue
+
+            retained = [name for name in label_names if not name.startswith('state:')]
+            final_labels = sorted(set(retained + ['state:done']))
+
+            desired_state = 'closed' if issue_number in closing else issue.get('state', 'open')
+            req('PATCH', f'/issues/{issue_number}', {
+              'labels': final_labels,
+              'state': desired_state,
+            })
+
+            marker = f'<!-- governance-closeout:{pr_number}:{issue_number} -->'
+            comments = paginated(f'/issues/{issue_number}/comments')
+            if not any(marker in (c.get('body') or '') for c in comments):
+              body_lines = [
+                marker,
+                'Governance closeout update:',
+                '',
+                f'- merged PR: #{pr_number}',
+                f'- PR title: {pr.get("title")}',
+                '- state labels normalized to `state:done`',
+              ]
+              if issue_number in closing:
+                body_lines.append('- issue closed because the PR body used an explicit closing keyword')
+              else:
+                body_lines.append('- issue left open because no explicit closing keyword was found in the PR body')
+              req('POST', f'/issues/{issue_number}/comments', {'body': '\n'.join(body_lines)})
+
+          print(f'processed={len(referenced)}')
+          PY
