@@ -1,0 +1,137 @@
+name: rebase-dev-and-integration-branches-on-main
+
+on:
+  workflow_dispatch:
+    inputs:
+      target_set:
+        description: "Choose all future dev/* and integration/* branches, or one specific branch"
+        required: true
+        default: "all"
+        type: choice
+        options:
+          - all
+          - single
+      target_branch:
+        description: "Full branch name when target_set=single, for example dev/bridge"
+        required: false
+        default: ""
+
+permissions:
+  contents: write
+
+concurrency:
+  group: rebase-dev-and-integration-branches-on-main
+  cancel-in-progress: false
+
+jobs:
+  rebase_selected_branches:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Configure Git identity
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Fetch all remote branches
+        shell: bash
+        run: |
+          git fetch origin '+refs/heads/*:refs/remotes/origin/*' --prune
+
+      - name: Determine target branches
+        id: targets
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          target_set="${{ inputs.target_set }}"
+          target_branch="${{ inputs.target_branch }}"
+
+          if [[ "$target_set" == "all" ]]; then
+            mapfile -t branches < <(
+              git for-each-ref --format='%(refname:short)' refs/remotes/origin \
+              | sed 's#^origin/##' \
+              | grep -E '^(dev|integration)/' \
+              | sort -u
+            )
+          else
+            if [[ -z "$target_branch" ]]; then
+              echo "target_branch is required when target_set=single" >&2
+              exit 1
+            fi
+
+            if ! git show-ref --verify --quiet "refs/remotes/origin/$target_branch"; then
+              echo "Branch not found on origin: $target_branch" >&2
+              exit 1
+            fi
+
+            branches=("$target_branch")
+          fi
+
+          if [[ "${#branches[@]}" -eq 0 ]]; then
+            echo "No matching branches found." >> "$GITHUB_STEP_SUMMARY"
+            echo "count=0" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          printf '%s\n' "${branches[@]}" > "$RUNNER_TEMP/target_branches.txt"
+
+          {
+            echo "count=${#branches[@]}"
+            echo "branches<<EOF"
+            printf '%s\n' "${branches[@]}"
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+
+          echo "### Target branches" >> "$GITHUB_STEP_SUMMARY"
+          printf -- '- `%s`\n' "${branches[@]}" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Rebase selected branches onto origin/main
+        if: steps.targets.outputs.count != '0'
+        shell: bash
+        run: |
+          set -u
+
+          successes=()
+          failures=()
+
+          while IFS= read -r branch; do
+            [[ -z "$branch" ]] && continue
+
+            echo
+            echo "=== REBASE $branch ON origin/main ==="
+
+            git checkout -B rebase-work "origin/$branch"
+
+            if git rebase origin/main; then
+              if git push --force-with-lease origin "HEAD:refs/heads/$branch"; then
+                successes+=("$branch")
+                printf -- '- success: `%s`\n' "$branch" >> "$GITHUB_STEP_SUMMARY"
+              else
+                failures+=("$branch (push failed)")
+                printf -- '- failure: `%s` push failed\n' "$branch" >> "$GITHUB_STEP_SUMMARY"
+                git rebase --abort || true
+              fi
+            else
+              failures+=("$branch (rebase conflict)")
+              printf -- '- failure: `%s` rebase conflict\n' "$branch" >> "$GITHUB_STEP_SUMMARY"
+              git rebase --abort || true
+            fi
+          done < "$RUNNER_TEMP/target_branches.txt"
+
+          echo >> "$GITHUB_STEP_SUMMARY"
+          echo "### Summary" >> "$GITHUB_STEP_SUMMARY"
+          echo "- successful branches: ${#successes[@]}" >> "$GITHUB_STEP_SUMMARY"
+          echo "- failed branches: ${#failures[@]}" >> "$GITHUB_STEP_SUMMARY"
+
+          if [[ "${#failures[@]}" -gt 0 ]]; then
+            echo >> "$GITHUB_STEP_SUMMARY"
+            echo "### Failed branches" >> "$GITHUB_STEP_SUMMARY"
+            printf -- '- `%s`\n' "${failures[@]}" >> "$GITHUB_STEP_SUMMARY"
+            exit 1
+          fi
