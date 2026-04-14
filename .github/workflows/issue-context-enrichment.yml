@@ -1,0 +1,104 @@
+name: issue-context-enrichment
+
+on:
+  issues:
+    types: [opened, edited, labeled, reopened]
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  enrich_issue_context:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Add repo context comment to governance issues
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+        run: |
+          python3 - <<'PY'
+          import json, os, urllib.request
+          from pathlib import Path
+
+          repo = os.environ['GITHUB_REPOSITORY']
+          token = os.environ['GITHUB_TOKEN']
+          issue_number = os.environ['ISSUE_NUMBER']
+          base = f'https://api.github.com/repos/{repo}'
+          workspace = Path(os.environ['GITHUB_WORKSPACE'])
+          headers = {
+            'Authorization': f'Bearer {token}',
+            'Accept': 'application/vnd.github+json',
+            'X-GitHub-Api-Version': '2022-11-28',
+            'User-Agent': 'issue-context-enrichment'
+          }
+
+          def req(method, path, data=None):
+            body = None if data is None else json.dumps(data).encode('utf-8')
+            h = dict(headers)
+            if body is not None:
+              h['Content-Type'] = 'application/json'
+            r = urllib.request.Request(base + path, data=body, headers=h, method=method)
+            with urllib.request.urlopen(r) as resp:
+              raw = resp.read().decode('utf-8')
+              return json.loads(raw) if raw else None
+
+          def paginated(path):
+            page = 1
+            items = []
+            while True:
+              joiner = '&' if '?' in path else '?'
+              batch = req('GET', f'{path}{joiner}per_page=100&page={page}')
+              if not batch:
+                break
+              items.extend(batch)
+              if len(batch) < 100:
+                break
+              page += 1
+            return items
+
+          issue = req('GET', f'/issues/{issue_number}')
+          if 'pull_request' in issue:
+            raise SystemExit(0)
+          labels = [l['name'] for l in issue.get('labels', [])]
+          if 'governance' not in labels and not any(l.startswith(('component:', 'impact:', 'type:', 'agent:', 'state:', 'source:')) for l in labels):
+            raise SystemExit(0)
+
+          component_labels = [l.split(':', 1)[1] for l in labels if l.startswith('component:')]
+          marker = '<!-- governance-context-enrichment -->'
+          comments = paginated(f'/issues/{issue_number}/comments')
+          if any(marker in (c.get('body') or '') for c in comments):
+            raise SystemExit(0)
+
+          lines = [marker, '## Repo context', '']
+          lines.append('- governance routing standard: `contracts/repo/issue_governance_routing_standard_v1.md`')
+          lines.append('- autonomous intake and execution standard: `contracts/repo/autonomous_execution_and_chat_intake_standard_v1.md`')
+          lines.append('- SI escalation contract: `contracts/repo/system_integration_escalation_contract_v1.md`')
+          lines.append('')
+
+          for comp in sorted(component_labels):
+            if comp == 'system-integration':
+              lines.append('### System integration context')
+              lines.append('- `journals/system-integration-normalization/STATUS_system_integration_normalization_v5.md`')
+              lines.append('- `journals/system-integration-normalization/DECISIONS_system_integration_normalization_v5.md`')
+              lines.append('- `journals/system-integration-normalization/stream_v1.md`')
+              lines.append('')
+              continue
+            comp_dir = f'scale-radio-{comp}'
+            lines.append(f'### Component context — {comp}')
+            lines.append(f'- `components/{comp_dir}/README.md`')
+            lines.append(f'- `journals/{comp_dir}/current_state_v1.md`')
+            lines.append(f'- `journals/{comp_dir}/stream_v1.md`')
+            lines.append('')
+
+          if 'agent:ux' in labels:
+            lines.append('### UX / asset handling guidance')
+            lines.append('- use governance issue routing for UI/UX standard and asset-placement work')
+            lines.append('- escalate to system integration if the work affects multiple components or shared doctrine')
+            lines.append('')
+
+          req('POST', f'/issues/{issue_number}/comments', {'body': '\n'.join(lines)})
+          PY
