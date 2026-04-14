@@ -11,6 +11,9 @@ Before touching files, read these governance documents on `main`:
 - `contracts/repo/release_intake_and_delivery_status_v2.md`
 - `contracts/repo/component_journal_policy_v2.md`
 - `contracts/repo/repository_language_standard_v2.md`
+- `contracts/repo/system_integration_governance_index_v3.md`
+- `contracts/repo/new_component_intake_standard_v2.md`
+- `docs/agents/system_integration_recovery_onboarding_v3.md`
 
 ## Core doctrine
 - `main` is the canonical truth branch for workflows, governance, accepted stable artifacts, and operator-visible execution paths.
@@ -45,9 +48,11 @@ Before touching files, read these governance documents on `main`:
 - keep changes scoped and governance-consistent
 - prefer component-level changes over ad-hoc plugin-fragment changes
 - if a new operational rule is introduced, put it into governance docs instead of relying on chat memory
+- `bootstrap new components using contracts/repo/new_component_intake_standard_v2.md`
 
 ## Skills and reference docs
 Agents should consult:
 - `docs/agents/skill_volumio4_plugin_development_v1.md`
 - `docs/agents/skill_overlay_component_governance_v1.md`
 - `docs/agents/reference_repositories_and_docs_v1.md`
+- `docs/agents/system_integration_recovery_onboarding_v3.md`
