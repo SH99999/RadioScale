@@ -198,3 +198,14 @@ Status note: this v6 file supersedes `stream_v5.md` as the current SI/N stream b
 - fallback now also tests tokenized HTTPS URL probe and reports explicit detail (`configured credential helper...` vs `token present but push dry-run failed`)
 - updated agent/cloud setup docs to reflect this behavior and reduce false `push auth: blocked` statuses in Codex cloud sessions
 - purpose: let agent lanes with valid env tokens push with standard `git push -u git <branch>` instead of failing on username prompt
+
+### 2026-04-15 / si/owner-reference-validation / owner single-page operations reference
+- added `docs/agents/owner_operational_reference_v1.md` as a single owner-facing page with readiness gates, blocker triage, automation status, click-path flow, and direct links to core governance/onboarding/automation docs
+- updated SI governance index and SI onboarding read chains to include the owner operational reference as canonical startup material
+- purpose: give owner one deterministic page to validate setup state, assess readiness-to-dev, and run low-click decision/approval flow
+
+### 2026-04-15 / si/owner-reference-validation / owner page structured and fully clickable
+- refined `docs/agents/owner_operational_reference_v1.md` to include explicit PR feedback/close policy, owner decision contract, and blocker handling rules
+- converted owner-relevant document and workflow lists to markdown links so the page is directly clickable in GitHub
+- added direct project board link (`https://github.com/users/SH99999/projects/1`) and daily owner click-path guidance
+- purpose: ensure owner can review and decide from one page with minimal navigation friction
