@@ -6,15 +6,15 @@ on:
       git_ref:
         description: "Git ref containing the component payload and deploy scripts"
         required: true
-        default: "dev/bridge"
+        default: "main"
       component:
         description: "Component to deploy"
         required: true
-        default: "bridge"
+        default: "tuner"
       payload:
         description: "Payload directory name or governed pointer"
         required: true
-        default: "current_dev"
+        default: "current"
       target:
         description: "Target Pi slot identifier"
         required: true
