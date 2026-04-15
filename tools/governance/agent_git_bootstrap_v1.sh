@@ -3,6 +3,7 @@ set -euo pipefail
 
 REMOTE_NAME="${CANONICAL_REMOTE_NAME:-git}"
 REMOTE_URL="${CANONICAL_REMOTE_URL:-https://github.com/SH99999/mediastreamer.git}"
+CANONICAL_OWNER_REPO="${CANONICAL_OWNER_REPO:-SH99999/mediastreamer}"
 
 if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
   echo "error: not inside a git repository"
@@ -14,9 +15,28 @@ if [[ -z "${CURRENT_BRANCH}" ]]; then
   CURRENT_BRANCH="(detached-head)"
 fi
 
+normalize_remote_identity() {
+  local url="$1"
+  url="${url%.git}"
+  case "${url}" in
+    "https://github.com/${CANONICAL_OWNER_REPO}"|"http://github.com/${CANONICAL_OWNER_REPO}"|"git@github.com:${CANONICAL_OWNER_REPO}"|"ssh://git@github.com/${CANONICAL_OWNER_REPO}")
+      echo "github.com/${CANONICAL_OWNER_REPO}"
+      return 0
+      ;;
+    *)
+      echo "${url}"
+      return 0
+      ;;
+  esac
+}
+
 if git remote get-url "${REMOTE_NAME}" >/dev/null 2>&1; then
   CURRENT_REMOTE_URL="$(git remote get-url "${REMOTE_NAME}")"
-  if [[ "${CURRENT_REMOTE_URL}" != "${REMOTE_URL}" ]]; then
+  CURRENT_REMOTE_IDENTITY="$(normalize_remote_identity "${CURRENT_REMOTE_URL}")"
+  CANONICAL_REMOTE_IDENTITY="$(normalize_remote_identity "${REMOTE_URL}")"
+  if [[ "${CURRENT_REMOTE_IDENTITY}" == "${CANONICAL_REMOTE_IDENTITY}" ]]; then
+    REMOTE_STATUS="ok (equivalent-url)"
+  elif [[ "${CURRENT_REMOTE_URL}" != "${REMOTE_URL}" ]]; then
     git remote set-url "${REMOTE_NAME}" "${REMOTE_URL}"
     REMOTE_STATUS="ok (updated-url)"
   else

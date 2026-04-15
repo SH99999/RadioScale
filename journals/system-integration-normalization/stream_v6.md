@@ -120,3 +120,7 @@ Status note: this v6 file supersedes `stream_v5.md` as the current SI/N stream b
 - added `docs/agents/agent_git_bootstrap_v1.md` with mandatory first reply format (`ready now` + exact `owner action needed`)
 - aligned AGENTS, SI governance index, and onboarding read chain so every replacement agent runs bootstrap and immediately reports blockers instead of delaying with implicit assumptions
 - purpose: ensure all development/governance lanes can self-prepare branch+remote flow and ask for exactly the missing owner action when runtime auth is absent
+
+### 2026-04-15 / si/pr83-followup / PR83 review-comment fixes
+- updated `agent_git_bootstrap_v1.sh` so canonical SSH and HTTPS remote forms are treated as equivalent and existing working SSH remotes are not forcibly rewritten
+- purpose: avoid breaking already-working SSH-auth environments when mandatory bootstrap is executed

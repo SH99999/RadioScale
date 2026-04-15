@@ -6,6 +6,7 @@ Define one deterministic startup path so every development/governance agent can 
 ## Canonical remote rule
 - canonical remote name: `git`
 - canonical URL: `https://github.com/SH99999/mediastreamer.git`
+- equivalent canonical SSH form is accepted and preserved: `git@github.com:SH99999/mediastreamer.git`
 
 ## Bootstrap script
 Run:

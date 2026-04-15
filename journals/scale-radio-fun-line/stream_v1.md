@@ -11,3 +11,4 @@
 - 2026-04-15: Added governed payload pointer `components/scale-radio-fun-line/payload/current/` so lock-aware v10 deploy and rollback workflows can be executed for Fun Line testing.
 - 2026-04-15: Enabled wrapper support for `fun-line` in `sr-deploy-wrapper-v2.sh` and `sr-deploy-wrapper-v3.sh` with `current_dev|current -> current` alias resolution.
 - 2026-04-15: Updated autonomous delivery matrix v3 to include `fun-line` with `dev/fun-line` + `current` defaults and v10 workflow bindings.
+- 2026-04-15: Replaced metadata-only plugin entrypoint with a real controller export (`ControllerFunLineaOverlay`) and lifecycle handlers (`onVolumioStart`, `onStart`, `onStop`, `getUIConfig`) to satisfy runtime initialization expectations.
