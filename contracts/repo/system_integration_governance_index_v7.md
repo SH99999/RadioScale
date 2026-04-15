@@ -28,12 +28,13 @@ This file is the current entrypoint for system integration governance, recovery,
 16. `contracts/repo/git_release_tagging_standard_v1.md`
 17. `contracts/repo/governance_unification_delivery_plan_v1.md`
 18. `contracts/repo/ui_ux_stage_b_autonomous_loop_standard_v1.md`
-19. `docs/agents/system_integration_recovery_onboarding_v7.md`
-20. `journals/system-integration-normalization/STATUS_system_integration_normalization_v8.md`
-21. `journals/system-integration-normalization/DECISIONS_system_integration_normalization_v9.md`
-22. `journals/system-integration-normalization/stream_v6.md`
-23. `journals/system-integration-normalization/ui_gui_stream_v1.md`
-24. `tools/governance/scale_radio_governance_delivery_views_v1.md`
+19. `docs/agents/agent_git_bootstrap_v1.md`
+20. `docs/agents/system_integration_recovery_onboarding_v7.md`
+21. `journals/system-integration-normalization/STATUS_system_integration_normalization_v8.md`
+22. `journals/system-integration-normalization/DECISIONS_system_integration_normalization_v9.md`
+23. `journals/system-integration-normalization/stream_v6.md`
+24. `journals/system-integration-normalization/ui_gui_stream_v1.md`
+25. `tools/governance/scale_radio_governance_delivery_views_v1.md`
 
 ## Locked operating model
 - the repository remains public until further notice

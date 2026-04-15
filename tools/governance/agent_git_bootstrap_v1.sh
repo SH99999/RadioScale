@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+REMOTE_NAME="${CANONICAL_REMOTE_NAME:-git}"
+REMOTE_URL="${CANONICAL_REMOTE_URL:-https://github.com/SH99999/mediastreamer.git}"
+
+if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+  echo "error: not inside a git repository"
+  exit 1
+fi
+
+CURRENT_BRANCH="$(git branch --show-current 2>/dev/null || true)"
+if [[ -z "${CURRENT_BRANCH}" ]]; then
+  CURRENT_BRANCH="(detached-head)"
+fi
+
+if git remote get-url "${REMOTE_NAME}" >/dev/null 2>&1; then
+  CURRENT_REMOTE_URL="$(git remote get-url "${REMOTE_NAME}")"
+  if [[ "${CURRENT_REMOTE_URL}" != "${REMOTE_URL}" ]]; then
+    git remote set-url "${REMOTE_NAME}" "${REMOTE_URL}"
+    REMOTE_STATUS="ok (updated-url)"
+  else
+    REMOTE_STATUS="ok"
+  fi
+else
+  git remote add "${REMOTE_NAME}" "${REMOTE_URL}"
+  REMOTE_STATUS="ok (added)"
+fi
+
+PUSH_AUTH_STATUS="blocked"
+PUSH_AUTH_DETAIL="auth not available in current runtime"
+PROBE_REF="refs/heads/_bootstrap_auth_probe_$(date +%s)"
+
+if git push --dry-run "${REMOTE_NAME}" "HEAD:${PROBE_REF}" >/dev/null 2>&1; then
+  PUSH_AUTH_STATUS="ok"
+  PUSH_AUTH_DETAIL="push dry-run succeeded"
+fi
+
+echo "Bootstrap status:"
+echo "- branch: ${CURRENT_BRANCH}"
+echo "- remote(${REMOTE_NAME}): ${REMOTE_STATUS}"
+echo "- push auth: ${PUSH_AUTH_STATUS} (${PUSH_AUTH_DETAIL})"
+
+if [[ "${PUSH_AUTH_STATUS}" == "ok" ]]; then
+  echo "- ready now: create/update dedicated branch, commit, push, and open PR to main"
+  echo "- owner action needed: none"
+else
+  echo "- ready now: local implementation, commit packaging, and PR text preparation"
+  echo "- owner action needed: provide runtime git push auth (token/connector auth) or run final push locally"
+fi

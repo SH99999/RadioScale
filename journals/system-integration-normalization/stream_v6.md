@@ -114,3 +114,9 @@ Status note: this v6 file supersedes `stream_v5.md` as the current SI/N stream b
 - added a dedicated `Component Delivery Readiness` view definition keyed by component + release-readiness/defect/integration-risk labels
 - aligned Stage-B autonomy standard and SI onboarding checklist wording so proposal intake and owner decision packets are explicitly multi-component, not UI-only
 - purpose: keep one project as the control-plane for all governed components instead of a UI-only queue subset
+
+### 2026-04-15 / si/agent-bootstrap-git / Agent git bootstrap and first-reply contract
+- added `tools/governance/agent_git_bootstrap_v1.sh` to standardize canonical remote setup and quick push-auth probing at session start
+- added `docs/agents/agent_git_bootstrap_v1.md` with mandatory first reply format (`ready now` + exact `owner action needed`)
+- aligned AGENTS, SI governance index, and onboarding read chain so every replacement agent runs bootstrap and immediately reports blockers instead of delaying with implicit assumptions
+- purpose: ensure all development/governance lanes can self-prepare branch+remote flow and ask for exactly the missing owner action when runtime auth is absent

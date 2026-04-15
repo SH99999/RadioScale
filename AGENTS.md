@@ -55,6 +55,8 @@ Before touching files, read these governance documents on `main`:
 - for SI/governance scope, create a dedicated SI branch first (`si/<topic>`), perform local changes there, then push that branch and open/update a PR from that branch to `main`
 - do not use the generic branch name `work` for SI/governance mutations; rename or recreate to `si/<topic>` before changing repo truth
 - before pushing or preparing PR handoff, verify remote `git` points to the canonical repository URL and push the active SI branch to that remote
+- at session start, run `bash tools/governance/agent_git_bootstrap_v1.sh` and report bootstrap status immediately
+- the first owner-facing reply must explicitly state what is ready now and exactly what owner action is needed (or `none`)
 - keep changes scoped and governance-consistent
 - prefer component-level changes over ad-hoc plugin-fragment changes
 - if a new operational rule is introduced, put it into governance docs instead of relying on chat memory

@@ -78,14 +78,15 @@ The system-integration stream operates as the control-plane function set for the
 16. `contracts/repo/truthful_execution_and_negative_answer_standard_v1.md`
 17. `contracts/repo/git_release_tagging_standard_v1.md`
 18. `contracts/repo/governance_unification_delivery_plan_v1.md`
-19. `contracts/repo/ui_ux_stage_b_autonomous_loop_standard_v1.md`
-20. `tools/governance/scale_radio_governance_delivery_views_v1.md`
-21. `journals/system-integration-normalization/STATUS_system_integration_normalization_v8.md`
-22. `journals/system-integration-normalization/DECISIONS_system_integration_normalization_v9.md`
-23. `journals/system-integration-normalization/stream_v6.md`
-24. `journals/system-integration-normalization/ui_gui_stream_v1.md`
-25. `journals/scale-radio-bridge/current_state_v1.md`
-26. `journals/scale-radio-tuner/current_state_v2.md`
+19. `docs/agents/agent_git_bootstrap_v1.md`
+20. `contracts/repo/ui_ux_stage_b_autonomous_loop_standard_v1.md`
+21. `tools/governance/scale_radio_governance_delivery_views_v1.md`
+22. `journals/system-integration-normalization/STATUS_system_integration_normalization_v8.md`
+23. `journals/system-integration-normalization/DECISIONS_system_integration_normalization_v9.md`
+24. `journals/system-integration-normalization/stream_v6.md`
+25. `journals/system-integration-normalization/ui_gui_stream_v1.md`
+26. `journals/scale-radio-bridge/current_state_v1.md`
+27. `journals/scale-radio-tuner/current_state_v2.md`
 
 ## Locked operating rules
 - `main` is the protected truth branch and final owner acceptance gate
@@ -150,6 +151,19 @@ Run this before mutating SI/governance truth files:
 2. `git remote get-url git` returns `https://github.com/SH99999/mediastreamer.git`
 3. local branch is clean enough to package a focused SI change set
 4. push uses the same SI branch that will be used for the PR to `main`
+
+## Agent bootstrap + first reply contract
+At session start, run:
+- `bash tools/governance/agent_git_bootstrap_v1.sh`
+
+Immediately reply with:
+1. branch status
+2. canonical remote status
+3. push-auth status
+4. ready-now scope
+5. exact owner action required (or `none`)
+
+If push auth is blocked, ask for one concrete owner action first (runtime token/auth or owner-side push), then continue with local prep and PR packaging.
 
 ## Stage-B proposal autonomy checklist (UI/UX + component/runtime)
 Use this when an external GPT chat produced a `.md` proposal:
