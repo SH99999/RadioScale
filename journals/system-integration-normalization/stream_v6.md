@@ -341,3 +341,7 @@ Status note: this v6 file supersedes `stream_v5.md` as the current SI/N stream b
 - updated bootstrap output to point first to the reference map and second to role profiles
 - updated role profiles to consume shared deferred references via reference map, reducing repeated cross-links in each role section
 - purpose: keep mode-B fast while reducing documentation maintenance overhead and preserving deterministic escalation paths
+
+### 2026-04-16 / si/bootstrap-role-mode-b-v1 / compact audit-response chain for low-read owner handoff
+- added `docs/agents/audit_response_compact_chain_v1.md` with essential-only, ranked issues, phase outcomes, hard rules, and copy/paste handoff blocks
+- purpose: provide low-read structured responses for ChatGPT roundtrips without narrative overhead
