@@ -271,3 +271,9 @@ Status note: this v6 file supersedes `stream_v5.md` as the current SI/N stream b
 - updated `contracts/repo/system_integration_governance_index_v7.md` locked operating model to state PR lifecycle execution is agent-lane responsibility, not owner PR authoring
 - updated `docs/agents/owner_operational_reference_v1.md` to make owner role boundary explicit and confirm daily click-path assumes agent-prepared PRs
 - purpose: remove ambiguity so owner only decides accept/change/reject while execution lanes handle branch/PR mechanics
+
+### 2026-04-16 / si/governance-model-optimization / P1 status taxonomy canonicalization
+- added `contracts/repo/status_taxonomy_contract_v1.md` as the canonical lifecycle status source with ordered definitions and a legacy-to-canonical migration map
+- updated `contracts/repo/release_intake_and_delivery_status_v2.md` to reference the canonical taxonomy contract and removed conflicting duplicate status lists
+- updated SI governance index and SI onboarding read order to include `status_taxonomy_contract_v1.md` in the mandatory chain
+- purpose: execute PR-P1 from the governance optimization plan and remove status taxonomy drift risk before schema/report enforcement packages
