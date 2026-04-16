@@ -1,5 +1,7 @@
 # STREAM — scale-radio-tuner
 
+Historical note: `stream_v2.md` is the active tuner stream. Keep this v1 file read-only for historical context.
+
 - 2026-04-13: Initial repo journal created from legacy tuner status and decision handover.
 - 2026-04-13: Tuner normalized as one component with multiple artifacts: overlay, source, and resident renderer service.
 - 2026-04-13: Authoritative tuner baseline recorded as the resident-renderer lineage culminating in `1.10.2`.

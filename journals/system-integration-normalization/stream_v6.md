@@ -223,3 +223,9 @@ Status note: this v6 file supersedes `stream_v5.md` as the current SI/N stream b
 - added `tools/governance/pi_test_results_report_v1.py` to aggregate run bundles and emit markdown summary tables plus Mermaid charts for pass-rate and deploy-duration trends
 - updated SI governance index and SI onboarding read orders to include the new deploy-test strategy standard
 - purpose: ensure each Pi test run yields structured, comparable, and visualizable data for owner decisions and autonomy gating
+
+### 2026-04-16 / si/tuner-journal-normalization-v1 / tuner stream path and chronology correction
+- normalized tuner journal handling so `journals/scale-radio-tuner/stream_v2.md` remains the active stream truth and `stream_v1.md` is explicitly marked historical/read-only
+- migrated the two recent tuner stream entries (deploy-scope revalidation and pointer/overlay tuning update) into `stream_v2.md` to preserve chronology in the active stream
+- updated `contracts/repo/component_journal_policy_v2.md` with an explicit versioned-journal rule: write new entries only to the latest generation and keep older generations historical
+- purpose: prevent governance drift from writing to deprecated journal paths and keep component truth chronologically consistent
