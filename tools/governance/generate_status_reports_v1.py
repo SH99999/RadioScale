@@ -21,21 +21,21 @@ def read(path: Path) -> str:
 
 def section_bullets(text: str, heading: str) -> list[str]:
     lines = text.splitlines()
-    out = []
+    out: list[str] = []
     capture = False
     heading_prefix = f"## {heading}"
     for line in lines:
-      if line.startswith("## ") and line.strip() == heading_prefix:
-        capture = True
-        continue
-      if capture and line.startswith("## "):
-        break
-      if capture and line.lstrip().startswith("-"):
-        out.append(line.lstrip()[1:].strip())
+        if line.startswith("## ") and line.strip() == heading_prefix:
+            capture = True
+            continue
+        if capture and line.startswith("## "):
+            break
+        if capture and line.lstrip().startswith("-"):
+            out.append(line.lstrip()[1:].strip())
     return out
 
 
-def status_from_component(component: str, current_state_path: Path, stream_path: Path) -> Report:
+def status_from_component(component: str, current_state_path: Path, stream_path: Path, generated_at: str) -> Report:
     cs = read(current_state_path)
     lifecycle = section_bullets(cs, "Lifecycle status")[:6]
     gaps = section_bullets(cs, "Current gaps")[:4]
@@ -44,7 +44,7 @@ def status_from_component(component: str, current_state_path: Path, stream_path:
     body = "\n".join([
         f"# Status {component}",
         "",
-        f"_Generated: {datetime.now(timezone.utc).isoformat()}_",
+        f"_Generated: {generated_at}_",
         "",
         "## Quick summary",
         *(f"- {i}" for i in lifecycle),
@@ -72,7 +72,7 @@ def status_from_component(component: str, current_state_path: Path, stream_path:
     return Report(component.lower(), f"Status {component}", body)
 
 
-def governance_status_report(si_status_path: Path) -> Report:
+def governance_status_report(si_status_path: Path, generated_at: str) -> Report:
     text = read(si_status_path)
     works = []
     partial = []
@@ -103,7 +103,7 @@ def governance_status_report(si_status_path: Path) -> Report:
     body = "\n".join([
         "# Status Governance",
         "",
-        f"_Generated: {datetime.now(timezone.utc).isoformat()}_",
+        f"_Generated: {generated_at}_",
         "",
         "## Quick summary",
         *(f"- {w}" for w in works[:6]),
@@ -130,14 +130,14 @@ def governance_status_report(si_status_path: Path) -> Report:
     return Report("governance", "Status Governance", body)
 
 
-def ui_status_report(ui_stream_path: Path) -> Report:
+def ui_status_report(ui_stream_path: Path, generated_at: str) -> Report:
     text = read(ui_stream_path)
     entries = [ln.strip()[2:].strip() for ln in text.splitlines() if ln.strip().startswith("-")]
     recent = entries[-6:]
     body = "\n".join([
         "# Status UI",
         "",
-        f"_Generated: {datetime.now(timezone.utc).isoformat()}_",
+        f"_Generated: {generated_at}_",
         "",
         "## Recent governance entries",
         *(f"- {r}" for r in recent),
@@ -157,14 +157,14 @@ def ui_status_report(ui_stream_path: Path) -> Report:
     return Report("ui", "Status UI", body)
 
 
-def decisions_report(decisions_path: Path) -> Report:
+def decisions_report(decisions_path: Path, generated_at: str) -> Report:
     text = read(decisions_path)
     ids = re.findall(r"^###\s+(DEC-[^\n]+)", text, flags=re.MULTILINE)
     locked = len(re.findall(r"^- Status:\s*locked", text, flags=re.MULTILINE))
     body = "\n".join([
         "# Status Decisions",
         "",
-        f"_Generated: {datetime.now(timezone.utc).isoformat()}_",
+        f"_Generated: {generated_at}_",
         "",
         "## Quick summary",
         f"- total decision entries: {len(ids)}",
@@ -189,7 +189,7 @@ def decisions_report(decisions_path: Path) -> Report:
     return Report("decisions", "Status Decisions", body)
 
 
-def blocker_report(si_status_path: Path) -> Report:
+def blocker_report(si_status_path: Path, generated_at: str) -> Report:
     text = read(si_status_path)
     broken = []
     open_decisions = []
@@ -212,7 +212,7 @@ def blocker_report(si_status_path: Path) -> Report:
     body = "\n".join([
         "# Status Blocker",
         "",
-        f"_Generated: {datetime.now(timezone.utc).isoformat()}_",
+        f"_Generated: {generated_at}_",
         "",
         "## Active broken points",
         *(f"- {b}" for b in broken),
@@ -244,27 +244,35 @@ def main():
     parser = argparse.ArgumentParser(description="Generate prompt-ready status reports with clickable links and visuals.")
     parser.add_argument("--repo-root", default=".", help="Repository root path")
     parser.add_argument("--out-dir", default="reports/status", help="Output directory for generated markdown reports")
+    parser.add_argument(
+        "--generated-at",
+        default=None,
+        help="Optional ISO8601 timestamp to stamp all generated reports deterministically",
+    )
     args = parser.parse_args()
 
     root = Path(args.repo_root).resolve()
     out = root / args.out_dir
     out.mkdir(parents=True, exist_ok=True)
+    generated_at = args.generated_at or datetime.now(timezone.utc).isoformat()
 
     reports = [
         status_from_component(
             "Tuner",
             root / "journals/scale-radio-tuner/current_state_v2.md",
             root / "journals/scale-radio-tuner/stream_v2.md",
+            generated_at,
         ),
-        governance_status_report(root / "journals/system-integration-normalization/STATUS_system_integration_normalization_v8.md"),
-        ui_status_report(root / "journals/system-integration-normalization/ui_gui_stream_v1.md"),
+        governance_status_report(root / "journals/system-integration-normalization/STATUS_system_integration_normalization_v8.md", generated_at),
+        ui_status_report(root / "journals/system-integration-normalization/ui_gui_stream_v1.md", generated_at),
         status_from_component(
             "Bridge",
             root / "journals/scale-radio-bridge/current_state_v1.md",
             root / "journals/scale-radio-bridge/stream_v1.md",
+            generated_at,
         ),
-        decisions_report(root / "journals/system-integration-normalization/DECISIONS_system_integration_normalization_v9.md"),
-        blocker_report(root / "journals/system-integration-normalization/STATUS_system_integration_normalization_v8.md"),
+        decisions_report(root / "journals/system-integration-normalization/DECISIONS_system_integration_normalization_v9.md", generated_at),
+        blocker_report(root / "journals/system-integration-normalization/STATUS_system_integration_normalization_v8.md", generated_at),
     ]
 
     for r in reports:
@@ -273,7 +281,7 @@ def main():
     index_lines = [
         "# Status Reports Index v1",
         "",
-        f"_Generated: {datetime.now(timezone.utc).isoformat()}_",
+        f"_Generated: {generated_at}_",
         "",
         "Prompt aliases:",
         "- `status tuner` -> [Status Tuner](./tuner.md)",

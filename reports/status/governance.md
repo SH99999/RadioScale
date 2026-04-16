@@ -1,6 +1,6 @@
 # Status Governance
 
-_Generated: 2026-04-16T06:17:21.920370+00:00_
+_Generated: 2026-04-16T07:01:14.957359+00:00_
 
 ## Quick summary
 - governance, issue-routing, and reporting workflows exist on `main`

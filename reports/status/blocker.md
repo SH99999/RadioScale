@@ -1,6 +1,6 @@
 # Status Blocker
 
-_Generated: 2026-04-16T06:17:21.921842+00:00_
+_Generated: 2026-04-16T07:01:14.957359+00:00_
 
 ## Active broken points
 - unsupported components still cannot use autonomous delivery and must still escalate or no-op safely

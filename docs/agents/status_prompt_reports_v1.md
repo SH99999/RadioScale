@@ -10,6 +10,12 @@ Run:
 python3 tools/governance/generate_status_reports_v1.py --repo-root . --out-dir reports/status
 ```
 
+Deterministic timestamp mode (optional, useful for reproducible regeneration during review):
+
+```bash
+python3 tools/governance/generate_status_reports_v1.py --repo-root . --out-dir reports/status --generated-at 2026-04-16T00:00:00+00:00
+```
+
 Generated files:
 - `reports/status/index.md`
 - `reports/status/tuner.md`
