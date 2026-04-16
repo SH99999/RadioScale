@@ -422,3 +422,11 @@ Status note: this v6 file supersedes `stream_v5.md` as the current SI/N stream b
 - added `reports/owner/owner_dashboard_v1.html` as a single owner entrypoint for status visuals, exchange starts, proof reports, and packet links
 - updated `reports/status/index.md` with alias `owner dashboard` linking to the new HTML dashboard
 - purpose: keep all relevant owner links and visual/report entrypoints available in one place
+
+### 2026-04-16 / si/chatgpt-git-exchange-v1 / owner dashboard expansion + audit round2 prompt
+- added `docs/agents/chatgpt_start_prompt_audit_answer_round2_v1.md` for second-round ChatGPT audit refinement
+- expanded `reports/owner/owner_dashboard_v1.html` with: all start prompts, project/kanban links, rendered web-view links, and policy link
+- added `reports/owner/owner_dashboard_quick_link_policy_v1.md` with decision: owner-critical docs must be linked on dashboard in same PR
+- updated `reports/status/index.md` aliases for dashboard, policy, and audit-round2 prompt
+- updated bundle generator to include round2 prompt and regenerated `exchange/chatgpt/bundles/current_context_bundle_v1.md`
+- purpose: ensure owner has one visual page with immediate access to all critical starts, boards, and decision artifacts
