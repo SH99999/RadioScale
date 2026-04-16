@@ -3,6 +3,12 @@
 ## Purpose
 This document defines the repository-wide status language for release intake, normalization, deployment readiness, testing, rollback, and promotion to `main`.
 
+## Canonical taxonomy source
+Canonical lifecycle statuses are defined in:
+- `contracts/repo/status_taxonomy_contract_v1.md`
+
+This document must stay aligned to that source and must not introduce a second conflicting status list.
+
 ## Canonical branch doctrine
 - `main` = truth for governance, workflows, accepted stable artifacts, and operator-visible execution paths.
 - `dev/<component>` = component work lane and payload preparation lane.
@@ -10,34 +16,8 @@ This document defines the repository-wide status language for release intake, no
 - Active `dev/*` branches should stay at `0 behind main` whenever possible.
 
 ## Status vocabulary
-Use only these primary status values in component current-state journals and release notes.
-
-### `raw_intake_started`
-Release material entered the repository and the target branch/path is known.
-
-### `payload_partial`
-Payload tree exists but completeness or correctness is not yet trusted.
-
-### `payload_complete`
-Expected payload structure is present and core runtime files are in place.
-
-### `deployment_candidate_started`
-Deploy, healthcheck, and rollback scripts exist or are actively being prepared.
-
-### `deploy_ready`
-The repository-driven workflow can install and remove the payload using clean-replace semantics.
-
-### `tested_on_pi`
-Deploy and/or rollback ran on a real Pi through the active workflow lane.
-
-### `functional_acceptance_open`
-Deployment path works, but component-level feature acceptance is still open.
-
-### `accepted_for_main`
-The payload is stable enough to be treated as current truth on `main`.
-
-### `rolled_back`
-The active deployment was removed, unregistered when applicable, and Volumio recovery was verified.
+Use only canonical values from `status_taxonomy_contract_v1.md` in component current-state journals and release notes.
+Legacy vocabulary must be normalized via the migration map from the canonical taxonomy contract.
 
 ## Required fields in every component current-state journal
 - component name
@@ -69,15 +49,9 @@ A component may be promoted to `main` only when:
 Bridge and tuner are the current highest-priority production-facing lanes.
 This contract defines how a component release moves from raw intake to deployable and eventually to stable truth.
 
-## Status levels
-- `placeholder`: reserved path only, no usable release content
-- `raw_intake_started`: extracted or imported files are being brought into Git
-- `payload_present`: payload tree exists in the correct component path
-- `deploy_candidate_started`: deploy candidate scripts exist
-- `deploy_ready`: deploy and rollback workflows are usable against the component
-- `functional_acceptance_pending`: deploy lane works but functional validation is incomplete
-- `accepted_for_main`: release is accepted as current truth on `main`
-- `superseded`: older release retained for history only
+## Historical note
+Earlier generations used alternate terms such as `deploy_candidate_started` and `functional_acceptance_pending`.
+Those terms are now treated as legacy aliases and must be normalized using the canonical migration map.
 
 ## Required release contents
 A release is not considered real unless it contains:
