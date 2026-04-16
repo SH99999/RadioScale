@@ -69,33 +69,34 @@ The system-integration stream operates as the control-plane function set for the
 7. `contracts/repo/status_taxonomy_contract_v1.md`
 8. `contracts/repo/status_packet_reporting_contract_v1.md`
 9. `contracts/repo/governance_source_registry_standard_v1.md`
-10. `contracts/repo/component_journal_policy_v2.md`
-11. `contracts/repo/new_component_intake_standard_v2.md`
-12. `contracts/repo/issue_governance_routing_standard_v1.md`
-13. `contracts/repo/autonomous_execution_and_chat_intake_standard_v1.md`
-14. `contracts/repo/system_integration_escalation_contract_v1.md`
-15. `contracts/repo/protected_main_truth_maintenance_operating_model_v1.md`
-16. `contracts/repo/deploy_target_exclusivity_standard_v1.md`
-17. `contracts/repo/deploy_process_standard_v1.md`
-18. `contracts/repo/ui_gui_governance_standard_v1.md`
-19. `contracts/repo/truthful_execution_and_negative_answer_standard_v1.md`
-20. `contracts/repo/git_release_tagging_standard_v1.md`
-21. `contracts/repo/governance_unification_delivery_plan_v1.md`
-22. `docs/agents/agent_git_bootstrap_v1.md`
-23. `contracts/repo/ui_ux_stage_b_autonomous_loop_standard_v1.md`
-24. `contracts/repo/deployment_test_strategy_standard_v1.md`
-25. `contracts/repo/owner_decision_click_automation_standard_v1.md`
-26. `docs/agents/status_prompt_reports_v1.md`
-27. `docs/agents/chatgpt_governed_intake_prompt_v1.md`
-28. `tools/governance/scale_radio_governance_delivery_views_v1.md`
-29. `docs/agents/owner_operational_reference_v1.md`
-30. `docs/agents/si_merge_request_executive_summary_v1.md`
-31. `journals/system-integration-normalization/STATUS_system_integration_normalization_v8.md`
-32. `journals/system-integration-normalization/DECISIONS_system_integration_normalization_v9.md`
-33. `journals/system-integration-normalization/stream_v6.md`
-34. `journals/system-integration-normalization/ui_gui_stream_v1.md`
-35. `journals/scale-radio-bridge/current_state_v1.md`
-36. `journals/scale-radio-tuner/current_state_v2.md`
+10. `contracts/repo/si_branch_scope_guard_standard_v1.md`
+11. `contracts/repo/component_journal_policy_v2.md`
+12. `contracts/repo/new_component_intake_standard_v2.md`
+13. `contracts/repo/issue_governance_routing_standard_v1.md`
+14. `contracts/repo/autonomous_execution_and_chat_intake_standard_v1.md`
+15. `contracts/repo/system_integration_escalation_contract_v1.md`
+16. `contracts/repo/protected_main_truth_maintenance_operating_model_v1.md`
+17. `contracts/repo/deploy_target_exclusivity_standard_v1.md`
+18. `contracts/repo/deploy_process_standard_v1.md`
+19. `contracts/repo/ui_gui_governance_standard_v1.md`
+20. `contracts/repo/truthful_execution_and_negative_answer_standard_v1.md`
+21. `contracts/repo/git_release_tagging_standard_v1.md`
+22. `contracts/repo/governance_unification_delivery_plan_v1.md`
+23. `docs/agents/agent_git_bootstrap_v1.md`
+24. `contracts/repo/ui_ux_stage_b_autonomous_loop_standard_v1.md`
+25. `contracts/repo/deployment_test_strategy_standard_v1.md`
+26. `contracts/repo/owner_decision_click_automation_standard_v1.md`
+27. `docs/agents/status_prompt_reports_v1.md`
+28. `docs/agents/chatgpt_governed_intake_prompt_v1.md`
+29. `tools/governance/scale_radio_governance_delivery_views_v1.md`
+30. `docs/agents/owner_operational_reference_v1.md`
+31. `docs/agents/si_merge_request_executive_summary_v1.md`
+32. `journals/system-integration-normalization/STATUS_system_integration_normalization_v8.md`
+33. `journals/system-integration-normalization/DECISIONS_system_integration_normalization_v9.md`
+34. `journals/system-integration-normalization/stream_v6.md`
+35. `journals/system-integration-normalization/ui_gui_stream_v1.md`
+36. `journals/scale-radio-bridge/current_state_v1.md`
+37. `journals/scale-radio-tuner/current_state_v2.md`
 
 
 ## Locked operating rules
@@ -111,6 +112,7 @@ The system-integration stream operates as the control-plane function set for the
 - merged short-lived `si/*` branches should be removed (local + remote) after merge unless a documented retention exception exists
 - `next_owner_click` should be present in generated status pages and enforced by automation checks
 - governance source registry lint should stay active to prevent duplicated authority rules
+- SI branch-scope guard should block governed file mutations from non-`si/*` branches (warn-only mode allowed with `SI_BRANCH_GUARD_ENFORCE=false`)
 - `integration/staging` is exception-only for temporary integration-owned staging work
 - journals, decisions, and streams are mandatory repo truth and must not be treated as optional paperwork
 - if tooling, connector, access, or execution problems prevent safe completion, escalate and inform instead of improvising, faking completion, or silently mutating partial truth

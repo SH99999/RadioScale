@@ -300,3 +300,10 @@ Status note: this v6 file supersedes `stream_v5.md` as the current SI/N stream b
 - updated SI governance index and SI onboarding read orders with source-registry governance contract and explicit enforcement expectations
 - updated status prompt/report guide with enforcement check references
 - purpose: execute PR-P3 and PR-P4 in one package while preserving deterministic owner action routing and duplicate-authority guardrails
+
+### 2026-04-16 / si/governance-model-optimization-p5 / P5 SI branch-scope guard
+- added `contracts/repo/si_branch_scope_guard_standard_v1.md` with scope, enforcement mode, rollback toggle (`SI_BRANCH_GUARD_ENFORCE=false`), and safety notes
+- added `tools/governance/si_branch_scope_guard_v1.py` to detect governed-file changes and enforce `si/*` head-branch requirement
+- added workflow `.github/workflows/si-branch-scope-guard-v1.yml` to run branch-scope validation on governance/system-integration PRs
+- updated SI governance index and SI recovery onboarding to include branch-scope guard standard in read order and locked operating rules
+- purpose: execute PR-P5 by preventing SI/governance truth mutations from non-`si/*` branches while preserving warn-only rollback mode
