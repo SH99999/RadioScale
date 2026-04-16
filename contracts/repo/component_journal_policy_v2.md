@@ -25,6 +25,14 @@ Update triggers:
 - branch/path move
 - major decision that changes operational reality
 
+
+## Versioned journal file rule
+If a component has multiple journal generations (for example `stream_v1.md` and `stream_v2.md`):
+- the latest declared generation is the active truth file
+- earlier generations remain read-only historical context
+- new operational entries must be written to the active generation only
+- if content was accidentally written to an older generation, copy it to the active file in chronological order and mark the older file as historical
+
 ## Stream journal
 The stream journal is append-only and concise.
 It records meaningful events such as:
