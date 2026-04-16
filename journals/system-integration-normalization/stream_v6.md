@@ -402,3 +402,10 @@ Status note: this v6 file supersedes `stream_v5.md` as the current SI/N stream b
 - updated `tools/governance/chatgpt_no_shell_bundle_v1.py` to embed v2 prompt and owner decision packet template
 - regenerated `exchange/chatgpt/bundles/current_context_bundle_v1.md`
 - purpose: provide one copy/paste start prompt for ChatGPT and keep no-shell bundle aligned with current exchange rules
+
+### 2026-04-16 / si/chatgpt-git-exchange-v1 / owner-area audit-start report + start prompt v3
+- added `docs/agents/chatgpt_start_prompt_git_exchange_v3.md` with stricter audit-start and owner-handoff wording
+- added owner-facing report `reports/status/owner_audit_start_chatgpt_exchange.md` for one-place startup instructions
+- updated `reports/status/index.md` to expose owner audit-start report alias
+- updated playbook + no-shell bundle generator to v3 prompt and regenerated `exchange/chatgpt/bundles/current_context_bundle_v1.md`
+- purpose: give owner a clear report-area reference for audit start and a stronger ChatGPT startup contract
