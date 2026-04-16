@@ -12,6 +12,8 @@ Prompt aliases:
 - `owner audit-start` -> [Owner Audit Start ChatGPT Exchange](./owner_audit_start_chatgpt_exchange.md)
 - `owner idea-start` -> [Owner Idea Channel Start](./owner_idea_channel_start.md)
 - `owner dashboard` -> [Owner Dashboard HTML](../owner/owner_dashboard_v1.html)
+- `owner audit-round2 prompt` -> [ChatGPT Audit Round2 Prompt](../../docs/agents/chatgpt_start_prompt_audit_answer_round2_v1.md)
+- `owner dashboard policy` -> [Owner Dashboard Quick Link Policy](../owner/owner_dashboard_quick_link_policy_v1.md)
 
 Status packet JSON artifacts:
 - [tuner](./packets/tuner.json)

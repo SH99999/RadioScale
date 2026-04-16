@@ -23,6 +23,7 @@ FILES = [
     "exchange/chatgpt/outbox/TEMPLATE__consensus_owner_decision_v1.md",
     "exchange/chatgpt/outbox/TEMPLATE__owner_decision_packet_v1.md",
     "docs/agents/chatgpt_start_prompt_idea_channel_v1.md",
+    "docs/agents/chatgpt_start_prompt_audit_answer_round2_v1.md",
     "exchange/chatgpt/ideas/TEMPLATE__idea_seed_v1.md",
     "exchange/chatgpt/ideas/TEMPLATE__round2_alignment_v1.md",
 ]
