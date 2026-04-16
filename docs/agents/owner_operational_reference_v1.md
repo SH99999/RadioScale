@@ -3,6 +3,13 @@
 ## Purpose
 This is the single owner-facing page for decisions, onboarding links, governance operations, and review workflow.
 
+## Owner role boundary (non-negotiable)
+- Owner is expected to decide, not to execute PR mechanics.
+- Agents/chats/Codex lanes must create/update branches and PRs and deliver decision-ready packets.
+- Owner action is limited to decision (`accept | changes-requested | reject`) and optional merge authorization.
+- If PR creation/update is blocked by connector/auth issues, the agent must report it explicitly and provide one fallback action request.
+- Protected truth rule: only owner merges to `main`; agents prepare everything up to merge-ready state.
+
 ## Decision and review workflow (defined)
 ### Where to give improvement feedback
 - **Preferred:** directly on the PR as review comments (inline where possible).
@@ -59,10 +66,11 @@ Require exactly:
 1. Open project board: [Scale Radio Governance & Delivery](https://github.com/users/SH99999/projects/1)
 2. Review queue defined in: [Project view blueprint](../../tools/governance/scale_radio_governance_delivery_views_v1.md)
 3. Open top item and verify decision packet + recommended option.
-4. If accepted, approve/merge PR to `main`.
+4. If accepted, approve/merge PR to `main` (PR prepared and maintained by the agent lane).
 5. Confirm post-merge automation:
-   - rebase workflow
+   - rebase workflow (`si/*`, `dev/*`, `integration/*`)
    - governance closeout / decision verification comments
+6. If an agent resumes after `main` changed, require bootstrap refresh (`agent_git_bootstrap_v1.sh`) so branch base is current before new edits.
 
 ## Can ChatGPT issue creation be automated?
 **Yes.** Intake creation/normalization/routing is workflow-backed.

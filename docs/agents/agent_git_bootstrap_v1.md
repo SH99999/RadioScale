@@ -56,6 +56,13 @@ Bootstrap status:
 - owner action needed: <none|exact short action>
 ```
 
+## Main-change refresh rule (mandatory)
+- whenever `main` changes, agents/chats must refresh before new mutations:
+  1) run `bash tools/governance/agent_git_bootstrap_v1.sh <active-branch>`
+  2) verify `base sync: ok`
+  3) if blocked/conflict: report blocker truthfully and resolve before continuing
+- this keeps local lanes aligned with the auto-rebase flow on GitHub and prevents stale-branch drift.
+
 ## Owner action rule
 If push auth is blocked, the agent must ask for exactly one concrete action first (for example: provide runtime token/auth, or run push locally), not a long checklist.
 

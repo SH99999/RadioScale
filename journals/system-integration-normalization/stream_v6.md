@@ -238,9 +238,36 @@ Status note: this v6 file supersedes `stream_v5.md` as the current SI/N stream b
 - updated SI governance read chains and SI decision/status logs to lock this operating model
 - purpose: reduce owner PR-comment friction while preserving full rollback capability and governance robustness checks
 
+### 2026-04-16 / si/governance-model-optimization / owner-merge-only and branch-refresh clarity hardening
+- updated owner-decision click automation standard and SI governance index to explicitly lock the delivery path `local -> github.com branch -> PR to main` as an agent/chat/Codex responsibility
+- clarified that owner role is decision + protected-`main` merge authority only, not PR authoring
+- updated bootstrap and owner reference docs with a mandatory post-`main`-change refresh rule so agents/chats rebase/refresh before further mutations
+- expanded the main-change rebase workflow scope from `dev/*` + `integration/*` to `si/*` + `dev/*` + `integration/*`
+- purpose: make one-click owner acceptance operationally explicit and prevent stale branch execution after `main` updates
+
 ### 2026-04-16 / si/faceplate-intake-v1 / PR #85 normalized to suggestion-first intake
 - reviewed PR #85 as a suggestion package and removed broad governance/workflow replacements from the integration scope
 - kept faceplate component/journal bootstrap artifacts and added explicit integration proposal plus owner decision options
 - recorded that any broader governance mutation must follow a second approved integration package after owner decision
 - purpose: enforce review -> proposal -> owner approval -> governed integration sequence without accidental governance drift
 
+
+### 2026-04-16 / si/governance-model-optimization / governance gap and one-click ownership optimization package
+- added `docs/agents/governance_model_gap_and_one_click_ownership_optimization_v1.md` with two structured proposal sets:
+  1) governance-model problem analysis and hardening actions
+  2) one-click ownership and ChatGPT multi-agent status reporting optimization actions
+- identified high-priority gaps: governance duplication drift, inconsistent status taxonomy, long read-chain execution overhead, and weak deterministic owner-next-click encoding across status outputs
+- provided implementation sequence and acceptance checkpoints to reduce risk while increasing automation quality
+- purpose: enable one packaged SI proposal for governance consistency and low-click owner decision flow improvements
+
+### 2026-04-16 / si/governance-model-optimization / rollback-first PR packaging refinement
+- refined `docs/agents/governance_model_gap_and_one_click_ownership_optimization_v1.md` with a mandatory PR package matrix (P1-P6) so each improvement ships as a separate owner-decision PR
+- added explicit rollback controls per package (feature flags or revert path) and global rollback operating rules requiring command-level revert instructions plus post-rollback verification checklist
+- confirmed that manual owner fallback path must remain available for all packages to preserve safe recovery under automation degradation
+- purpose: enforce full rollback capability while still allowing incremental governance and one-click ownership improvements
+
+### 2026-04-16 / si/governance-model-optimization / owner-role clarification for PR execution
+- updated `contracts/repo/owner_decision_click_automation_standard_v1.md` with explicit mandatory role split: owner decides, agent/chat/Codex lanes create and maintain PRs
+- updated `contracts/repo/system_integration_governance_index_v7.md` locked operating model to state PR lifecycle execution is agent-lane responsibility, not owner PR authoring
+- updated `docs/agents/owner_operational_reference_v1.md` to make owner role boundary explicit and confirm daily click-path assumes agent-prepared PRs
+- purpose: remove ambiguity so owner only decides accept/change/reject while execution lanes handle branch/PR mechanics

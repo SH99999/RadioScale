@@ -46,6 +46,10 @@ This file is the current entrypoint for system integration governance, recovery,
 - `main` remains the protected truth branch
 - agents and chats work on non-`main` branches
 - SI/governance changes must use a dedicated `si/<topic>` branch (not generic branch names), then push that branch and open/update a PR to `main`
+- PR lifecycle execution (create/update/rebase/respond) is owned by agents/chats/Codex lanes; owner role is decision/acceptance, not PR authoring
+- delivery expectation is `local -> github.com branch -> PR to main` prepared by agents/chats/Codex so owner can use one-click decision flow
+- owner remains the only merge authority for protected `main` after governance validation gates pass
+- after each merge to `main`, all active `si/*`, `dev/*`, and `integration/*` branches must be rebased/refreshed and agents/chats must run bootstrap refresh before further mutations
 - deploy/test happens from those branches
 - accepted work merges to `main` only after packaged review, owner coordination, and owner acceptance
 - journals, decisions, and streams remain mandatory repo truth
