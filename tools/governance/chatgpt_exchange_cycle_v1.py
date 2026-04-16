@@ -47,6 +47,12 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--topic", required=True, help="exchange topic label")
     parser.add_argument(
+        "--actor",
+        default="codex",
+        choices=["codex", "chatgpt"],
+        help="who initialized this cycle entry",
+    )
+    parser.add_argument(
         "--branch-plan",
         default="si/<topic>",
         help="planned implementation branch path",
@@ -74,6 +80,7 @@ def main() -> int:
     with STREAM.open("a", encoding="utf-8") as fh:
         fh.write(
             f"\n### {now.date()} / cycle {cycle_id} / {topic}\n"
+            f"- actor: `{args.actor}`\n"
             f"- request: `exchange/chatgpt/inbox/{request_name}`\n"
             f"- response: `exchange/chatgpt/outbox/{response_name}`\n"
             f"- branch plan: `{args.branch_plan}`\n"

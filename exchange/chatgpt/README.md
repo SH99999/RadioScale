@@ -3,6 +3,9 @@
 ## Purpose
 Git-native exchange area for ChatGPT <-> Codex collaboration artifacts.
 
+Protocol:
+- `exchange/chatgpt/PROTOCOL_v1.md`
+
 ## Subdirectories
 - `audit_basis/` active audit baseline documents
 - `inbox/` ChatGPT-origin requests/findings

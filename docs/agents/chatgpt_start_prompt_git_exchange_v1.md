@@ -17,12 +17,13 @@ Branch policy (mandatory):
 How to enter the "chat with Codex" loop:
 Step A) Read these files in order:
   1. exchange/chatgpt/audit_basis/current_audit_basis_v1.md
-  2. exchange/chatgpt/inbox/audit-findings-round1__request_v1.md
+  2. exchange/chatgpt/inbox/TEMPLATE__request_v1.md (until a topic-specific request exists)
   3. exchange/chatgpt/outbox/TEMPLATE__response_v1.md
   4. exchange/chatgpt/streams/stream_v1.md
 Step B) Produce one response block matching TEMPLATE__response_v1.md exactly.
 Step C) Set branch plan explicitly (default: `si/chatgpt-git-exchange-v1`).
-Step D) End with owner decision needed (`accept | changes-requested | reject`).
+Step D) Set status marker to `status: ready-for-codex`.
+Step E) End with owner decision needed (`accept | changes-requested | reject`).
 
 What this branch is for:
 - exchange artifacts only (audit basis, inbox/outbox, stream, bundles, prompts)

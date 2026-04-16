@@ -44,6 +44,7 @@ This standard governs:
 ## Living exchange stream (mandatory)
 - active stream file: `exchange/chatgpt/streams/stream_v1.md`
 - every new exchange cycle must append one entry with:
+  - actor (`chatgpt|codex`)
   - cycle id
   - source request file
   - response file
@@ -56,6 +57,10 @@ This standard governs:
   1. generate new inbox/outbox files from templates
   2. append cycle entry to `exchange/chatgpt/streams/stream_v1.md`
   3. keep repeatable no-memory exchange flow
+
+## Review/evaluation trigger detection
+- watcher script: `tools/governance/chatgpt_exchange_watch_v1.py`
+- rule: Codex evaluates when status marker `ready-for-codex` is present in basis/request artifacts
 
 ## ChatGPT start prompt artifact
 - canonical prompt file: `docs/agents/chatgpt_start_prompt_git_exchange_v1.md`

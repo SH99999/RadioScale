@@ -356,6 +356,14 @@ Status note: this v6 file supersedes `stream_v5.md` as the current SI/N stream b
 - regenerated `exchange/chatgpt/bundles/current_context_bundle_v1.md` so GUI/no-shell sessions receive the hardened prompt in single-file form
 - purpose: ensure ChatGPT receives unambiguous instructions for joining the exchange loop with Codex
 
+### 2026-04-16 / si/chatgpt-git-exchange-v1 / actor-aware stream + audit-basis-first reset + codex review trigger
+- added `exchange/chatgpt/PROTOCOL_v1.md` with status markers, actor model, and handshake order (`audit basis first`)
+- reset `exchange/chatgpt/audit_basis/current_audit_basis_v1.md` to ChatGPT-first template and removed legacy round1 request/response artifacts
+- updated `exchange/chatgpt/streams/stream_v1.md` to include actor field and reset state (`waiting-for-chatgpt`)
+- added `tools/governance/chatgpt_exchange_watch_v1.py` so Codex knows when to evaluate (`status: ready-for-codex`)
+- updated cycle/bootstrap/no-shell docs and regenerated context bundle with protocol+template set
+- purpose: make exchange triggers explicit, remove stale branch artifacts, and keep a living actor-traceable collaboration loop
+
 ### 2026-04-16 / si/bootstrap-role-mode-b-v1 / role-optimized bootstrap mode-B implementation
 - updated `tools/governance/agent_git_bootstrap_v1.sh` with `--role` and `--mode` options and role-aware startup/deferred packet output
 - added `docs/agents/role_bootstrap_profiles_v1.md` as canonical role-pack mapping with explicit escalation triggers

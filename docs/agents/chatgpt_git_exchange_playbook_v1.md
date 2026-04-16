@@ -6,9 +6,9 @@ Provide a standard path for two-lane collaboration (ChatGPT + Codex) using Git a
 ## Quick start
 1. Run bootstrap on dedicated branch:
    - `bash tools/governance/agent_git_bootstrap_v1.sh --branch si/chatgpt-git-exchange-<topic> --role si --mode mode-b`
-2. Ensure audit basis exists:
+2. ChatGPT starts by filling audit basis first:
    - `exchange/chatgpt/audit_basis/current_audit_basis_v1.md`
-3. Place incoming ChatGPT package in:
+3. After basis is ready-for-codex, continue with inbox request packages:
    - `exchange/chatgpt/inbox/<topic>__request_v1.md`
 4. Produce response package in:
    - `exchange/chatgpt/outbox/<topic>__response_v1.md`
@@ -22,6 +22,16 @@ python3 tools/governance/chatgpt_exchange_cycle_v1.py --topic "<topic>" --branch
 ```
 
 This creates request/response files from templates and appends the living stream entry.
+
+## Review trigger (how Codex knows when to evaluate ChatGPT content)
+Use:
+
+```bash
+python3 tools/governance/chatgpt_exchange_watch_v1.py
+```
+
+Codex reviews/evaluates when any watched artifact contains:
+- `status: ready-for-codex`
 
 ## Response package contract (essential only)
 Every `outbox/*response*` file should include:

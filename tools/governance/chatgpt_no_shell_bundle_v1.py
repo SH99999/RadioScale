@@ -13,10 +13,11 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 BUNDLE_PATH = REPO_ROOT / "exchange" / "chatgpt" / "bundles" / "current_context_bundle_v1.md"
 FILES = [
     "docs/agents/chatgpt_start_prompt_git_exchange_v1.md",
+    "exchange/chatgpt/PROTOCOL_v1.md",
     "exchange/chatgpt/audit_basis/current_audit_basis_v1.md",
     "exchange/chatgpt/streams/stream_v1.md",
-    "exchange/chatgpt/inbox/audit-findings-round1__request_v1.md",
-    "exchange/chatgpt/outbox/audit-findings-round1__response_v1.md",
+    "exchange/chatgpt/inbox/TEMPLATE__request_v1.md",
+    "exchange/chatgpt/outbox/TEMPLATE__response_v1.md",
 ]
 
 
