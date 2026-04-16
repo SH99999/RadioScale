@@ -1,6 +1,6 @@
 # ChatGPT Context Bundle v1
 
-_Generated: 2026-04-16T19:09:21.023547+00:00_
+_Generated: 2026-04-16T19:13:40.660888+00:00_
 
 ## Usage
 - Upload this single file in ChatGPT GUI to avoid multi-file permission prompts.
@@ -8,57 +8,53 @@ _Generated: 2026-04-16T19:09:21.023547+00:00_
 
 ---
 
-## File: `docs/agents/chatgpt_start_prompt_git_exchange_v1.md`
+## File: `docs/agents/chatgpt_start_prompt_git_exchange_v2.md`
 
 ```md
-# CHATGPT START PROMPT — GIT EXCHANGE V1
-
-Use this exact prompt when starting ChatGPT for the Codex collaboration loop.
+# CHATGPT START PROMPT — GIT EXCHANGE V2
 
 ```text
 Role:
-You are ChatGPT collaborating with Codex through the Git exchange lane in SH99999/mediastreamer.
+You are ChatGPT in the SH99999/mediastreamer Git exchange loop with Codex.
 
-Goal:
-Produce implementation findings that Codex can directly execute in repo branches and PRs.
+Mission:
+Produce actionable findings and proposal responses that Codex can validate, implement, and deliver as owner-ready decision packets.
 
 Branch policy (mandatory):
-1) Read-only on all branches except `si/chatgpt-git-exchange-v1`.
-2) Never propose direct edits on `main`.
-3) If implementation branches are needed, propose them only as plan output (Codex executes).
+1) Read-only on every branch except `si/chatgpt-git-exchange-v1`.
+2) Never ask to edit `main` directly.
+3) Propose implementation branches only as plan output; Codex executes repository changes.
 
-How to enter the "chat with Codex" loop:
-Step A) Read these files in order:
-  1. exchange/chatgpt/audit_basis/current_audit_basis_v1.md
-  2. exchange/chatgpt/inbox/TEMPLATE__request_v1.md (until a topic-specific request exists)
-  3. exchange/chatgpt/outbox/TEMPLATE__response_v1.md
-  4. exchange/chatgpt/streams/stream_v1.md
-Step B) Produce one response block matching TEMPLATE__response_v1.md exactly.
-Step C) Set branch plan explicitly (default: `si/chatgpt-git-exchange-v1`).
-Step D) Set status marker to `status: ready-for-codex`.
-Step E) End with owner decision needed (`accept | changes-requested | reject`).
+Exchange protocol (mandatory):
+1) Start at `exchange/chatgpt/audit_basis/current_audit_basis_v1.md`.
+2) Fill findings (essential + ranked), then set `status: ready-for-codex`.
+3) For request/response rounds, use inbox/outbox templates in `exchange/chatgpt/`.
+4) Keep internal ChatGPT↔Codex artifacts compact/machine-oriented if faster.
+5) Owner handoff must be human-readable and produced as:
+   `exchange/chatgpt/outbox/<topic>__owner_decision_packet_v1.md`.
 
-What this branch is for:
-- exchange artifacts only (audit basis, inbox/outbox, stream, bundles, prompts)
-- proposal/plan coordination between ChatGPT and Codex
-- no direct production deployment change approvals
+Required read order before first response:
+- exchange/chatgpt/PROTOCOL_v1.md
+- exchange/chatgpt/audit_basis/current_audit_basis_v1.md
+- exchange/chatgpt/inbox/TEMPLATE__request_v1.md
+- exchange/chatgpt/outbox/TEMPLATE__response_v1.md
+- exchange/chatgpt/outbox/TEMPLATE__owner_decision_packet_v1.md
+- exchange/chatgpt/streams/stream_v1.md
 
-Output format (mandatory):
+Output contract for each response (strict):
 1) ask summary (max 5 bullets)
 2) blockers / missing input
 3) implementation proposals (ranked)
 4) branch + execution path (si/dev lanes)
-5) risks
-6) owner decision needed: accept | changes-requested | reject
+5) risks (essential)
+6) agreement_score_chatgpt (0..100)
+7) owner decision suggestion (accept | changes-requested | reject)
 
-Style:
-- essential only
-- no narrative filler
-- no repeated background explanation
-
-Additional protocol rule:
-- Internal ChatGPT↔Codex artifacts can be machine-oriented/compact for speed.
-- Final owner handoff must be human-readable via `*__owner_decision_packet_v1.md`.
+Speed rules:
+- no filler text
+- no repeated context
+- prefer short structured blocks
+- if unsure, add one clarifying blocker and continue
 ```
 ```
 
@@ -109,21 +105,21 @@ Every stream entry must include:
 ```md
 # Audit Basis v1 (active)
 
-status: draft
+status: ready-for-codex
 actor: chatgpt
 
 ## Scope
-- component/governance scope:
-- objective:
+- component/governance scope: governance consistency, exchange-lane onboarding, one-click semantics, delivery evidence gating
+- objective: provide ranked implementation findings and branchable execution paths that Codex can execute through repo branches and PRs
 
 ## Findings (essential, ranked)
-1.
-2.
-3.
+1. Governance model is viable; the first implementation priority is hard separation of active vs historical truth chains plus a CI anti-reference guard.
+2. Onboarding should keep mode-B safe-start as default and add explicit escalation triggers into the full governance chain.
+3. One-click semantics and delivery normalization should be tightened together: split owner-governance click vs component-delivery click and require evidence-linked journal/decision updates for delivery/support-matrix promotion.
 
 ## Proposed next step for Codex
-- branch suggestion:
-- expected output:
+- branch suggestion: keep exchange work on `si/chatgpt-git-exchange-v1`; propose implementation lanes as `si/active-historical-separation`, `si/onboarding-safe-start-escalation`, and `si/one-click-delivery-evidence-gate`
+- expected output: repo-ready implementation findings, branch plan, risk list, and PR-ready execution sequence without direct edits to `main`
 
 ## Handover
 - set `status: ready-for-codex` when this file is complete
@@ -298,4 +294,41 @@ actor: codex
 - recommended_owner_decision: accept | changes-requested | reject
 - mandatory_follow_up:
 - merge_authorization_hint: yes | no
+```
+
+---
+
+## File: `exchange/chatgpt/outbox/TEMPLATE__owner_decision_packet_v1.md`
+
+```md
+# <topic> owner decision packet v1
+
+status: ready-for-owner
+actor: codex
+
+## decision summary
+- recommendation: accept | changes-requested | reject
+- confidence_band: high | medium | low
+- agreement_score_chatgpt: <0..100>
+- agreement_score_codex: <0..100>
+- agreement_gap: <absolute difference>
+
+## implementation proposal (ranked)
+1.
+2.
+3.
+
+## risks (essential)
+-
+
+## execution path
+- branch: si/<topic>
+- follow-up branches (optional): dev/<component>
+
+## rollback
+- strategy:
+- command:
+
+## owner next click
+- accept | changes-requested | reject
 ```

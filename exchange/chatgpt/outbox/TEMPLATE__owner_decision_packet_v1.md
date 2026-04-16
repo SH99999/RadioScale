@@ -16,7 +16,7 @@ actor: codex
 3.
 
 ## risks (essential)
-- 
+-
 
 ## execution path
 - branch: si/<topic>

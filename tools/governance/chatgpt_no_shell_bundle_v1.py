@@ -12,7 +12,7 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parents[2]
 BUNDLE_PATH = REPO_ROOT / "exchange" / "chatgpt" / "bundles" / "current_context_bundle_v1.md"
 FILES = [
-    "docs/agents/chatgpt_start_prompt_git_exchange_v1.md",
+    "docs/agents/chatgpt_start_prompt_git_exchange_v2.md",
     "exchange/chatgpt/PROTOCOL_v1.md",
     "exchange/chatgpt/audit_basis/current_audit_basis_v1.md",
     "exchange/chatgpt/streams/stream_v1.md",
@@ -21,6 +21,7 @@ FILES = [
     "exchange/chatgpt/outbox/TEMPLATE__response_v1.md",
     "exchange/chatgpt/outbox/round2-implementation-review__response_v1.md",
     "exchange/chatgpt/outbox/TEMPLATE__consensus_owner_decision_v1.md",
+    "exchange/chatgpt/outbox/TEMPLATE__owner_decision_packet_v1.md",
 ]
 
 

@@ -395,3 +395,10 @@ Status note: this v6 file supersedes `stream_v5.md` as the current SI/N stream b
 - updated ChatGPT prompt and playbook with explicit owner-packet requirement and generator command
 - regenerated `exchange/chatgpt/bundles/current_context_bundle_v1.md` for no-shell GUI use
 - purpose: maximize exchange speed while preserving clean owner decision readability
+
+### 2026-04-16 / si/chatgpt-git-exchange-v1 / start prompt v2 + bundle alignment
+- added `docs/agents/chatgpt_start_prompt_git_exchange_v2.md` with strict read-order, status handshake, score output, and branch policy
+- updated `docs/agents/chatgpt_git_exchange_playbook_v1.md` to reference v2 start prompt
+- updated `tools/governance/chatgpt_no_shell_bundle_v1.py` to embed v2 prompt and owner decision packet template
+- regenerated `exchange/chatgpt/bundles/current_context_bundle_v1.md`
+- purpose: provide one copy/paste start prompt for ChatGPT and keep no-shell bundle aligned with current exchange rules
