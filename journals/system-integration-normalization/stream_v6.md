@@ -238,6 +238,13 @@ Status note: this v6 file supersedes `stream_v5.md` as the current SI/N stream b
 - updated SI governance read chains and SI decision/status logs to lock this operating model
 - purpose: reduce owner PR-comment friction while preserving full rollback capability and governance robustness checks
 
+### 2026-04-16 / si/governance-model-optimization / owner-merge-only and branch-refresh clarity hardening
+- updated owner-decision click automation standard and SI governance index to explicitly lock the delivery path `local -> github.com branch -> PR to main` as an agent/chat/Codex responsibility
+- clarified that owner role is decision + protected-`main` merge authority only, not PR authoring
+- updated bootstrap and owner reference docs with a mandatory post-`main`-change refresh rule so agents/chats rebase/refresh before further mutations
+- expanded the main-change rebase workflow scope from `dev/*` + `integration/*` to `si/*` + `dev/*` + `integration/*`
+- purpose: make one-click owner acceptance operationally explicit and prevent stale branch execution after `main` updates
+
 ### 2026-04-16 / si/faceplate-intake-v1 / PR #85 normalized to suggestion-first intake
 - reviewed PR #85 as a suggestion package and removed broad governance/workflow replacements from the integration scope
 - kept faceplate component/journal bootstrap artifacts and added explicit integration proposal plus owner decision options

@@ -1,4 +1,4 @@
-name: rebase-dev-and-integration-branches-on-main
+name: rebase-si-dev-and-integration-branches-on-main
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
     inputs:
       target_set:
-        description: "Choose all future dev/* and integration/* branches, or one specific branch"
+        description: "Choose all future si/*, dev/*, and integration/* branches, or one specific branch"
         required: true
         default: "all"
         type: choice
@@ -15,7 +15,7 @@ on:
           - all
           - single
       target_branch:
-        description: "Full branch name when target_set=single, for example dev/bridge"
+        description: "Full branch name when target_set=single, for example si/governance-ops"
         required: false
         default: ""
 
@@ -23,7 +23,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: rebase-dev-and-integration-branches-on-main
+  group: rebase-si-dev-and-integration-branches-on-main
   cancel-in-progress: false
 
 jobs:
@@ -63,7 +63,7 @@ jobs:
             mapfile -t branches < <(
               git for-each-ref --format='%(refname:short)' refs/remotes/origin \
               | sed 's#^origin/##' \
-              | grep -E '^(dev|integration)/' \
+              | grep -E '^(si|dev|integration)/' \
               | sort -u
             )
           else

@@ -7,6 +7,13 @@ This standard reduces owner comment overhead by introducing a structured click/s
 Owner decisions should be captured through structured fields (Project custom fields or fallback structured comment) and synchronized into governed PR labels.
 PR creation and PR updates are execution responsibilities of agents/chats/Codex lanes, not the owner.
 
+## One-click ownership operating contract (mandatory)
+- `main` is protected truth and merge authority remains owner-only.
+- delivery path is deterministic: `local branch -> github.com branch -> PR to main`.
+- branch push and PR lifecycle actions (create/update/rebase/respond) are automated responsibilities of agents/chats/Codex lanes.
+- owner should receive one decision-ready packet and choose `accept | changes-requested | reject` without performing PR mechanics.
+- owner merge click happens only after governance validation checks are green and requested evidence is present.
+
 ## Role split (mandatory)
 - **Owner:** decision authority only (`accept | changes-requested | reject`) and merge authorization (`yes | no`).
 - **Agent/Chat/Codex lane:** create/update branch, push branch, create/update PR, apply requested changes, and keep docs/journals in sync.
@@ -47,6 +54,8 @@ Automation must be reversible without history loss:
 - PR governance review workflow
 - governance closeout workflow
 - SI status/decision/stream logs
+- branch auto-rebase workflow for `si/*`, `dev/*`, and `integration/*`
+- bootstrap/reporting prompts that instruct agents/chats to refresh/rebase after `main` changes
 
 ## Robustness double-check
 Before enabling on `main`, run governance-model robustness checks to verify:
