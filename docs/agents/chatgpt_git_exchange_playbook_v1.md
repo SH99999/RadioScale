@@ -14,6 +14,15 @@ Provide a standard path for two-lane collaboration (ChatGPT + Codex) using Git a
    - `exchange/chatgpt/outbox/<topic>__response_v1.md`
 5. Add concrete implementation list (ranked, actionable, branchable).
 
+## Autonomous cycle init
+Use:
+
+```bash
+python3 tools/governance/chatgpt_exchange_cycle_v1.py --topic "<topic>" --branch-plan "si/<topic>"
+```
+
+This creates request/response files from templates and appends the living stream entry.
+
 ## Response package contract (essential only)
 Every `outbox/*response*` file should include:
 - summary of ask (max 5 bullets)
@@ -53,3 +62,7 @@ If ChatGPT produced a demand:
 
 ## Operating rule
 Prefer short, structured artifacts over narrative text blocks.
+
+## ChatGPT start prompt
+Use:
+- `docs/agents/chatgpt_start_prompt_git_exchange_v1.md`
