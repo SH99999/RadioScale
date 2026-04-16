@@ -18,6 +18,14 @@ on:
         description: "Full branch name when target_set=single, for example si/governance-ops"
         required: false
         default: ""
+      fail_on_error:
+        description: "Set true to fail workflow when any branch rebase/push fails"
+        required: false
+        default: "false"
+        type: choice
+        options:
+          - "false"
+          - "true"
 
 permissions:
   contents: write
@@ -59,11 +67,17 @@ jobs:
             target_set="all"
           fi
 
+          fail_on_error="${{ inputs.fail_on_error }}"
+          if [[ -z "$fail_on_error" ]]; then
+            fail_on_error="false"
+          fi
+
           if [[ "$target_set" == "all" ]]; then
             mapfile -t branches < <(
               git for-each-ref --format='%(refname:short)' refs/remotes/origin \
               | sed 's#^origin/##' \
               | grep -E '^(si|dev|integration)/' \
+              | grep -Ev '^(integration/staging)$' \
               | sort -u
             )
           else
@@ -83,6 +97,7 @@ jobs:
           if [[ "${#branches[@]}" -eq 0 ]]; then
             echo "No matching branches found." >> "$GITHUB_STEP_SUMMARY"
             echo "count=0" >> "$GITHUB_OUTPUT"
+            echo "fail_on_error=$fail_on_error" >> "$GITHUB_OUTPUT"
             exit 0
           fi
 
@@ -93,6 +108,7 @@ jobs:
             echo "branches<<EOF"
             printf '%s\n' "${branches[@]}"
             echo "EOF"
+            echo "fail_on_error=$fail_on_error"
           } >> "$GITHUB_OUTPUT"
 
           echo "### Target branches" >> "$GITHUB_STEP_SUMMARY"
@@ -140,5 +156,10 @@ jobs:
             echo >> "$GITHUB_STEP_SUMMARY"
             echo "### Failed branches" >> "$GITHUB_STEP_SUMMARY"
             printf -- '- `%s`\n' "${failures[@]}" >> "$GITHUB_STEP_SUMMARY"
-            exit 1
+
+            if [[ "${{ steps.targets.outputs.fail_on_error }}" == "true" ]]; then
+              exit 1
+            fi
+
+            echo "Workflow kept green (fail_on_error=false)." >> "$GITHUB_STEP_SUMMARY"
           fi
