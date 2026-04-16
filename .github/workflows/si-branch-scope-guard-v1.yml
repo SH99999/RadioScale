@@ -1,0 +1,40 @@
+name: si-branch-scope-guard-v1
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, edited]
+    paths:
+      - 'contracts/repo/**'
+      - 'docs/agents/**'
+      - 'journals/system-integration-normalization/**'
+      - 'tools/governance/**'
+      - '.github/workflows/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  scope_guard:
+    runs-on: ubuntu-latest
+    env:
+      SI_BRANCH_GUARD_ENFORCE: ${{ vars.SI_BRANCH_GUARD_ENFORCE || 'true' }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Compute changed files
+        shell: bash
+        run: |
+          git fetch origin "${{ github.base_ref }}" --depth=1
+          git diff --name-only "origin/${{ github.base_ref }}...HEAD" > changed_files.txt
+          echo "changed_count=$(wc -l < changed_files.txt | tr -d ' ')" >> "$GITHUB_OUTPUT"
+
+      - name: Enforce SI branch scope guard
+        shell: bash
+        run: |
+          python3 tools/governance/si_branch_scope_guard_v1.py \
+            --branch "${{ github.head_ref }}" \
+            --changed-files changed_files.txt \
+            --enforce "${SI_BRANCH_GUARD_ENFORCE}"
