@@ -42,4 +42,8 @@ Style:
 - essential only
 - no narrative filler
 - no repeated background explanation
+
+Additional protocol rule:
+- Internal ChatGPT↔Codex artifacts can be machine-oriented/compact for speed.
+- Final owner handoff must be human-readable via `*__owner_decision_packet_v1.md`.
 ```

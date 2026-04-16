@@ -387,3 +387,11 @@ Status note: this v6 file supersedes `stream_v5.md` as the current SI/N stream b
 ### 2026-04-16 / si/bootstrap-role-mode-b-v1 / compact audit-response chain for low-read owner handoff
 - added `docs/agents/audit_response_compact_chain_v1.md` with essential-only, ranked issues, phase outcomes, hard rules, and copy/paste handoff blocks
 - purpose: provide low-read structured responses for ChatGPT roundtrips without narrative overhead
+
+### 2026-04-16 / si/chatgpt-git-exchange-v1 / opaque internal channel + human-readable owner packet hardening
+- updated `exchange/chatgpt/PROTOCOL_v1.md` to require channel separation: internal exchange can be machine-oriented, owner packet must be human-readable
+- added `exchange/chatgpt/outbox/TEMPLATE__owner_decision_packet_v1.md` as decision-ready owner handoff template
+- added `tools/governance/chatgpt_owner_decision_packet_v1.py` to generate owner decision packet from round scores and exchange artifacts
+- updated ChatGPT prompt and playbook with explicit owner-packet requirement and generator command
+- regenerated `exchange/chatgpt/bundles/current_context_bundle_v1.md` for no-shell GUI use
+- purpose: maximize exchange speed while preserving clean owner decision readability

@@ -1,6 +1,6 @@
 # ChatGPT Context Bundle v1
 
-_Generated: 2026-04-16T19:07:36.676512+00:00_
+_Generated: 2026-04-16T19:09:21.023547+00:00_
 
 ## Usage
 - Upload this single file in ChatGPT GUI to avoid multi-file permission prompts.
@@ -55,6 +55,10 @@ Style:
 - essential only
 - no narrative filler
 - no repeated background explanation
+
+Additional protocol rule:
+- Internal ChatGPT↔Codex artifacts can be machine-oriented/compact for speed.
+- Final owner handoff must be human-readable via `*__owner_decision_packet_v1.md`.
 ```
 ```
 
@@ -84,6 +88,12 @@ Each active file must contain one status marker line:
 3. Codex reviews/evaluates and writes next request/response artifact if needed
 4. Codex updates stream with actor and status transition
 5. for decision rounds, both sides provide agreement scores and Codex derives owner decision draft
+6. Codex publishes one human-readable owner packet in `exchange/chatgpt/outbox/*__owner_decision_packet_v1.md`
+
+## Channel separation (required)
+- Internal ChatGPT↔Codex exchange artifacts may be compact or machine-oriented.
+- Owner-facing packet must remain human-readable and decision-ready.
+- Owner packet is the only mandatory readable handoff object for decisioning.
 
 ## Stream entry requirement
 Every stream entry must include:

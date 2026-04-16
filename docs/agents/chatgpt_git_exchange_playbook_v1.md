@@ -44,6 +44,17 @@ python3 tools/governance/chatgpt_consensus_decision_v1.py --chatgpt-score <0..10
 
 4. store final block in `exchange/chatgpt/outbox/<topic>__consensus_owner_decision_v1.md`
 
+## Internal channel vs owner handoff
+- Internal ChatGPT↔Codex exchange may use compact/machine-oriented notes to reduce latency.
+- Owner handoff must be generated as a human-readable decision packet.
+- Decision packet template:
+  - `exchange/chatgpt/outbox/TEMPLATE__owner_decision_packet_v1.md`
+- Packet generator:
+
+```bash
+python3 tools/governance/chatgpt_owner_decision_packet_v1.py --topic "<topic>" --chatgpt-score <0..100> --codex-score <0..100>
+```
+
 ## Response package contract (essential only)
 Every `outbox/*response*` file should include:
 - summary of ask (max 5 bullets)
