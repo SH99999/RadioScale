@@ -11,6 +11,7 @@ Status note: this v8 file remains the current SI/N status addendum and is update
 ## 2. Current Functional Status
 - what currently works:
   - governance, issue-routing, and reporting workflows exist on `main`
+  - governance closeout now applies evidence-gated state transitions so referenced governance issues move to `state:done` only when a merged source PR exists and governance/journal/docs truth paths were updated in the merged PR
   - one-click branch rebase exists for all current and future `dev/*` and `integration/*` branches
   - weekly governance report issues are generated from repo truth
   - open decisions, branch drift, and journal freshness can become governance-routed issues automatically

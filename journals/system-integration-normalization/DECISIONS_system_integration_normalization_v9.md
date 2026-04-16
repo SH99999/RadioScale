@@ -185,3 +185,12 @@ Status note: this v9 file remains the current SI/N decision addendum and is upda
 - What it affects: owner PR decision flow, state-label synchronization, governance closeout readiness, and review click-path.
 - What it explicitly does NOT affect: protected-`main` merge approval authority or the requirement for docs/journal truth updates.
 - Follow-up needed: keep rollback switch and robustness checks active; disable automation quickly through `OWNER_DECISION_AUTOMATION_ENABLED=false` if behavior degrades.
+
+### DEC-system_integration_normalization-33
+- Status: locked
+- Decision: governance-closeout automation must require evidence-gated transitions (`source PR merged` + `governance/journal/docs truth updated`) before assigning `state:done`; otherwise it must keep issues open with `state:docs-update-required` and write an explicit audit-trail comment.
+- Date context: SI TOM stabilization and queue-closeout hardening phase
+- Why this was chosen: merged PR state alone can over-close queue items and produce false owner pressure when governance truth is not actually aligned.
+- What it affects: governance issue lifecycle reliability, owner queue trust, and closeout workflow behavior after merged PRs.
+- What it explicitly does NOT affect: explicit PR-body close keywords after all closeout conditions are satisfied.
+- Follow-up needed: periodically audit legacy open SI escalation items and close stale merged-source items with documented reasons.
