@@ -1,30 +1,54 @@
-# ChatGPT capture-to-demand prompt v1
+# ChatGPT Capture-to-Demand Prompt v1
 
 ## Purpose
-Provide a one-time activation prompt so repo-relevant chats persist live state to Git and route to Codex with minimal owner repetition.
+Use this one-time activation prompt in any repo-relevant chat so material decisions are persisted to Git with governed continuity and can be routed into Codex execution.
 
-## One-time activation prompt
-Use this once at the beginning of a repo-relevant chat:
+## When to use
+Use this when the chat contains any of the following:
+- locked decisions that must not be lost
+- implementation requests
+- governance update requirements
+- owner decision framing
+- blockers, risks, or non-loss requirements
+
+## Activation and output targets
+1. Activate governed mode in chat: `governed mode on`.
+2. Persist live continuity to:
+   - `exchange/chatgpt/sessions/<topic>__live_v1.md`
+3. Promote with `chatok` to demand intake:
+   - `exchange/chatgpt/demands/<topic>__intake_v1.md`
+
+## Capture prompt
+Use this exact prompt in the ChatGPT chat you want to preserve:
 
 ```text
 governed mode on
 Topic: <topic>
-Open or create live session artifact at exchange/chatgpt/sessions/<topic>__live_v1.md.
-From now on, persist every material decision/request/risk/blocker/non-loss delta to that live session within 5 minutes.
-When context is execution-ready, run chatok promotion to exchange/chatgpt/demands/<topic>__intake_v1.md and set demand status to ready-for-codex.
-After codex output is prepared, require ready-for-chatgpt-review -> pre-ok before ready-for-owner.
-Keep owner commands minimal: governed mode on | chatok | ship to codex | close demand.
+
+Create or update one live continuity artifact for this chat at:
+exchange/chatgpt/sessions/<topic>__live_v1.md
+
+Requirements:
+- persist all material deltas to Git within 5 minutes
+- include source/context, current objective, locked decisions, open decisions, active implementation asks, active risks/blockers, non-loss requirements, lifecycle status, last_material_update_utc
+
+When execution-ready:
+- run chatok promotion into exchange/chatgpt/demands/<topic>__intake_v1.md
+- set demand status to ready-for-codex (ship to codex)
+
+Then follow lifecycle:
+in-execution -> ready-for-chatgpt-review -> pre-ok -> ready-for-owner -> closed
+
+Owner command surface must stay minimal:
+- governed mode on
+- chatok
+- ship to codex
+- close demand
 ```
 
-## Command semantics
-- `governed mode on`: activates live Git continuity for the chat.
-- `chatok`: lock/promote live session into a demand intake.
-- `ship to codex`: ensure demand is `ready-for-codex` and watcher-visible.
-- `close demand`: set lifecycle to `closed` after owner decision path completes.
+## Owner handoff rule
+After promotion to demand intake, use governed execution flow prompt:
+- `docs/agents/chatgpt_governed_intake_prompt_v1.md`
 
-## Required outputs from a governed chat
-1. live session artifact path
-2. demand intake path
-3. PR link (when implementation exists)
-4. rollback command
-5. next owner click
+## Continuity rule
+After governed mode activation, no relevant chat information may remain chat-only for more than 5 minutes.
