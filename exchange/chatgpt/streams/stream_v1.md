@@ -55,3 +55,11 @@
 - branch plan: `si/main-inbox-codex-trigger-and-protocol-snapshots-v1`
 - owner decision needed: `none`
 - status: `closed`
+
+### 2026-04-17 / cycle chat-backup-only-command / ship-to-codex
+- actor: `chatgpt`
+- source file: `exchange/chatgpt/demands/chat-backup-only-command__intake_v1.md`
+- action: formalized the current topic as a governed demand on the dedicated ChatGPT write branch for Codex pickup
+- branch plan: `si/chat-backup-only-command-v1`
+- owner decision needed: `none`
+- status: `ready-for-codex`
