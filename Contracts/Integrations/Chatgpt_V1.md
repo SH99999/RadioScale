@@ -41,6 +41,21 @@ Codex may do either path from one intake:
 - `done_definition`
 - `rollback_command` (or `not-applicable`)
 
+## JSON intake to issue rule
+If requirements are delivered as JSON, Codex should create/update issues automatically.
+
+Minimum mapping:
+- `topic` -> issue title prefix/topic
+- `requirements[]` -> checklist/body items
+- `priority` -> issue label or priority field
+- `component`/`target_lane` -> lane label + `target_branch`
+- `execution_mode` -> `self-implement` or `dispatch`
+
+If JSON is incomplete:
+- create one intake issue with `status: needs-clarification`
+- proceed only with clearly bounded safe scope
+- request missing fields in the same issue thread
+
 ## Operational guardrails
 - One issue may map to multiple PRs; each PR must be linked back in the issue.
 - If intake is ambiguous, Codex must write one clarification comment and proceed with the safest bounded scope.
