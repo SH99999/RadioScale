@@ -3,6 +3,13 @@
 Status note: this v6 file supersedes `stream_v5.md` as the current SI/N stream because tuner now has a real repo-driven manual deploy/rollback lane after Bridge proved the lock-aware runtime path on the Pi.
 
 ## Entries
+### 2026-04-17 / si/authority-compression-onboarding-hardening-v1 / active-path compression + historical boundary hardening
+- compressed active SI startup/onboarding path to one authority chain with explicit Tier-0/Tier-1/Tier-2 boundaries and acceptance targets (`<5m`, `<15m`)
+- aligned SI governance index, onboarding v7, role bootstrap map/profile, and SI role start prompt to the same canonical startup path
+- tightened superseded index so older onboarding/index generations are explicit deep-history only
+- fixed repo-truth contradictions in SI status (duplicate autonomous-matrix line) and SI TOM (outdated missing-helper claim)
+- purpose: reduce onboarding burden and remove active-vs-history ambiguity without creating new control-plane surfaces
+
 ### 2026-04-16 / si/component-evidence-ledger-and-claim-normalization-v1 / component claim normalization
 - normalized component current-state files for bridge, tuner, fun-line, starter, autoswitch, and hardware with a common evidence-led claim ledger
 - aligned status-packet/report generation and enforcement with the component claim ledger so claims degrade truthfully when evidence is missing

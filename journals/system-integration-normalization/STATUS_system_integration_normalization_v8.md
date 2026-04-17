@@ -13,6 +13,7 @@ Status note: this v8 file remains the current SI/N status addendum and is update
   - governance, issue-routing, and reporting workflows exist on `main`
   - governance closeout now applies evidence-gated state transitions so referenced governance issues move to `state:done` only when a merged source PR exists and governance/journal/docs truth paths were updated in the merged PR
   - SI onboarding is now tiered (`Tier 0` safe-start, `Tier 1` working context, `Tier 2` deep history) and active startup truth is explicitly anchored to AGENTS + SI index + SI TOM + current SI status/decisions/stream
+  - SI startup references are compressed to one canonical active path with explicit deep-history boundary and startup acceptance targets (`Tier 0 < 5m`, `Tier 1 < 15m`)
   - status/owner packet claim classes now separate `governance/docs accepted`, `runtime validated`, and `autonomy eligible`, with evidence-gated runtime/autonomy assertions and truthful degradation when evidence is missing
   - one-click branch rebase exists for all current and future `dev/*` and `integration/*` branches
   - weekly governance report issues are generated from repo truth
@@ -133,7 +134,6 @@ Status note: this v8 file remains the current SI/N status addendum and is update
   - Tuner overlay/runtime/service lane
 - next manual validation target with repo deploy lane ready:
   - Fun Line overlay lane (`current`)
-- delivery support matrix on `main` now supports Bridge, Tuner, and Fun Line for autonomous dispatch
 - delivery support matrix on `main` now supports Bridge and Tuner for autonomous dispatch; Fun Line is explicitly held non-autonomous pending target-Pi deploy/rollback evidence
 - autonomous deploy line remains partial at repository scope because other components are still unsupported
 - owner remains the final onsite acceptance gate before stable truth is merged to `main`
