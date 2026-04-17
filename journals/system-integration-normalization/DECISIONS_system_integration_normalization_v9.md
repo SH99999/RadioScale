@@ -279,3 +279,21 @@ Status note: this v9 file remains the current SI/N decision addendum and is upda
 - What it affects: issue routing labels, exchange templates/protocol, owner operational query guidance, and ChatGPT answer contract (structured summary + direct Git links + optional label-filter URL + explicit owner todo).
 - What it explicitly does NOT affect: creation of new dashboard/board/html surfaces or replacement of repo-truth artifact content with labels.
 - Follow-up needed: keep label index and artifact truth synchronized and treat any mismatch as a repo-truth defect.
+
+### DEC-system_integration_normalization-43
+- Status: locked
+- Decision: the single review-ready handoff marker is `status: ready-for-chatgpt-review`; the demand artifact carrying this marker must include `source_pr_url`, `source_branch`, and `review_target_artifacts`, and owner review pickup command is `review now`.
+- Date context: review-ready handoff marker + governance freeze package
+- Why this was chosen: owner/ChatGPT review pickup needed one unambiguous repo-visible marker with direct source references.
+- What it affects: exchange protocol/operating standard, demand template fields, owner-facing existing surfaces, and owner quickstart wording.
+- What it explicitly does NOT affect: creation of a second lifecycle/review system or new dashboard/board/html surfaces.
+- Follow-up needed: keep ready-for-review demand refs populated so `review now` resolution stays deterministic.
+
+### DEC-system_integration_normalization-44
+- Status: locked
+- Decision: governance/process expansion is frozen after this package; only bugfixes, regression fixes, small necessary corrections, and direct appliance-delivery support work are allowed.
+- Date context: governance freeze activation
+- Why this was chosen: governance support must stop expanding and remain subordinate to appliance delivery.
+- What it affects: SI governance package acceptance scope and future change triage.
+- What it explicitly does NOT affect: required fixes to existing governance paths when regressions/defects are found.
+- Follow-up needed: reject or defer non-exception governance/meta expansion proposals.

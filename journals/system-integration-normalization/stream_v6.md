@@ -4,6 +4,13 @@ Status note: this v6 file supersedes `stream_v5.md` as the current SI/N stream b
 
 ## Entries
 
+### 2026-04-17 / si/review-ready-handoff-marker-and-governance-freeze-v1 / review-ready marker + governance freeze
+- tightened lifecycle semantics so `ready-for-chatgpt-review` is the single canonical repo-visible handoff marker for review pickup
+- required review refs on ready-for-review demand artifacts: `source_pr_url`, `source_branch`, `review_target_artifacts`
+- aligned existing owner-facing surfaces and quickstart/status references to the minimal owner command set (`governed mode on`, `ship to codex`, `review now`, merge after `pre-ok`)
+- activated explicit governance freeze rule: no further governance/process/dashboard/board/prompt/meta expansion packages beyond exception-only fixes and direct delivery-support work
+- purpose: remove review pickup ambiguity and stop governance/control-plane growth before freeze
+
 ### 2026-04-17 / si/label-only-owner-query-surface-v1 / label-indexed owner repo-truth query surface
 - standardized execution-gate labels for owner query/indexing (`gate:now`, `gate:quick-win`, `gate:backlog`) and aligned issue-routing governance wording
 - updated exchange demand/idea templates + protocol so labels are index/routing metadata while repo artifacts remain canonical detail truth

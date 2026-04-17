@@ -145,21 +145,32 @@ def load_demand_review_items(br: str) -> list[dict]:
                 key, value = stripped[2:].split(':', 1)
                 meta[key.strip().lower().replace(' ', '_')] = value.strip()
 
-        if status_value not in {'pre-ok', 'ready-for-owner'}:
+        if status_value not in {'ready-for-chatgpt-review', 'pre-ok', 'ready-for-owner'}:
             continue
 
         pr_url = meta.get('source_pr_url', '')
+        source_branch = meta.get('source_branch', '')
+        review_targets = meta.get('review_target_artifacts', '')
         review = meta.get('chatgpt_review_result', 'pending')
-        next_click = meta.get('next_owner_click', 'merge after pre-ok')
+        next_click = meta.get('next_owner_click', 'review now' if status_value == 'ready-for-chatgpt-review' else 'merge after pre-ok')
         action_url = pr_url or blob_url(str(p.relative_to(ROOT)), br)
+        needed = 'review now' if status_value == 'ready-for-chatgpt-review' else next_click
+        where = (
+            'Open demand + PR refs and run ChatGPT review now'
+            if status_value == 'ready-for-chatgpt-review'
+            else 'Confirm pre-ok, open PR link, then merge to main if accepted'
+        )
 
         items.append({
             'type': 'chat-review',
             'title': p.name.replace('__intake_v1.md', '').replace('-', ' '),
-            'needed_from_owner': next_click,
-            'details': f"ChatGPT review={review}; demand_status={status_value}",
+            'needed_from_owner': needed,
+            'details': (
+                f"ChatGPT review={review}; demand_status={status_value}; "
+                f"source_branch={source_branch or '-'}; review_target_artifacts={review_targets or '-'}"
+            ),
             'action_url': action_url,
-            'where_to_act': 'Confirm pre-ok, open PR link, then merge to main if accepted',
+            'where_to_act': where,
             'source': str(p.relative_to(ROOT)),
             'added_on': file_added_on(p),
         })

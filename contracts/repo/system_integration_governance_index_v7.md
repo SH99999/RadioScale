@@ -30,6 +30,7 @@ Interpretation rule:
 
 ## Meta-freeze rule (stabilization guard)
 Do not add new dashboards/prompts/boards/summaries/exchange artifacts unless replacing an existing canonical artifact in the same PR.
+Post-freeze rule: no new governance/process/dashboard/board/prompt/meta-layer expansion packages after `si/review-ready-handoff-marker-and-governance-freeze-v1`, except bugfixes/regression fixes/small necessary corrections/direct appliance-delivery support.
 
 ## Extended reference set (Tier-1/Tier-2 only; not part of active startup chain)
 Use `docs/agents/system_integration_recovery_onboarding_v7.md` as the canonical tier map.
@@ -45,6 +46,7 @@ Core Tier-1 references:
 7. `contracts/repo/chatgpt_git_exchange_operating_standard_v1.md`
 8. `docs/agents/chatgpt_git_exchange_playbook_v1.md`
 9. `docs/agents/chatgpt_capture_to_demand_prompt_v1.md`
+10. `docs/agents/chatgpt_owner_quickstart_v1.md`
 
 Tier-2 deep-history references are read-only and listed in:
 - `contracts/repo/superseded_documents_index_v1.md`
@@ -61,6 +63,7 @@ Tier-2 deep-history references are read-only and listed in:
 - SI handoff must include a prepared merge-request executive summary comment with executive summary + risk level + rollback command + next owner click
 - ChatGPT exchange for audit/demand loops should use the governed exchange root `exchange/chatgpt/` with inbox/outbox artifact flow
 - Chat-to-demand continuity is mandatory: relevant chat outcomes must be captured to `exchange/chatgpt/sessions/` within 5 minutes, then promoted to `exchange/chatgpt/demands/` at owner command `ship to codex` (internal `chatok`)
+- owner review pickup command is `review now`, resolved from demand artifacts marked `ready-for-chatgpt-review`
 - Chat execution-gate classification is mandatory for demand/idea items: `now | quick_win | backlog` with promotion rationale and related outputs preserved in repo truth
 - execution-gate labels are standardized for owner query/indexing: `gate:now`, `gate:quick-win`, `gate:backlog`
 - owner repo-truth queries should be answerable from labels + canonical repo artifacts with direct Git links (no custom-field dependency required)
