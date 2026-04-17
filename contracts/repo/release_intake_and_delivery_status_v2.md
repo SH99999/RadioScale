@@ -14,6 +14,11 @@ Define only the minimum deterministic rules required to operate safely and audit
 4. **Rollback-first safety**: any operation with runtime impact must provide rollback action or explicit blocker.
 5. **No implicit behavior**: commands, statuses, and transitions must be written as concrete allowed values.
 
+## Simplified release/rollback operating rule
+- `main` is the single accepted software truth branch
+- in-progress work may exist on `dev/*`, but is not a second truth line
+- rollback for accepted baselines should reference governed Git tags
+
 ## Required evidence (minimum)
 - `who`: responsible role or agent id
 - `what`: exact artifact/path changed

@@ -14,6 +14,11 @@ Define only the minimum deterministic rules required to operate safely and audit
 4. **Rollback-first safety**: any operation with runtime impact must provide rollback action or explicit blocker.
 5. **No implicit behavior**: commands, statuses, and transitions must be written as concrete allowed values.
 
+## Tagging minimum (Git-principle)
+- `main` is the accepted software truth line
+- create governed tags for accepted stable baselines and rollback anchors
+- do not use tags for every intermediate step; keep tags meaningful and auditable
+
 ## Required evidence (minimum)
 - `who`: responsible role or agent id
 - `what`: exact artifact/path changed

@@ -14,6 +14,11 @@ Define only the minimum deterministic rules required to operate safely and audit
 4. **Rollback-first safety**: any operation with runtime impact must provide rollback action or explicit blocker.
 5. **No implicit behavior**: commands, statuses, and transitions must be written as concrete allowed values.
 
+## Release naming minimum
+- accepted software truth lives on `main`
+- rollback anchors use governed Git tags
+- mutable payload pointer names (for example `current` / `current_dev`) are optional and used only where payload-folder switching is still operationally required
+
 ## Required evidence (minimum)
 - `who`: responsible role or agent id
 - `what`: exact artifact/path changed
