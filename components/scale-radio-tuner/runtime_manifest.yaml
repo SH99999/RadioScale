@@ -1,0 +1,12 @@
+component: scale_radio_tuner
+runtime_contract: deploy_v2_candidate
+install_hook: components/scale-radio-tuner/install.sh
+configure_hook: components/scale-radio-tuner/configure.sh
+healthcheck_hook: components/scale-radio-tuner/healthcheck.sh
+expected_runtime_paths:
+  - /data/plugins/user_interface/radio_scale_peppy
+  - /data/plugins/music_service/radio_scale_source
+expected_services:
+  - scale_fm_renderer.service
+notes:
+  - Tuner V2 is not executable until real plugin payloads are imported into the repo path.
