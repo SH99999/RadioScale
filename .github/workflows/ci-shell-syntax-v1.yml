@@ -1,0 +1,22 @@
+name: ci-shell-syntax-v1
+
+on:
+  push:
+    branches:
+      - main
+      - dev/**
+      - si/**
+      - temp_codex
+  pull_request:
+
+jobs:
+  shell_syntax:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate shell script syntax
+        shell: bash
+        run: |
+          bash tools/ci/check_shell_syntax_v3.sh

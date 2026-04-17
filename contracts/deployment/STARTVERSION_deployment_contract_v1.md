@@ -22,3 +22,10 @@ A release is merge-ready only when:
 - checks passed,
 - deploy/rollback evidence recorded,
 - owner decision captured.
+
+## 5) Git automation baseline (required)
+- `ci-shell-syntax-v1` must run on push/PR for script syntax guardrails.
+- `component-test-deploy-v10` is the canonical deploy test entrypoint.
+- `component-test-rollback-v10` is the canonical rollback entrypoint.
+- `component-test-release-slot-v3` is the canonical slot release entrypoint.
+- Deploy/rollback workflows are run as `workflow_dispatch` with explicit `component`, `git_ref`, `payload`, and `target`.

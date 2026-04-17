@@ -35,3 +35,7 @@ Every PR using STARTVERSION must include:
 - tests/checks executed
 - rollback command
 - owner decision required (`accept | changes-requested | reject`)
+
+
+## Owner one-click surface
+- `reports/owner/dashboard_v1.html` is the single owner aggregation page for links to workflows, issue queries, and active operating docs.
