@@ -21,6 +21,7 @@ This stack is the **minimum active contract layer** for day-to-day work. Legacy 
 - `contracts/observability/STARTVERSION_observability_contract_v1.md`
 - `contracts/volumio4/STARTVERSION_volumio4_contract_v1.md`
 - `contracts/integration-freeze/STARTVERSION_integration_freeze_contract_v1.md`
+- `Contracts/Integrations/Chatgpt_V1.md`
 
 ## Operating rule
 If two rules conflict:
