@@ -221,3 +221,12 @@ Status note: this v9 file remains the current SI/N decision addendum and is upda
 - What it affects: component current-state files, autonomous support matrix wording, status packet schema/report generation, and claim consistency checks.
 - What it explicitly does NOT affect: creation of new dashboards/boards/report surfaces.
 - Follow-up needed: keep component claim ledgers updated whenever deploy/rollback/runtime/autonomy truth changes materially.
+
+### DEC-system_integration_normalization-37
+- Status: locked
+- Decision: SI startup/onboarding uses one compressed active path with tiered scope (`Tier 0`, `Tier 1`, `Tier 2`) and active docs must not require historical/superseded material outside explicit Tier-2 deep-history use.
+- Date context: authority-compression onboarding hardening completion phase
+- Why this was chosen: long startup read chains and mixed active/historical references increased misread risk and onboarding burden.
+- What it affects: SI governance index, onboarding v7, role bootstrap references/profiles, and startup prompt wording.
+- What it explicitly does NOT affect: preservation of historical stream generations and superseded docs for forensic review.
+- Follow-up needed: keep active startup references anchored to the authority chain and treat any missing startup-referenced file as a repo-truth defect.

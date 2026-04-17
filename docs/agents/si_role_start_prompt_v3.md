@@ -30,6 +30,7 @@ Tiered onboarding (derived from the same authority chain, not parallel truth):
 - Tier 0 safe-start target: < 5 minutes
 - Tier 1 working-context target: < 15 minutes
 - Tier 2 deep history: read-only forensic context only
+- acceptance criteria: active read path materially reduced, and no active-path ambiguity between current truth and historical material
 
 Interpretation rule:
 - contracts + current SI status/decisions are authoritative

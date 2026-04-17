@@ -21,6 +21,10 @@ The following may still exist for transition reasons or historical continuity, b
 - `journals/system-integration-normalization/stream_v4.md`
 - `journals/system-integration-normalization/stream_v5.md`
 
+### Historical onboarding/index generations (deep-history only)
+- `docs/agents/system_integration_recovery_onboarding_v1.md` through `system_integration_recovery_onboarding_v6.md`
+- `contracts/repo/system_integration_governance_index_v1.md` through `system_integration_governance_index_v6.md`
+
 ### Interpretation rule
 If an older file conflicts with:
 - `contracts/repo/canonical_governance_sources_v1.md`
