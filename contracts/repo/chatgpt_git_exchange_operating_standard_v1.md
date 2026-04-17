@@ -114,6 +114,19 @@ Allowed statuses are:
 - `changes-requested`
 - `closed`
 
+## Canonical review-ready handoff marker
+The single repo-visible handoff marker for ChatGPT review pickup is:
+- `status: ready-for-chatgpt-review`
+
+When this marker is set on a demand artifact, the same demand must also include:
+- `source_pr_url`
+- `source_branch`
+- `review_target_artifacts`
+
+Interpretation:
+- this marker means Codex execution is complete enough for ChatGPT review now
+- owner command `review now` should resolve directly to these demand artifacts
+
 ## Execution gate model (canonical)
 Every relevant demand/idea item must be classified as:
 - `execution_gate: now`
@@ -183,6 +196,7 @@ Required companion fields:
 
 ## ChatGPT review/pre-ok gate
 - Codex implementation output must include documented branch/PR/rollback path.
+- demand artifacts in `ready-for-chatgpt-review` must include `source_pr_url`, `source_branch`, and `review_target_artifacts`.
 - ChatGPT review compares implementation output against demand + repo truth.
 - Demand lifecycle must not advance to `ready-for-owner` without `pre-ok` or explicit `changes-requested` handling.
 - Existing owner-facing surfaces (owner action board / owner decision board / status index / owner dashboard) must expose `pre-ok`, `ready-for-owner`, PR link, and next owner click without requiring owner lifecycle reconstruction.
@@ -268,7 +282,23 @@ Execution packages must update durable repo truth when impacted:
 - all protected truth still merges via PR to `main`
 - if connector/auth is blocked, produce explicit blocker + one owner action
 - no new dashboards/boards/html surfaces are required by this standard
-- owner command surface should remain minimal: `governed mode on`, `ship to codex`, `merge after pre-ok`
+- owner command surface should remain minimal: `governed mode on`, `ship to codex`, `review now`, `merge after pre-ok`
+
+## Governance freeze rule (post-package)
+After this package, governance/process expansion is frozen.
+
+Not allowed as new package types:
+- new governance/process/dashboard/board/prompt/meta-layer expansion packages
+
+Allowed exceptions only:
+- bugfixes
+- regression fixes
+- small necessary corrections
+- direct appliance-delivery support work
+
+Priority rule:
+- appliance delivery remains primary
+- governance supports delivery and must not become the product
 
 ## Success condition
 - ChatGPT exchange is reproducible from Git history alone

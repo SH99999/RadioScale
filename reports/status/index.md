@@ -15,15 +15,18 @@ Prompt aliases:
 - `status blocker` -> [Status Blocker](./blocker.md)
 - `owner capture-prompt` -> [ChatGPT Capture-to-Demand Prompt](../../docs/agents/chatgpt_capture_to_demand_prompt_v1.md)
 - `owner governed-intake` -> [ChatGPT Governed Intake Prompt](../../docs/agents/chatgpt_governed_intake_prompt_v1.md)
+- `owner quickstart` -> [ChatGPT Owner Quickstart](../../docs/agents/chatgpt_owner_quickstart_v1.md)
 
 Owner minimal command set:
 - `governed mode on`
 - `ship to codex`
+- `review now`
 - merge to `main` after `pre-ok`
 
 Where to check chat review state:
 - [Owner action board](../owner/owner_action_board_v1.html)
 - [Owner decision board](../owner/owner_decision_board_v1.html)
+- Review-ready marker is `status: ready-for-chatgpt-review` on demand artifacts with `source_pr_url`, `source_branch`, and `review_target_artifacts`
 
 Execution-gate portfolio visibility:
 - Owner boards include `execution-gate-demand` / `execution-gate-idea` rows showing `now | quick_win | backlog`
