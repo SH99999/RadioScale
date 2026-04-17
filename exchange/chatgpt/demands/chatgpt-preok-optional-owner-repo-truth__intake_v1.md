@@ -1,6 +1,6 @@
 # chatgpt-preok-optional-owner-repo-truth intake v1
 
-status: ready-for-codex
+status: closed
 actor: chatgpt
 
 ## source/context
@@ -60,15 +60,15 @@ actor: chatgpt
 ## lifecycle tracking
 - codex_trigger: ship-to-codex
 - materialized_protocol: exchange/chatgpt/protocol-main/chatgpt-preok-optional-owner-repo-truth__protocol_v1.md
-- main_inbox_snapshot: exchange/chatgpt/inbox-main/<timestamp>__chatgpt-preok-optional-owner-repo-truth__intake_snapshot_v1.md
-- source_pr_url:
-- source_branch:
+- main_inbox_snapshot: exchange/chatgpt/inbox-main/20260417T113113Z__chatgpt-preok-optional-owner-repo-truth__intake_snapshot_v1.md
+- source_pr_url: https://github.com/SH99999/mediastreamer/pull/147
+- source_branch: si/agent-registry-delegation-and-startup-v1
 - review_target_artifacts:
 - chatgpt_review_result: pending
 - owner_review_override: no
 - owner_override_note:
-- governance_closeout_status: pending
-- next_owner_click: review decision-ready PR packet and merge if accepted (`pre-ok` optional advisory)
+- governance_closeout_status: done
+- next_owner_click: none (closed; merged work already present on main)
 
 ## promotion metadata
 - promoted_from_live: `exchange/chatgpt/sessions/chatgpt-preok-optional-owner-repo-truth__live_v1.md`
@@ -76,4 +76,4 @@ actor: chatgpt
 - codex_trigger: `ship-to-codex`
 - promotion_trigger: `chatok`
 - materialized_protocol: `exchange/chatgpt/protocol-main/chatgpt-preok-optional-owner-repo-truth__protocol_v1.md`
-- main_inbox_snapshot: ``
+- main_inbox_snapshot: `exchange/chatgpt/inbox-main/20260417T113113Z__chatgpt-preok-optional-owner-repo-truth__intake_snapshot_v1.md`

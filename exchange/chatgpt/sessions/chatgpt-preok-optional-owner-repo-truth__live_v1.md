@@ -1,6 +1,6 @@
 # chatgpt-preok-optional-owner-repo-truth live v1
 
-status: chatok
+status: closed
 actor: chatgpt
 last_material_update_utc: 2026-04-17T00:00:00Z
 
@@ -35,3 +35,9 @@ last_material_update_utc: 2026-04-17T00:00:00Z
 
 ## promotion note
 - promoted to demand intake on `ship to codex`
+
+## close metadata
+- close_reason: merged-on-main
+- closed_by_pr: #147
+- governance_closeout_status: done
+- next_owner_click: none
