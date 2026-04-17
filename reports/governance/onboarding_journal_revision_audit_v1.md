@@ -1,6 +1,6 @@
 # Onboarding & Journal Revision Audit v1
 
-_Generated: 2026-04-17T05:26:36.055410+00:00_
+_Generated: 2026-04-17T06:37:01.888708+00:00_
 
 ## Onboarding unification check
 - governance_index_read_order_count: 0

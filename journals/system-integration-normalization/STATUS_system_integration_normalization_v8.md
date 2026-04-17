@@ -28,6 +28,7 @@ Status note: this v8 file remains the current SI/N status addendum and is update
   - tuner deploy and rollback are validated on the target Pi through the manual lock-aware workflow lane
   - bridge and tuner are both enabled in the autonomous delivery support matrix
 - what partially works:
+  - execution-gate model (`now|quick_win|backlog`) is now standardized for demand/idea items with promotion rationale and related outputs fields
   - owner-minimal chat handoff now uses only `governed mode on` and `ship to codex` before merge-after-pre-ok; internal `chatok` and demand closure are automation-owned
   - governed chat mode can now persist live session continuity artifacts under `exchange/chatgpt/sessions/` and promote `chatok` sessions into `ready-for-codex` demand artifacts
   - chat-to-demand exchange lane remains active under `exchange/chatgpt/` with watcher support for `ready-for-codex` artifacts
@@ -150,3 +151,4 @@ Status note: this v8 file remains the current SI/N status addendum and is update
 5. enforce the 5-minute chat-to-demand continuity SLA for relevant chat outcomes and route all execution from demand artifacts
 6. keep owner command surface constrained to `governed mode on | ship to codex | merge after pre-ok` for governed chat lanes
 7. keep owner-facing boards/index synchronized with demand `pre-ok` and `ready-for-owner` visibility
+8. keep owner-facing portfolio visibility synchronized for `now|quick_win|backlog` rows in existing owner boards

@@ -95,6 +95,12 @@ Each demand intake file under `exchange/chatgpt/demands/` must include:
 - non-loss requirements
 - execution request for Codex
 - status marker
+- execution gate block (`execution_gate`, `why_now`, `why_not_now`, `promotion_trigger`, `safe_to_attach_to_current_package`, `related_files_outputs`, `impacted_portfolio_component`)
+
+## Idea artifact contract (mandatory fields)
+Each idea seed file under `exchange/chatgpt/ideas/` must include:
+- idea summary and scope
+- execution gate block (`execution_gate`, `why_now`, `why_not_now`, `promotion_trigger`, `safe_to_attach_to_current_package`, `related_files_outputs`, `impacted_portfolio_component`)
 
 ## Demand lifecycle statuses (canonical)
 Allowed statuses are:
@@ -107,6 +113,20 @@ Allowed statuses are:
 - `ready-for-owner`
 - `changes-requested`
 - `closed`
+
+## Execution gate model (canonical)
+Every relevant demand/idea item must be classified as:
+- `execution_gate: now`
+- `execution_gate: quick_win`
+- `execution_gate: backlog`
+
+Required companion fields:
+- `why_now`
+- `why_not_now`
+- `promotion_trigger`
+- `safe_to_attach_to_current_package: yes|no`
+- `related_files_outputs`
+- `impacted_portfolio_component`
 
 ## Standard exchange loop (minimal owner path)
 1. ChatGPT activates governed mode with `governed mode on`.
@@ -161,6 +181,26 @@ Allowed statuses are:
 - owner does not classify components/streams/docs manually
 - Codex performs routing, branch creation, decomposition into streams/components, required governance/status/decision updates, and PR preparation
 - routing/decomposition logic must remain repo-driven and auditable
+- owner does not classify execution gate destination manually; Codex sets/updates gate and routing
+
+## Codex quick-win attachment rule
+Codex may attach `quick_win` items to the current package only when all are true:
+1. low blast radius
+2. no unresolved architecture decision required
+3. rollback path is clear
+4. no contradiction to current SI/component truth
+5. no governance/control-plane sprawl introduced
+6. current package scope stays coherent
+
+If any condition fails, Codex must downgrade item to `backlog` and preserve promotion trigger.
+
+## Backlog preservation rule
+Backlog items must preserve:
+- summary
+- impacted portfolio/component
+- related files/outputs/links
+- why_not_now
+- promotion_trigger
 
 ## Durable truth update obligation
 Execution packages must update durable repo truth when impacted:
@@ -191,5 +231,6 @@ Execution packages must update durable repo truth when impacted:
 - ChatGPT exchange is reproducible from Git history alone
 - relevant chat outcomes are captured to repo artifacts within 5 minutes
 - owner can follow and decide with minimal additional steps
+- owner can see `now`, `quick_win`, and `backlog` inventory from existing Git surfaces
 - implementation suggestions are explicit, ranked, and branchable
 - exchange cycles can be initialized and watched automatically through existing exchange scripts

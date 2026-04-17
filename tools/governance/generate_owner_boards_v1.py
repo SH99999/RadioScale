@@ -13,6 +13,7 @@ ACTION_OUT = ROOT / 'reports' / 'owner' / 'owner_action_board_v1.html'
 DECISION_OUT = ROOT / 'reports' / 'owner' / 'owner_decision_board_v1.html'
 OUTBOX = ROOT / 'exchange' / 'chatgpt' / 'outbox'
 DEMANDS = ROOT / 'exchange' / 'chatgpt' / 'demands'
+IDEAS = ROOT / 'exchange' / 'chatgpt' / 'ideas'
 
 
 def branch() -> str:
@@ -165,6 +166,70 @@ def load_demand_review_items(br: str) -> list[dict]:
     return items
 
 
+def load_execution_gate_portfolio_items(br: str) -> list[dict]:
+    items: list[dict] = []
+
+    def parse_gate(path: Path, source_type: str) -> None:
+        meta: dict[str, str] = {}
+        status_value = 'missing'
+        for line in path.read_text(encoding='utf-8').splitlines():
+            stripped = line.strip()
+            if stripped.startswith('status:'):
+                status_value = stripped.split(':', 1)[1].strip().lower()
+            if stripped.startswith('- ') and ':' in stripped:
+                key, value = stripped[2:].split(':', 1)
+                meta[key.strip().lower().replace(' ', '_')] = value.strip()
+
+        gate = meta.get('execution_gate', '').lower()
+        if gate not in {'now', 'quick_win', 'backlog'}:
+            return
+
+        portfolio = meta.get('impacted_portfolio_component', 'unspecified')
+        why_now = meta.get('why_now', '')
+        why_not_now = meta.get('why_not_now', '')
+        trigger = meta.get('promotion_trigger', '')
+        attach = meta.get('safe_to_attach_to_current_package', '')
+        related = meta.get('related_files_outputs', '')
+        details = (
+            f"gate={gate}; portfolio={portfolio}; status={status_value}; "
+            f"safe_attach={attach}; why_now={why_now or '-'}; why_not_now={why_not_now or '-'}; "
+            f"promotion_trigger={trigger or '-'}; related={related or '-'}"
+        )
+        items.append({
+            'type': f'execution-gate-{source_type}',
+            'title': path.name.replace('__intake_v1.md', '').replace('__idea_seed_v1.md', '').replace('-', ' '),
+            'needed_from_owner': 'visibility-only' if gate in {'quick_win', 'backlog'} else 'merge after pre-ok',
+            'details': details,
+            'action_url': blob_url(str(path.relative_to(ROOT)), br),
+            'where_to_act': 'Review gate classification and portfolio placement',
+            'source': str(path.relative_to(ROOT)),
+            'added_on': file_added_on(path),
+        })
+
+    for p in sorted(DEMANDS.glob('*__intake_v*.md')):
+        if p.name.startswith('TEMPLATE__'):
+            continue
+        parse_gate(p, 'demand')
+
+    for p in sorted(IDEAS.glob('*__idea_seed_v*.md')):
+        if p.name.startswith('TEMPLATE__'):
+            continue
+        parse_gate(p, 'idea')
+
+    if not items:
+        items.append({
+            'type': 'execution-gate-summary',
+            'title': 'Execution gate portfolio',
+            'needed_from_owner': 'visibility-only',
+            'details': 'now=0; quick_win=0; backlog=0; add gate fields to demand/idea items to populate portfolio rows',
+            'action_url': blob_url('exchange/chatgpt/demands/TEMPLATE__intake_v1.md', br),
+            'where_to_act': 'Use demand/idea templates to classify new items as now|quick_win|backlog',
+            'source': 'exchange/chatgpt/demands/TEMPLATE__intake_v1.md',
+            'added_on': 'n/a',
+        })
+    return items
+
+
 def load_manual() -> list[dict]:
     if not MANUAL.exists():
         return []
@@ -204,10 +269,11 @@ def main() -> int:
     packet_items = load_packet_items(br)
     owner_packets = load_owner_packets(br)
     demand_items = load_demand_review_items(br)
+    gate_items = load_execution_gate_portfolio_items(br)
     manual = load_manual()
     ACTION_OUT.parent.mkdir(parents=True, exist_ok=True)
-    ACTION_OUT.write_text(render('Owner Action Board v1', 'Open owner needs (decision/input/task/feedback).', demand_items + owner_packets + packet_items + manual), encoding='utf-8')
-    DECISION_OUT.write_text(render('Owner Decision Board v1', 'Decision-focused view from status packets and owner packets.', demand_items + owner_packets + packet_items), encoding='utf-8')
+    ACTION_OUT.write_text(render('Owner Action Board v1', 'Open owner needs (decision/input/task/feedback).', demand_items + gate_items + owner_packets + packet_items + manual), encoding='utf-8')
+    DECISION_OUT.write_text(render('Owner Decision Board v1', 'Decision-focused view from status packets and owner packets.', demand_items + gate_items + owner_packets + packet_items), encoding='utf-8')
     print(ACTION_OUT.relative_to(ROOT))
     print(DECISION_OUT.relative_to(ROOT))
     return 0

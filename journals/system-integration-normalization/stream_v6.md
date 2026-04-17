@@ -4,6 +4,13 @@ Status note: this v6 file supersedes `stream_v5.md` as the current SI/N stream b
 
 ## Entries
 
+### 2026-04-17 / si/execution-gate-and-backlog-portfolio-v1 / execution-gate + backlog portfolio visibility
+- standardized execution gate model (`now|quick_win|backlog`) with mandatory rationale/promotion fields for demand and idea artifacts
+- codified quick-win attachment rule for Codex and explicit downgrade-to-backlog behavior when safety/coherence checks fail
+- extended existing owner surfaces (status index, owner dashboard, owner action/decision boards) to expose execution-gate portfolio visibility without adding new dashboard families
+- reinforced Codex-owned routing/decomposition and backlog preservation requirements so appliance delivery remains primary
+- purpose: prevent idea loss, keep quick wins usable, and keep backlog owner-visible from Git truth
+
 ### 2026-04-17 / si/owner-minimal-chat-handoff-v1 / owner-minimal handoff hardening
 - made owner-visible handoff command set minimal (`governed mode on`, `ship to codex`, merge after `pre-ok`) while internalizing `chatok` promotion semantics
 - removed owner-visible manual closure requirement and added automated demand closure workflow/script based on merged PR + `pre-ok` + `governance_closeout_status=done`

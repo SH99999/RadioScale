@@ -44,6 +44,20 @@ No relevant chat information may remain chat-only for more than 5 minutes.
 Minimum persistence layer before full durable truth updates:
 - `exchange/chatgpt/sessions/<topic>__live_v1.md`
 
+## Execution gate rule
+Relevant demand/idea items must carry:
+- `execution_gate: now|quick_win|backlog`
+- `why_now`
+- `why_not_now`
+- `promotion_trigger`
+- `safe_to_attach_to_current_package`
+- `related_files_outputs`
+
+Routing:
+- `now` -> active demand execution
+- `quick_win` -> Codex may attach if safe and coherent
+- `backlog` -> preserved/visible; not silently executed
+
 ## Promotion rule (`chatok`)
 - promotion source: `exchange/chatgpt/sessions/<topic>__live_v1.md`
 - promotion target: `exchange/chatgpt/demands/<topic>__intake_v1.md`

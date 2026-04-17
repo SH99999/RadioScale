@@ -33,6 +33,15 @@ actor: chatgpt
 - execution branch: si/<topic>
 - required output: PR to `main` + decision-ready packet + rollback command + next owner click
 
+## execution gate
+- execution_gate: now
+- why_now:
+- why_not_now:
+- promotion_trigger:
+- safe_to_attach_to_current_package: yes
+- related_files_outputs:
+- impacted_portfolio_component:
+
 ## lifecycle tracking
 - source_pr_url:
 - chatgpt_review_result: pending
