@@ -25,6 +25,10 @@ Where to check chat review state:
 - [Owner action board](../owner/owner_action_board_v1.html)
 - [Owner decision board](../owner/owner_decision_board_v1.html)
 
+Execution-gate portfolio visibility:
+- Owner boards include `execution-gate-demand` / `execution-gate-idea` rows showing `now | quick_win | backlog`
+- rows include portfolio/component, promotion trigger, and related outputs when provided
+
 Status packet JSON artifacts:
 - [tuner](./packets/tuner.json)
 - [governance](./packets/governance.json)

@@ -18,6 +18,8 @@ Recommended option: <opt-a|opt-b|opt-c>
 Run `governed mode on`, then create/update live session at exchange/chatgpt/sessions/<topic>__live_v1.md within 5 minutes for every material delta.
 Use `ship to codex` to promote into exchange/chatgpt/demands/<topic>__intake_v1.md and set demand `ready-for-codex` (internal `chatok` handling by Codex).
 Do the full governance flow: prepare documented Codex job via git, execute on si/<topic>, update required governance/journal truth, move demand through in-execution->ready-for-chatgpt-review->pre-ok->ready-for-owner->closed (automatic closure after merge + closeout), push branch, open PR to main, and report only final approval action for owner.
+Codex must classify and maintain execution gate (`now|quick_win|backlog`) and perform routing/decomposition; owner does not classify components/streams/docs manually.
+Codex may attach `quick_win` items to current package only when low-risk/coherent; otherwise preserve as `backlog` with promotion trigger.
 ```
 
 ## Owner prompt (strict form)

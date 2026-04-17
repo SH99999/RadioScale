@@ -21,6 +21,18 @@ Provide a standard path for two-lane collaboration (ChatGPT + Codex) using Git a
    - `ready-for-owner` with PR + rollback + next owner click
 8. Demand is auto-closed after owner merge + governance closeout completion.
 
+## Execution gate classification
+Each demand/idea item must include:
+- `execution_gate: now|quick_win|backlog`
+- `why_now`, `why_not_now`, `promotion_trigger`
+- `safe_to_attach_to_current_package: yes|no`
+- `related_files_outputs`, `impacted_portfolio_component`
+
+Gate behavior:
+- `now`: executes in current demand package
+- `quick_win`: Codex may attach when safe/coherent
+- `backlog`: preserved and visible to owner; not silently executed
+
 ## Max-delta continuity rule
 No relevant chat decision/risk/request/blocker/non-loss requirement may remain chat-only for more than 5 minutes.
 If durable truth update is not ready, live session capture is mandatory and demand promotion follows at `ship to codex`.

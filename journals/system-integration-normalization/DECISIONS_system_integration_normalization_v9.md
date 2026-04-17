@@ -260,3 +260,13 @@ Status note: this v9 file remains the current SI/N decision addendum and is upda
 - What it affects: exchange lifecycle wording, live->demand promotion helper, demand auto-close automation, and owner boards/index visibility of `pre-ok` / `ready-for-owner`.
 - What it explicitly does NOT affect: addition of new dashboards/boards/html surfaces or manual owner routing/decomposition work.
 - Follow-up needed: keep demand lifecycle tracking fields populated (`source_pr_url`, `chatgpt_review_result`, `governance_closeout_status`, `next_owner_click`) so auto-close remains reliable.
+
+
+### DEC-system_integration_normalization-41
+- Status: locked
+- Decision: chat-driven demand/idea items must carry an execution gate classification (`now|quick_win|backlog`) with rationale and promotion metadata; owner backlog visibility is provided through existing owner surfaces without creating new dashboard families.
+- Date context: execution-gate and backlog-portfolio hardening phase
+- Why this was chosen: good ideas were at risk of being lost or executed implicitly without explicit gate/risk handling and owner visibility.
+- What it affects: demand/idea templates, exchange governance wording, owner board generation, and owner status/dashboard guidance.
+- What it explicitly does NOT affect: manual owner routing/decomposition work or unrelated governance/runtime packages.
+- Follow-up needed: ensure each active demand/idea artifact maintains gate fields and portfolio metadata so quick-win pull-in and backlog preservation remain auditable.

@@ -31,6 +31,7 @@ exchange/chatgpt/sessions/<topic>__live_v1.md
 Requirements:
 - persist all material deltas to Git within 5 minutes
 - include source/context, current objective, locked decisions, open decisions, active implementation asks, active risks/blockers, non-loss requirements, lifecycle status, last_material_update_utc
+- include execution gate fields: execution_gate (now|quick_win|backlog), why_now, why_not_now, promotion_trigger, safe_to_attach_to_current_package, related_files_outputs, impacted_portfolio_component
 
 When execution-ready:
 - run ship-to-codex promotion into exchange/chatgpt/demands/<topic>__intake_v1.md
@@ -48,6 +49,7 @@ Owner command surface must stay minimal:
 ## Owner handoff rule
 After promotion to demand intake, use governed execution flow prompt:
 - `docs/agents/chatgpt_governed_intake_prompt_v1.md`
+- Codex owns gate/routing/decomposition; owner does not classify components, branches, or documentation targets manually.
 
 ## Continuity rule
 After governed mode activation, no relevant chat information may remain chat-only for more than 5 minutes.
