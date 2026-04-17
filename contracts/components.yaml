@@ -1,0 +1,17 @@
+contract_id: components
+version: vmin.1
+status: active
+source_lineage: mediastreamer/contracts/components.yaml
+objective: minimum deterministic and auditable operating contract for RadioScale
+minimum_rules:
+  - main_is_protected_truth_branch
+  - changes_are_branch_pr_owner_merge_gated
+  - runtime_actions_require_explicit_state_and_result
+  - rollback_or_blocker_must_be_explicit
+required_evidence:
+  - who
+  - what
+  - where
+  - when_utc
+  - result
+  - rollback_or_not_applicable
