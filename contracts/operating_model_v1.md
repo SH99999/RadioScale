@@ -15,10 +15,14 @@ This is the single operating-model truth for this repository.
 - One package may touch multiple components.
 - Owner can hand over directly in Codex chat.
 - Optional file handoff exists on `ops/chat-archive`.
-- Archive intake is auto-routed by `archive-handoff-auto-route-v1` on a 1-minute scheduler from `main`; no manual workflow click is required.
-- Owner does not manually move handoff files between branches.
-- Codex bridges archive intake into implementation flow.
-- Intake automation auto-creates routing issues and ensures a draft PR exists for each target `dev/*` branch.
+
+## Regular intake-to-execution process (mandatory)
+1. `archive-handoff-auto-route-v1` (1-minute scheduler from `main`) reads `ops/chat-archive/handoff/open/*.json`.
+2. Intake is validated and mapped to target `dev/*` branches.
+3. Routing issues are created/updated automatically.
+4. `issue-autostart-v1` immediately moves handoff issues to `status/in_progress`, links target branch, and starts execution kickoff on the target `dev/*` branch.
+5. The same listener writes kickoff commit evidence, ensures a draft PR exists for the target branch, and writes commit/PR links back to the issue.
+6. Codex continues implementation commits on the same branch until review-ready.
 
 ## Status + context model
 - Keep `status/*.yaml` and `context/*.md` short and factual.
