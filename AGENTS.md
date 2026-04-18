@@ -3,17 +3,14 @@
 ## Scope
 This file applies to the whole repository.
 
-## Operating rules (mandatory)
-1. Work from Git branches only (`main`, `dev/*`, `si/*`, `temp_codex`).
-2. Never use local-only branch `work`.
-3. Push branch changes to `origin` before reporting completion.
-4. `main` is protected truth; changes land through PR.
-5. Keep repository docs minimal and aligned to the RadioScale operating model.
-6. Remove stale/legacy markdown surfaces when they are not execution-relevant.
-7. If blocked, report exact blocker and required owner decision in one line.
+## Central operating truth
+- Canonical operating model: `contracts/repo/STARTVERSION_repo_operating_contract_v1.md`.
+- Do not restate or fork operating doctrine in local docs.
 
-## Branch intent
-- `main`: accepted stable truth
-- `dev/*`: active component implementation
-- `si/*`: orchestration and cross-component control-plane updates
-- `temp_codex`: temporary integration lane for consolidation work
+## Mandatory execution rules
+1. Use Git branches only (`main`, `dev/*`, `si/*`).
+2. `si/*` is governance-only (contracts/process/docs). Product development runs on `dev/*`.
+3. Never use local-only branch `work`.
+4. Push branch changes to `origin` before reporting completion.
+5. `main` is protected truth; land changes through PR.
+6. If blocked, report one explicit blocker and the one owner decision needed.

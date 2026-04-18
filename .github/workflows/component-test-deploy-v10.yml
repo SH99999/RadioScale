@@ -46,17 +46,10 @@ jobs:
           ref: ${{ inputs.git_ref }}
           path: target_ref
 
-      - name: Preflight writable paths on runner host
+      - name: Bootstrap Pi dependencies and paths (repo-controlled)
         shell: bash
         run: |
-          mkdir -p /opt/scale-radio/state
-          mkdir -p "/opt/scale-radio/removed/${{ inputs.component }}"
-          mkdir -p /data/plugins/user_interface
-          mkdir -p /data/configuration/user_interface
-          test -w /opt/scale-radio/state
-          test -w "/opt/scale-radio/removed/${{ inputs.component }}"
-          test -w /data/plugins/user_interface
-          test -w /data/configuration/user_interface
+          bash tools/deploy/pi-bootstrap-v1.sh deploy
 
       - name: Acquire target deploy slot
         id: acquire_slot
