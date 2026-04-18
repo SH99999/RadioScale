@@ -180,11 +180,43 @@ def ensure_issue(entry: IntakeResult, repo: str, token: str) -> str:
     return ""
 
 
+def ensure_pr(branch: str, repo: str, token: str) -> str:
+    owner = repo.split("/")[0]
+    pulls = github_api_request(
+        f"https://api.github.com/repos/{repo}/pulls?state=open&head={owner}:{branch}",
+        token,
+    )
+    if isinstance(pulls, list) and pulls:
+        return pulls[0].get("html_url", "")
+
+    created = github_api_request(
+        f"https://api.github.com/repos/{repo}/pulls",
+        token,
+        payload={
+            "title": f"[autostart] {branch} intake execution",
+            "head": branch,
+            "base": "main",
+            "body": (
+                "Auto-opened by archive handoff routing automation.\n\n"
+                f"- target_branch: `{branch}`\n"
+                "- purpose: immediate development lane visibility (no owner manual start click)\n"
+                "- note: implementation commits are produced by Codex on this branch\n"
+            ),
+            "draft": True,
+        },
+        method="POST",
+    )
+    if isinstance(created, dict):
+        return created.get("html_url", "")
+    return ""
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Consume archive handoff JSON from ops/chat-archive")
     parser.add_argument("--branch", default=ARCHIVE_BRANCH_DEFAULT, help="Archive branch ref")
     parser.add_argument("--json-output", default="", help="Optional path to write routing json")
     parser.add_argument("--auto-issue", action="store_true", help="Create/open issues automatically")
+    parser.add_argument("--auto-pr", action="store_true", help="Ensure draft PR exists for each target dev branch")
     parser.add_argument("--repo", default=os.getenv("GITHUB_REPOSITORY", ""), help="GitHub repo owner/name")
     args = parser.parse_args()
 
@@ -218,24 +250,37 @@ def main() -> int:
             print(f"{file_path} | ERROR: {exc}")
 
     issue_urls: list[str] = []
-    if args.auto_issue and failures == 0:
+    pr_urls: list[str] = []
+    if (args.auto_issue or args.auto_pr) and failures == 0:
         token = os.getenv("GITHUB_TOKEN") or os.getenv("GH_TOKEN")
         if not token:
-            print("ERROR: --auto-issue requires GITHUB_TOKEN/GH_TOKEN")
+            print("ERROR: --auto-issue/--auto-pr requires GITHUB_TOKEN/GH_TOKEN")
             return 2
         if not args.repo:
-            print("ERROR: --auto-issue requires --repo or GITHUB_REPOSITORY")
+            print("ERROR: --auto-issue/--auto-pr requires --repo or GITHUB_REPOSITORY")
             return 2
 
-        for entry in all_entries:
-            try:
-                url = ensure_issue(entry, args.repo, token)
-                if url:
-                    issue_urls.append(url)
-                    print(f"issue: {url}")
-            except urllib.error.HTTPError as exc:
-                failures += 1
-                print(f"issue ERROR ({entry.request_id}/{entry.component}): {exc}")
+        if args.auto_issue:
+            for entry in all_entries:
+                try:
+                    url = ensure_issue(entry, args.repo, token)
+                    if url:
+                        issue_urls.append(url)
+                        print(f"issue: {url}")
+                except urllib.error.HTTPError as exc:
+                    failures += 1
+                    print(f"issue ERROR ({entry.request_id}/{entry.component}): {exc}")
+
+        if args.auto_pr:
+            for branch in sorted({entry.branch for entry in all_entries}):
+                try:
+                    url = ensure_pr(branch, args.repo, token)
+                    if url:
+                        pr_urls.append(url)
+                        print(f"pr: {url}")
+                except urllib.error.HTTPError as exc:
+                    failures += 1
+                    print(f"pr ERROR ({branch}): {exc}")
 
     if args.json_output:
         payload = {
@@ -249,6 +294,7 @@ def main() -> int:
                 for e in all_entries
             ],
             "issue_urls": issue_urls,
+            "pr_urls": pr_urls,
             "failures": failures,
         }
         with open(args.json_output, "w", encoding="utf-8") as fh:

@@ -1,0 +1,42 @@
+name: issue-autostart-v1
+
+on:
+  issues:
+    types: [opened, assigned, reopened, labeled]
+
+permissions:
+  issues: write
+  contents: read
+
+jobs:
+  autostart:
+    if: contains(github.event.issue.labels.*.name, 'status/open') || contains(github.event.issue.labels.*.name, 'status/backlog')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Move issue to in_progress and stamp autostart
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const issue = context.payload.issue;
+            const labels = issue.labels.map(l => l.name).filter(n => n !== 'status/open' && n !== 'status/backlog');
+            if (!labels.includes('status/in_progress')) labels.push('status/in_progress');
+
+            try {
+              await github.rest.issues.update({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issue.number,
+                labels
+              });
+            } catch (e) {
+              core.warning(`label update skipped: ${e.message}`);
+            }
+
+            const componentMatch = issue.body ? issue.body.match(/component:\s*`([^`]+)`/i) : null;
+            const target = componentMatch ? `dev/${componentMatch[1].trim()}` : 'dev/<component>';
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issue.number,
+              body: `Autostart: development queued immediately.\\n\\nTarget branch: \\`${target}\\`\\nSource: issue #${issue.number}`
+            });

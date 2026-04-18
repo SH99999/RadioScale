@@ -1,29 +1,33 @@
 name: archive-handoff-auto-route-v1
 
 on:
-  schedule:
-    - cron: '*/5 * * * *'
   push:
     branches:
-      - main
+      - ops/chat-archive
+    paths:
+      - handoff/open/*.json
+  schedule:
+    - cron: '*/5 * * * *'
   workflow_dispatch:
 
 permissions:
   contents: read
   issues: write
+  pull-requests: write
 
 jobs:
   route-handoff:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout main
+      - name: Checkout main automation truth
         uses: actions/checkout@v4
         with:
+          ref: main
           fetch-depth: 0
 
-      - name: Validate + route archive handoff and auto-create issues
+      - name: Validate + route archive handoff and auto-create issues/PRs
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: ${{ github.repository }}
         run: |
-          python3 tools/intake/consume_archive_handoff_v1.py --auto-issue --repo "$GITHUB_REPOSITORY"
+          python3 tools/intake/consume_archive_handoff_v1.py --auto-issue --auto-pr --repo "$GITHUB_REPOSITORY"

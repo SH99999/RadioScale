@@ -5,7 +5,7 @@ on:
     branches:
       - main
       - dev/**
-      - si/**
+      - si/governance
   pull_request:
 
 jobs:
