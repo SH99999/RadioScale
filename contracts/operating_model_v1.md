@@ -5,7 +5,7 @@ This is the single operating-model truth for this repository.
 ## Branch model
 - `main` is the only truth.
 - Product development runs on `dev/*` (optional `dev/ux`).
-- `si/*` is governance-only and exceptional.
+- `si/governance` is the single governance lane (exceptional, not product development).
 - `ops/chat-archive` is archive/input only, never truth, never merged into `main`.
 - `work` and `temp_*` are invalid branches.
 
@@ -17,13 +17,14 @@ This is the single operating-model truth for this repository.
 - Push to `ops/chat-archive` (`handoff/open/*.json`) auto-routes intake; no manual workflow click is required.
 - Owner does not manually move handoff files between branches.
 - Codex bridges archive intake into implementation flow.
+- issue assignment auto-starts development routing (`issue-autostart-v1`).
 
 ## Status + context model
 - Keep `status/*.yaml` and `context/*.md` short and factual.
 - Allowed status values: `backlog`, `open`, `in_progress`, `on_hold`, `done`.
 
 ## Merge-clean and drift ownership
-- Codex owns keeping branches refreshed/rebased.
+- Codex owns keeping branches refreshed/rebased; `dev-branch-refresh-v1` keeps branch drift down automatically.
 - Codex owns keeping PRs merge-clean before review.
 - Owner should not resolve routine merge conflicts.
 
