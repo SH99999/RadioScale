@@ -1,7 +1,7 @@
 contract_id: path_guard_rules
 version: vmin.1
 status: active
-source_lineage: mediastreamer/contracts/path_guard_rules.yaml
+source_lineage: radioscale/contracts/path_guard_rules.yaml
 objective: minimum deterministic and auditable operating contract for RadioScale
 minimum_rules:
   - main_is_protected_truth_branch

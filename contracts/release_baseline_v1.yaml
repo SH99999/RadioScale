@@ -1,7 +1,7 @@
 contract_id: release_baseline_v1
 version: vmin.1
 status: active
-source_lineage: mediastreamer/contracts/release_baseline_v1.yaml
+source_lineage: radioscale/contracts/release_baseline_v1.yaml
 objective: minimum deterministic and auditable operating contract for RadioScale
 minimum_rules:
   - main_is_protected_truth_branch

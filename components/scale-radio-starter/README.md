@@ -7,8 +7,8 @@ Scale Radio Starter governs the accepted startup/runtime glue baseline for Media
 - governed component: `scale-radio-starter`
 - current work lane: `dev/starter`
 - accepted stable baseline:
-  - `mediastreamer_bootdelay_fix_v0.1.0`
-  - `mediastreamer_hybrid_startup_standby_v0.2.2_stable`
+  - `radioscale_bootdelay_fix_v1.0.0`
+  - `radioscale_hybrid_startup_standby_v1.0.0`
 
 ## Boundaries
 This component owns startup glue, boot handover, and the accepted hybrid runtime control surface.
@@ -17,7 +17,7 @@ It does not own final appliance-grade startup visuals or imply that deep-idle / 
 ## Current focus
 - preserve the accepted stable baseline
 - keep `4004` as preferred handover target and `3000` as fallback
-- keep `mediastreamer-shellctl standby|wake|status` as the runtime control contract
+- keep `radioscale-shellctl standby|wake|status` as the runtime control contract
 - archive later appliance/direct-now-playing variants as nonleading experiments only
 
 ## See also

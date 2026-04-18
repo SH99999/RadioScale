@@ -1,18 +1,9 @@
 # STARTVERSION Contract Stack v1
 
 ## Purpose
-This is the consolidated minimum operational contract set for RadioScale.
+Minimum RadioScale operating contracts for deterministic, auditable, low-admin execution.
 
-Goals:
-- deterministic execution
-- auditable changes
-- team/agent operability
-- minimal process overhead
-
-## Scope
-This stack is the **minimum active contract layer** for day-to-day work. Legacy contracts remain as history/reference unless explicitly re-activated.
-
-## Active STARTVERSION contracts
+## Active contracts (only)
 - `contracts/repo/STARTVERSION_repo_operating_contract_v1.md`
 - `contracts/deployment/STARTVERSION_deployment_contract_v1.md`
 - `contracts/coding/STARTVERSION_coding_contract_v1.md`
@@ -21,21 +12,17 @@ This stack is the **minimum active contract layer** for day-to-day work. Legacy 
 - `contracts/observability/STARTVERSION_observability_contract_v1.md`
 - `contracts/volumio4/STARTVERSION_volumio4_contract_v1.md`
 - `contracts/integration-freeze/STARTVERSION_integration_freeze_contract_v1.md`
-- `Contracts/Integrations/Chatgpt_V1.md`
+- `contracts/integrations/chatgpt_v1.md`
 
-## Operating rule
-If two rules conflict:
-1. STARTVERSION file in the most specific folder wins.
-2. Repo STARTVERSION wins over legacy repo contracts.
-3. If still unclear, escalate to owner decision before merge.
+## Conflict rule
+1. More specific STARTVERSION contract wins.
+2. If still unclear, escalate once to owner.
 
-## Audit minimum
-Every PR using STARTVERSION must include:
+## PR minimum
 - scope summary
-- tests/checks executed
+- executed checks
 - rollback command
-- owner decision required (`accept | changes-requested | reject`)
-
+- owner decision (`accept | changes-requested | reject`)
 
 ## Owner one-click surface
-- `reports/owner/dashboard_v1.html` is the single owner aggregation page for links to workflows, issue queries, and active operating docs.
+- `reports/owner/dashboard_v1.html`

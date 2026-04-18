@@ -1,7 +1,7 @@
 contract_id: components
 version: vmin.1
 status: active
-source_lineage: mediastreamer/contracts/components.yaml
+source_lineage: radioscale/contracts/components.yaml
 objective: minimum deterministic and auditable operating contract for RadioScale
 minimum_rules:
   - main_is_protected_truth_branch

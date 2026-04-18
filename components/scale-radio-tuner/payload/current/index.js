@@ -37,7 +37,7 @@ function ControllerRadioScalePeppy(context) {
   this.stationCachePath = path.join(this.runtimeDir, 'station_cache.json');
   this.rendererReadyPath = path.join(this.runtimeDir, 'renderer_ready.json');
   this.rendererPidPath = path.join(this.runtimeDir, 'renderer.pid');
-  this.sharedOverlayOwnerPath = '/tmp/mediastreamer_active_overlay.json';
+  this.sharedOverlayOwnerPath = '/tmp/radioscale_active_overlay.json';
   this.rendererOwnedByPlugin = false;
   this.stationCache = {};
   this.stationWarmPromises = {};

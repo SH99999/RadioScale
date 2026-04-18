@@ -42,4 +42,4 @@ This release introduces a **resident renderer service** path for Volumio 4.
 ## 1.10.2 resident standby behaviour
 - hidden standby uses idle / deep-idle instead of a running draw loop
 - visible rendering is capped for Pi-friendly operation
-- shared overlay owner marker: `/tmp/mediastreamer_active_overlay.json`
+- shared overlay owner marker: `/tmp/radioscale_active_overlay.json`

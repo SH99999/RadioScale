@@ -1,0 +1,53 @@
+name: Operating Intake
+description: Lean RadioScale work intake (owner/chat/json)
+title: "[intake] "
+labels: ["status/open"]
+body:
+  - type: dropdown
+    id: component
+    attributes:
+      label: Component
+      options:
+        - tuner
+        - bridge
+        - fun-line
+        - starter
+        - autoswitch
+        - hardware
+        - ux
+    validations:
+      required: true
+
+  - type: dropdown
+    id: status
+    attributes:
+      label: Status
+      options:
+        - backlog
+        - open
+        - in_progress
+        - on_hold
+        - done
+    validations:
+      required: true
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+    validations:
+      required: true
+
+  - type: textarea
+    id: constraints
+    attributes:
+      label: Constraints / blockers
+    validations:
+      required: false

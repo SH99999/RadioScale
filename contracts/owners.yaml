@@ -1,7 +1,7 @@
 contract_id: owners
 version: vmin.1
 status: active
-source_lineage: mediastreamer/contracts/owners.yaml
+source_lineage: radioscale/contracts/owners.yaml
 objective: minimum deterministic and auditable operating contract for RadioScale
 minimum_rules:
   - main_is_protected_truth_branch
