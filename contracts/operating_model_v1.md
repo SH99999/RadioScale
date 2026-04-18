@@ -14,6 +14,7 @@ This is the single operating-model truth for this repository.
 - One package may touch multiple components.
 - Owner can hand over directly in Codex chat.
 - Optional file handoff exists on `ops/chat-archive`.
+- Push to `ops/chat-archive` (`handoff/open/*.json`) auto-routes intake; no manual workflow click is required.
 - Owner does not manually move handoff files between branches.
 - Codex bridges archive intake into implementation flow.
 
