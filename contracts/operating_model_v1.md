@@ -17,11 +17,11 @@ This is the single operating-model truth for this repository.
 - Archive intake is auto-routed from `ops/chat-archive` by scheduled workflow (`archive-handoff-auto-route-v1`); no manual workflow click is required.
 - Owner does not manually move handoff files between branches.
 - Codex bridges archive intake into implementation flow.
-- issue assignment auto-starts development routing (`issue-autostart-v1`).
+- Intake automation auto-creates routing issues and ensures a draft PR exists for each target `dev/*` branch.
 
 ## Status + context model
 - Keep `status/*.yaml` and `context/*.md` short and factual.
-- Allowed status values: `backlog`, `open`, `in_progress`, `on_hold`, `done`.
+- Allowed status values are only component-delivery statuses: `backlog`, `open`, `in_progress`, `on_hold`, `done` (no extra chat lifecycle statuses in RadioScale truth).
 
 ## Merge-clean and drift ownership
 - Codex owns keeping branches refreshed/rebased; `dev-branch-refresh-v1` keeps branch drift down automatically.
