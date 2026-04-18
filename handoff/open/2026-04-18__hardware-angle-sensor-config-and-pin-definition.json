@@ -1,0 +1,31 @@
+{
+  "topic": "hardware angle sensor config and pin definition",
+  "created_at_utc": "2026-04-18T00:00:00Z",
+  "summary": "Hardware must support the angle sensor/rotary angle meter. Required configuration options must be provided, GPIO/pin assignments must be defined, and HiFiBerry/Pi pin dependencies must be respected. Pin allocation must be documented in the PR comment and treated as mandatory shared knowledge.",
+  "requests": [
+    {
+      "id": "REQ-001",
+      "component": "hardware",
+      "summary": "Extend the hardware component so it is designed for the angle sensor/rotary angle meter, with required configuration support and defined GPIO/pin assignments.",
+      "constraints": [
+        "provide the necessary configuration for the angle sensor/rotary angle meter",
+        "define the GPIO/pin ports explicitly",
+        "respect dependencies and conflicts with HiFiBerry and other Raspberry Pi pins",
+        "do not create a pin assignment that collides with required existing hardware usage",
+        "pin assignment must be documented in the PR comment",
+        "pin assignment knowledge must be treated as mandatory for all involved contributors"
+      ],
+      "acceptance": [
+        "hardware component includes the required angle-sensor configuration capability",
+        "GPIO/pin assignments are explicitly defined",
+        "HiFiBerry and Raspberry Pi pin conflicts are checked and respected",
+        "the resulting PR includes a clear pin-allocation comment",
+        "the implementation leaves no ambiguity about which pins are reserved and why"
+      ],
+      "depends_on": [],
+      "deploy_required": true,
+      "test_required": true,
+      "asset_refs": []
+    }
+  ]
+}
