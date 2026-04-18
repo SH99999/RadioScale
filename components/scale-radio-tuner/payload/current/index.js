@@ -2938,7 +2938,9 @@ ControllerRadioScalePeppy.prototype.scheduleLockedStationActivation = function (
 
   this.clearPendingActivation();
 
-  const debounceMs = Math.max(25, Math.min(90, this.getNumberConfig('stationActivationDebounceMs', 50)));
+  // Keep activation stable around slider middle transitions: a longer debounce
+  // avoids rapid lock/unlock re-fires while the pointer settles.
+  const debounceMs = Math.max(40, Math.min(220, this.getNumberConfig('stationActivationDebounceMs', 110)));
   this.tuning.pendingActivation = {
     key: station.key,
     scheduledAt: Date.now(),
