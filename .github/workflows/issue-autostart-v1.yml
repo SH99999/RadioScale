@@ -10,21 +10,42 @@ permissions:
 
 jobs:
   autostart:
-    if: contains(github.event.issue.labels.*.name, 'status/open') || contains(github.event.issue.labels.*.name, 'status/backlog')
+    if: startsWith(github.event.issue.title, '[handoff]')
     runs-on: ubuntu-latest
     steps:
-      - name: Move issue to in_progress and stamp autostart
+      - name: Move handoff issue to in_progress and stamp autostart
         uses: actions/github-script@v7
         with:
           script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
             const issue = context.payload.issue;
-            const labels = issue.labels.map(l => l.name).filter(n => n !== 'status/open' && n !== 'status/backlog');
+
+            async function ensureLabel(name, color, description) {
+              try {
+                await github.rest.issues.getLabel({ owner, repo, name });
+              } catch (e) {
+                if (e.status === 404) {
+                  await github.rest.issues.createLabel({ owner, repo, name, color, description });
+                } else {
+                  throw e;
+                }
+              }
+            }
+
+            await ensureLabel('status/open', '0052cc', 'Issue ready for execution.');
+            await ensureLabel('status/in_progress', 'fbca04', 'Issue currently being executed.');
+            await ensureLabel('source/handoff', '0e8a16', 'Created from archive handoff intake.');
+
+            const existing = issue.labels.map(l => l.name);
+            const labels = existing.filter(n => n !== 'status/open' && n !== 'status/backlog');
             if (!labels.includes('status/in_progress')) labels.push('status/in_progress');
+            if (!labels.includes('source/handoff')) labels.push('source/handoff');
 
             try {
               await github.rest.issues.update({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
+                owner,
+                repo,
                 issue_number: issue.number,
                 labels
               });
@@ -32,11 +53,11 @@ jobs:
               core.warning(`label update skipped: ${e.message}`);
             }
 
-            const componentMatch = issue.body ? issue.body.match(/component:\s*`([^`]+)`/i) : null;
-            const target = componentMatch ? `dev/${componentMatch[1].trim()}` : 'dev/<component>';
+            const branchMatch = issue.title.match(/->\s*(dev\/[^\s`]+)/i);
+            const target = branchMatch ? branchMatch[1] : 'dev/<component>';
             await github.rest.issues.createComment({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
+              owner,
+              repo,
               issue_number: issue.number,
-              body: `Autostart: development queued immediately.\\n\\nTarget branch: \\`${target}\\`\\nSource: issue #${issue.number}`
+              body: `Autostart: development queued immediately.\n\nTarget branch: \`${target}\`\nSource: issue #${issue.number}`
             });
