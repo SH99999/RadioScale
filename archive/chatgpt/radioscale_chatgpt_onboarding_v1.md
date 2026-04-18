@@ -1,7 +1,7 @@
 # RadioScale — ChatGPT Onboarding v1
 
 ## Purpose
-Use this file to onboard a new ChatGPT chat for RadioScale.
+Use this file to onboard a new ChatGPT chat for RadioScale. You need the Github connector in the session.
 
 ## Repo truth
 - `main` is the only truth.
