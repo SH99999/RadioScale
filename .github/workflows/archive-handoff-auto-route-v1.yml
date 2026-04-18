@@ -1,11 +1,12 @@
 name: archive-handoff-auto-route-v1
 
 on:
+  schedule:
+    - cron: '*/5 * * * *'
   push:
     branches:
-      - ops/chat-archive
-    paths:
-      - handoff/open/*.json
+      - main
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -15,7 +16,7 @@ jobs:
   route-handoff:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout main
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
