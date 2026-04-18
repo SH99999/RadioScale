@@ -1,5 +1,5 @@
 blank_issues_enabled: false
 contact_links:
   - name: RadioScale Operating Model
-    url: https://github.com/SH99999/RadioScale/blob/main/contracts/repo/STARTVERSION_repo_operating_contract_v1.md
+    url: https://github.com/SH99999/RadioScale/blob/main/contracts/operating_model_v1.md
     about: Read operating rules before opening an issue.

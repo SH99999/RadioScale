@@ -1,7 +1,3 @@
-# Component Agent Notes
+# Component AGENTS
 
-Use central operating truth only:
-- `contracts/repo/STARTVERSION_repo_operating_contract_v1.md`
-- `AGENTS.md` (repo root)
-
-No local workflow/governance/branch/status doctrine is defined here.
+Use only `contracts/operating_model_v1.md` plus this component's local runtime files.

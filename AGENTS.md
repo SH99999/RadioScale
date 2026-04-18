@@ -1,15 +1,10 @@
-# AGENTS.md (RadioScale)
+# AGENTS (RadioScale)
 
-## Scope
-This file applies to the whole repository.
+Central truth: `contracts/operating_model_v1.md`.
 
-## Central operating truth
-Use only:
-- `contracts/repo/STARTVERSION_repo_operating_contract_v1.md`
-
-Do not restate or fork operating doctrine in local docs.
-
-## Mandatory execution minimum
-1. Work only on Git branches and push before reporting done.
-2. Never use `work` or `temp_*` branches.
-3. If blocked, report one explicit blocker and one owner decision needed.
+Mandatory:
+- `main` is truth.
+- Product delivery runs on `dev/*` (optional `dev/ux`).
+- `si/*` is governance-only.
+- No fake delivery.
+- Blockers must be explicit.

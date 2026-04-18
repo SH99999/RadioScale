@@ -1,8 +1,3 @@
 # Component AGENTS
 
-Component work follows the central operating model:
-- `contracts/repo/STARTVERSION_repo_operating_contract_v1.md`
-- `AGENTS.md` (repo root)
-
-Local component notes belong only in component README/runtime files.
-Do not define local operating-model variants here.
+Use only `contracts/operating_model_v1.md` plus this component's local runtime files.
