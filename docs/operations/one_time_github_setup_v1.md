@@ -27,3 +27,14 @@ Do this once.
 5. Commit once on `ops/chat-archive`.
 
 `ops/chat-archive` is archive/input only and is never merged into `main`.
+
+
+## Keep archive branch automation file present (one time)
+1. Open **Pull requests**.
+2. Click **New pull request**.
+3. Set **base** = `ops/chat-archive` and **compare** = `main`.
+4. Click **Create pull request**.
+5. Click **Merge pull request**.
+6. Click **Confirm merge**.
+
+Why: push-trigger workflows run from the branch that receives the push. This one-time sync makes sure `ops/chat-archive` has the workflow file.
