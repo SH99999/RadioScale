@@ -1,0 +1,65 @@
+{
+  "topic": "hardware plugin naming and global RadioScale call standard",
+  "created_at_utc": "2026-04-18T00:00:00Z",
+  "summary": "The hardware plugin needs a proper project-fit name, must expose existing RadioScale functions as selectable targets, and requires a global standard for function/call naming across components.",
+  "requests": [
+    {
+      "id": "REQ-001",
+      "component": "hardware",
+      "summary": "Choose and implement an adequate project-consistent name for the new hardware plugin instead of leaving naming implicit or ad hoc.",
+      "constraints": [
+        "name must fit the RadioScale project model",
+        "naming must be intentional and stable, not temporary",
+        "plugin remains installable as a plugin"
+      ],
+      "acceptance": [
+        "hardware plugin has a clear project-fit name",
+        "name is used consistently in repo-facing implementation and documentation",
+        "no temporary or placeholder naming remains"
+      ],
+      "depends_on": [],
+      "deploy_required": false,
+      "test_required": false,
+      "asset_refs": []
+    },
+    {
+      "id": "REQ-002",
+      "components": ["hardware", "bridge", "tuner", "fun-line"],
+      "summary": "Make already existing RadioScale functions available as selectable targets/options in the hardware plugin where applicable.",
+      "constraints": [
+        "existing RadioScale functions should already be available for selection where they exist",
+        "Codex must determine the exact repo-truth mapping of available functions per component",
+        "selection model must tolerate missing components safely"
+      ],
+      "acceptance": [
+        "hardware plugin exposes applicable existing RadioScale functions as selectable targets",
+        "selection options are based on real repo-truth functions rather than ad hoc guesses",
+        "missing components do not break runtime behavior"
+      ],
+      "depends_on": [],
+      "deploy_required": true,
+      "test_required": true,
+      "asset_refs": []
+    },
+    {
+      "id": "REQ-003",
+      "components": ["hardware", "bridge", "tuner", "fun-line", "starter", "autoswitch"],
+      "summary": "Define and apply a global RadioScale standard for function names, calls, and invocation targets across components.",
+      "constraints": [
+        "this must be a global standard, not a hardware-local convention",
+        "component alignment is required before locking the standard",
+        "standard must cover naming of functions, calls, and invocation targets/events where relevant",
+        "standardization must reduce ambiguity between components"
+      ],
+      "acceptance": [
+        "one explicit global naming/call standard is defined",
+        "affected components are aligned to that standard or have a clear migration path",
+        "function/call naming is no longer component-specific drift"
+      ],
+      "depends_on": [],
+      "deploy_required": false,
+      "test_required": true,
+      "asset_refs": []
+    }
+  ]
+}
