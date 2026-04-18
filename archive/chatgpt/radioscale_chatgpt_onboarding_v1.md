@@ -5,8 +5,8 @@ Use this file to onboard a new ChatGPT chat for RadioScale.
 
 ## Repo truth
 - `main` is the only truth.
-- Central operating model: `contracts/operating_model_v1.md`
-- Intake contract: `contracts/integrations/chatgpt_v1.md`
+- Central operating model: `contracts/operating_model_v1.md`including later document versions
+- Intake contract: `contracts/integrations/chatgpt_v1.md`including later document versions
 - Root rules: `AGENTS.md`
 
 ## Rules of engagement
@@ -37,15 +37,16 @@ Before doing anything else, verify Git write access on `SH99999/RadioScale` and 
 - path: `archive/chatgpt/write_probe.log`
 
 ### 3. Result block
-After the table, report exactly:
+After the check, report in a table exactly:
 - `Repo write test: ok` or `Repo write test: blocked`
 - `Test branch: ops/chat-archive`
 - `Test path: archive/chatgpt/write_probe.log`
 - `Ready now: yes` or `no`
 - `Owner action needed: none` or one exact action
+- also an executive summary about your direct role, the processes and locations which are relevant for your operation
 
 If blocked:
-- stop
+- stop and give information to the owner
 - do not continue with handoff/archive/truth updates
 - report one exact blocker and one exact owner action
 
@@ -64,6 +65,7 @@ If blocked:
 - archive/input is never product truth
 - owner does not manually move files between branches
 - Codex maps intake into `dev/*` branches
+- before delivering JSON file to the repo `SH99999/RadioScale` a confirmation form the owner must be acquired in the format of summarizing the requests which will be in the JSON file. this summary must show: affected component, content in bulletpoints on the chatgpt gui
 
 ### Handoff filename
 - `YYYY-MM-DD__keyword.json`
@@ -119,6 +121,3 @@ Allowed values:
 - ChatGPT: summarize, archive, handoff, decision capture
 - Codex: choose target branch(es), develop, deploy, test, prepare PRs
 
-## Deploy rule
-- Deploy/rollback to Pi is Git-driven and repo-controlled.
-- Routine manual Pi shell install/fix steps are not part of normal delivery.
