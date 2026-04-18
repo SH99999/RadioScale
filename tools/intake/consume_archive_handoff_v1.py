@@ -2,15 +2,20 @@
 """Bridge archive handoff intake into active development routing.
 
 Reads JSON handoff files from origin/ops/chat-archive:handoff/open/, validates
-minimum fields, and prints deterministic routing hints for dev/* branches.
+minimum fields, normalizes component aliases, and emits deterministic routing
+entries for dev/* branches.
 """
 
 from __future__ import annotations
 
 import argparse
 import json
+import os
 import subprocess
 import sys
+import urllib.error
+import urllib.parse
+import urllib.request
 from dataclasses import dataclass
 from typing import Iterable
 
@@ -26,6 +31,20 @@ REQUIRED_FIELDS = {
     "test_required",
     "asset_refs",
 }
+COMPONENT_ALIASES = {
+    "scale": "bridge",
+    "radio-scale": "bridge",
+    "radio_scale": "bridge",
+}
+KNOWN_COMPONENTS = {
+    "tuner",
+    "bridge",
+    "fun-line",
+    "starter",
+    "autoswitch",
+    "hardware",
+    "ux",
+}
 
 
 @dataclass
@@ -34,6 +53,9 @@ class IntakeResult:
     request_id: str
     component: str
     branch: str
+    summary: str
+    acceptance: str
+    constraints: str
 
 
 def run_git(*args: str) -> str:
@@ -59,11 +81,19 @@ def normalize_components(request: dict) -> Iterable[str]:
         yield str(comp)
 
 
-def to_branch(component: str) -> str:
+def canonical_component(component: str) -> str:
     normalized = component.strip().lower().replace("_", "-")
-    if normalized == "ux":
-        return "dev/ux"
-    return f"dev/{normalized}"
+    return COMPONENT_ALIASES.get(normalized, normalized)
+
+
+def to_branch(component: str) -> str:
+    canon = canonical_component(component)
+    if canon not in KNOWN_COMPONENTS:
+        raise ValueError(
+            f"unknown component '{component}' (canonical '{canon}'). "
+            f"Known: {', '.join(sorted(KNOWN_COMPONENTS))}"
+        )
+    return "dev/ux" if canon == "ux" else f"dev/{canon}"
 
 
 def validate_request(request: dict) -> None:
@@ -85,20 +115,77 @@ def parse_handoff(path: str, text: str) -> list[IntakeResult]:
         validate_request(req)
         request_id = str(req["id"])
         for comp in normalize_components(req):
+            canon = canonical_component(comp)
             routed.append(
                 IntakeResult(
                     file_path=path,
                     request_id=request_id,
-                    component=comp,
+                    component=canon,
                     branch=to_branch(comp),
+                    summary=str(req.get("summary", "")).strip(),
+                    acceptance=str(req.get("acceptance", "")).strip(),
+                    constraints=str(req.get("constraints", "")).strip(),
                 )
             )
     return routed
 
 
+def github_api_request(url: str, token: str, payload: dict | None = None, method: str = "GET") -> dict | list:
+    data = None
+    if payload is not None:
+        data = json.dumps(payload).encode("utf-8")
+    req = urllib.request.Request(
+        url,
+        data=data,
+        method=method,
+        headers={
+            "Authorization": f"Bearer {token}",
+            "Accept": "application/vnd.github+json",
+            "Content-Type": "application/json",
+        },
+    )
+    with urllib.request.urlopen(req) as resp:  # noqa: S310
+        raw = resp.read().decode("utf-8")
+        if not raw:
+            return {}
+        return json.loads(raw)
+
+
+def ensure_issue(entry: IntakeResult, repo: str, token: str) -> str:
+    title = f"[handoff] {entry.request_id} -> {entry.branch}"
+    q = urllib.parse.quote(f'repo:{repo} is:issue is:open in:title "{title}"')
+    search_url = f"https://api.github.com/search/issues?q={q}"
+    found = github_api_request(search_url, token)
+    items = found.get("items", []) if isinstance(found, dict) else []
+    if items:
+        return items[0].get("html_url", "")
+
+    body = (
+        f"source_handoff: `{entry.file_path}`\n"
+        f"request_id: `{entry.request_id}`\n"
+        f"target_branch: `{entry.branch}`\n"
+        f"component: `{entry.component}`\n\n"
+        f"summary:\n{entry.summary or '-'}\n\n"
+        f"acceptance:\n{entry.acceptance or '-'}\n\n"
+        f"constraints:\n{entry.constraints or '-'}\n"
+    )
+    created = github_api_request(
+        f"https://api.github.com/repos/{repo}/issues",
+        token,
+        payload={"title": title, "body": body},
+        method="POST",
+    )
+    if isinstance(created, dict):
+        return created.get("html_url", "")
+    return ""
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Consume archive handoff JSON from ops/chat-archive")
     parser.add_argument("--branch", default=ARCHIVE_BRANCH_DEFAULT, help="Archive branch ref")
+    parser.add_argument("--json-output", default="", help="Optional path to write routing json")
+    parser.add_argument("--auto-issue", action="store_true", help="Create/open issues automatically")
+    parser.add_argument("--repo", default=os.getenv("GITHUB_REPOSITORY", ""), help="GitHub repo owner/name")
     args = parser.parse_args()
 
     try:
@@ -116,17 +203,59 @@ def main() -> int:
     print("===========================")
 
     failures = 0
+    all_entries: list[IntakeResult] = []
     for file_path in files:
         try:
             routed = parse_handoff(file_path, get_file_text(args.branch, file_path))
+            all_entries.extend(routed)
             for entry in routed:
-                print(f"{entry.file_path} | request={entry.request_id} | component={entry.component} | target_branch={entry.branch}")
+                print(
+                    f"{entry.file_path} | request={entry.request_id} | component={entry.component} | "
+                    f"target_branch={entry.branch}"
+                )
         except Exception as exc:  # noqa: BLE001
             failures += 1
             print(f"{file_path} | ERROR: {exc}")
 
+    issue_urls: list[str] = []
+    if args.auto_issue and failures == 0:
+        token = os.getenv("GITHUB_TOKEN") or os.getenv("GH_TOKEN")
+        if not token:
+            print("ERROR: --auto-issue requires GITHUB_TOKEN/GH_TOKEN")
+            return 2
+        if not args.repo:
+            print("ERROR: --auto-issue requires --repo or GITHUB_REPOSITORY")
+            return 2
+
+        for entry in all_entries:
+            try:
+                url = ensure_issue(entry, args.repo, token)
+                if url:
+                    issue_urls.append(url)
+                    print(f"issue: {url}")
+            except urllib.error.HTTPError as exc:
+                failures += 1
+                print(f"issue ERROR ({entry.request_id}/{entry.component}): {exc}")
+
+    if args.json_output:
+        payload = {
+            "entries": [
+                {
+                    "file_path": e.file_path,
+                    "request_id": e.request_id,
+                    "component": e.component,
+                    "branch": e.branch,
+                }
+                for e in all_entries
+            ],
+            "issue_urls": issue_urls,
+            "failures": failures,
+        }
+        with open(args.json_output, "w", encoding="utf-8") as fh:
+            json.dump(payload, fh, indent=2)
+
     if failures:
-        print(f"Completed with {failures} invalid handoff file(s).")
+        print(f"Completed with {failures} failure(s).")
         return 1
 
     print("Completed with all handoff files validated and routed.")

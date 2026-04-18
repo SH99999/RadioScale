@@ -1,0 +1,28 @@
+name: archive-handoff-auto-route-v1
+
+on:
+  push:
+    branches:
+      - ops/chat-archive
+    paths:
+      - handoff/open/*.json
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  route-handoff:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Validate + route archive handoff and auto-create issues
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: |
+          python3 tools/intake/consume_archive_handoff_v1.py --auto-issue --repo "$GITHUB_REPOSITORY"
