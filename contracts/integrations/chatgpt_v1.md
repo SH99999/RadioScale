@@ -1,19 +1,20 @@
 # ChatGPT/Codex Intake Contract v1 (RadioScale)
 
 ## Purpose
-Define lightweight intake from owner/ChatGPT into Codex execution.
+Define minimal intake into Codex execution.
 
 ## Source of truth
-- Operating doctrine and statuses are defined only in `contracts/repo/STARTVERSION_repo_operating_contract_v1.md`.
-- This file defines intake interface only.
+Operating doctrine and statuses are defined only in `contracts/repo/STARTVERSION_repo_operating_contract_v1.md`.
+This file defines intake interface only.
 
 ## Intake sources
 - owner direct in Codex chat
-- one JSON handover file in `handoff/open/`
+- one JSON handoff file on archive branch `ops/chat-archive` under `handoff/open/`
 
 ## Intake payload rule
-- One handover JSON may contain multiple requests.
-- Codex decides target component branch mapping.
+- One handoff JSON may contain multiple requests.
+- Codex decides target component branch mapping and implementation split.
+- Codex runs `tools/intake/consume_archive_handoff_v1.py` to bridge archive input into active development flow.
 
 ## Request minimum fields
 - `id`
@@ -27,6 +28,8 @@ Define lightweight intake from owner/ChatGPT into Codex execution.
 - `asset_refs`
 
 ## Constraints
+- Archive branch data is input/archive only and never product truth.
+- Owner must not manually shuttle handoff files between branches.
 - no fake delivery
 - no hidden partial truth
 - blockers must be explicit

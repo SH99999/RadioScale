@@ -1,0 +1,18 @@
+name: pr-merge-clean-v1
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  merge-clean:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Verify PR branch is merge-clean and up to date with main
+        run: bash tools/ci/check_pr_merge_clean_v1.sh main
