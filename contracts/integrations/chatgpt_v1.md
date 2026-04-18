@@ -1,25 +1,30 @@
 # ChatGPT/Codex Intake Contract v1 (RadioScale)
 
 ## Purpose
-Define minimal, deterministic intake/routing for owner + ChatGPT + Codex.
+Define lightweight intake from owner/ChatGPT into Codex execution.
 
-## Truth order
-1. repo contracts
-2. branch commits and PR state
-3. issue state/comments
+## Source of truth
+- Operating doctrine and statuses are defined only in `contracts/repo/STARTVERSION_repo_operating_contract_v1.md`.
+- This file defines intake interface only.
 
 ## Intake sources
 - owner direct in Codex chat
-- JSON handover in `handoff/open/`
+- one JSON handover file in `handoff/open/`
 
-## Routing model
-- Codex maps each request to target branch/component.
-- One intake may contain multiple component requests.
-- Statuses: `backlog`, `open`, `in_progress`, `on_hold`, `done`.
+## Intake payload rule
+- One handover JSON may contain multiple requests.
+- Codex decides target component branch mapping.
 
-## Done evidence (required)
-- `test_evidence`
-- `rollback_evidence`
+## Request minimum fields
+- `id`
+- `component` or `components`
+- `summary`
+- `constraints`
+- `acceptance`
+- `depends_on`
+- `deploy_required`
+- `test_required`
+- `asset_refs`
 
 ## Constraints
 - no fake delivery

@@ -6,7 +6,6 @@ on:
       - main
       - dev/**
       - si/**
-      - temp_codex
   pull_request:
 
 jobs:

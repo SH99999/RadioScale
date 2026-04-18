@@ -41,11 +41,10 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Preflight writable paths on runner host
+      - name: Bootstrap Pi state path (repo-controlled)
         shell: bash
         run: |
-          mkdir -p /opt/scale-radio/state
-          test -w /opt/scale-radio/state
+          bash tools/deploy/pi-bootstrap-v1.sh state
 
       - name: Release target test slot
         shell: bash
