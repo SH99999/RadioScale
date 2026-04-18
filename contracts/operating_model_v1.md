@@ -14,7 +14,7 @@ This is the single operating-model truth for this repository.
 - One package may touch multiple components.
 - Owner can hand over directly in Codex chat.
 - Optional file handoff exists on `ops/chat-archive`.
-- Archive intake is auto-routed by `archive-handoff-auto-route-v1` on a 5-minute scheduler from `main`; no manual workflow click is required.
+- Archive intake is auto-routed by `archive-handoff-auto-route-v1` on a 1-minute scheduler from `main`; no manual workflow click is required.
 - Owner does not manually move handoff files between branches.
 - Codex bridges archive intake into implementation flow.
 - Intake automation auto-creates routing issues and ensures a draft PR exists for each target `dev/*` branch.

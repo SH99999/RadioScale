@@ -23,7 +23,7 @@ Operating rules live only in `contracts/operating_model_v1.md`.
 - archive branch content is input/archive only, never product truth
 - owner does not shuttle files between branches
 - Codex maps intake into `dev/*` implementation branches
-- workflow `.github/workflows/archive-handoff-auto-route-v1.yml` runs every 5 minutes from `main`, reads `ops/chat-archive` `handoff/open/*.json`, then auto-creates routing issues and draft PRs for target `dev/*` branches
+- workflow `.github/workflows/archive-handoff-auto-route-v1.yml` runs every 1 minute from `main`, reads `ops/chat-archive` `handoff/open/*.json`, then auto-creates routing issues and draft PRs for target `dev/*` branches
 
 ## Lean status boundary
 - `ready-for-codex` is not part of RadioScale operating truth.
