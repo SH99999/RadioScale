@@ -283,6 +283,9 @@ def main() -> int:
                     if exc.code == 422 and ("No commits between" in body or "A pull request already exists" in body or "no history in common" in body.lower()):
                         print(f"pr SKIP ({branch}): {exc.code} {body.strip()}")
                         continue
+                    if exc.code == 403 and "not permitted to create or approve pull requests" in body:
+                        print(f"pr SKIP ({branch}): {exc.code} {body.strip()}")
+                        continue
                     failures += 1
                     print(f"pr ERROR ({branch}): {exc} {body.strip()}")
 
