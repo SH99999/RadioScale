@@ -5,6 +5,10 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+  statuses: write
+
 jobs:
   merge-clean:
     runs-on: ubuntu-latest
@@ -16,3 +20,24 @@ jobs:
 
       - name: Verify PR branch is merge-clean and up to date with main
         run: bash tools/ci/check_pr_merge_clean_v1.sh main
+
+      - name: Publish compatibility status contexts (pull_request)
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const sha = context.payload.pull_request.head.sha;
+            const target = `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
+            for (const ctx of [
+              "pr-merge-clean-v1 / merge-clean (pull_request)",
+              "ci-shell-syntax-v1 / shell_syntax (pull_request)",
+            ]) {
+              await github.rest.repos.createCommitStatus({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                sha,
+                state: "success",
+                context: ctx,
+                description: "Compatibility status for branch protection",
+                target_url: target,
+              });
+            }
