@@ -6,14 +6,22 @@ on:
 
 permissions:
   issues: write
-  contents: read
+  contents: write
+  pull-requests: write
 
 jobs:
   autostart:
     if: startsWith(github.event.issue.title, '[handoff]')
     runs-on: ubuntu-latest
+    outputs:
+      issue_number: ${{ steps.meta.outputs.issue_number }}
+      issue_title: ${{ steps.meta.outputs.issue_title }}
+      target_branch: ${{ steps.meta.outputs.target_branch }}
+      repo_owner: ${{ steps.meta.outputs.repo_owner }}
+      repo_name: ${{ steps.meta.outputs.repo_name }}
     steps:
       - name: Move handoff issue to in_progress and stamp autostart
+        id: meta
         uses: actions/github-script@v7
         with:
           script: |
@@ -43,12 +51,7 @@ jobs:
             if (!labels.includes('source/handoff')) labels.push('source/handoff');
 
             try {
-              await github.rest.issues.update({
-                owner,
-                repo,
-                issue_number: issue.number,
-                labels
-              });
+              await github.rest.issues.update({ owner, repo, issue_number: issue.number, labels });
             } catch (e) {
               core.warning(`label update skipped: ${e.message}`);
             }
@@ -60,4 +63,100 @@ jobs:
               repo,
               issue_number: issue.number,
               body: `Autostart: development queued immediately.\n\nTarget branch: \`${target}\`\nSource: issue #${issue.number}`
+            });
+
+            core.setOutput('issue_number', String(issue.number));
+            core.setOutput('issue_title', issue.title);
+            core.setOutput('target_branch', target);
+            core.setOutput('repo_owner', owner);
+            core.setOutput('repo_name', repo);
+
+  kickoff_commit:
+    if: needs.autostart.outputs.target_branch != '' && startsWith(needs.autostart.outputs.target_branch, 'dev/')
+    needs: autostart
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout target branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.autostart.outputs.target_branch }}
+          fetch-depth: 0
+
+      - name: Create execution kickoff artifact and commit
+        id: kickoff
+        shell: bash
+        run: |
+          ISSUE_NO='${{ needs.autostart.outputs.issue_number }}'
+          ISSUE_TITLE='${{ needs.autostart.outputs.issue_title }}'
+          TARGET='${{ needs.autostart.outputs.target_branch }}'
+          mkdir -p .codex/execution
+          FILE=".codex/execution/issue-${ISSUE_NO}.md"
+          NOW="$(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+          {
+            echo "# Issue ${ISSUE_NO} kickoff"
+            echo
+            echo "- status: in_progress"
+            echo "- started_at_utc: ${NOW}"
+            echo "- target_branch: ${TARGET}"
+            echo "- issue_title: ${ISSUE_TITLE}"
+            echo "- issue_url: https://github.com/${{ github.repository }}/issues/${ISSUE_NO}"
+          } > "$FILE"
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "$FILE"
+          if git diff --cached --quiet; then
+            echo "commit_sha=" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          git commit -m "autostart: kickoff issue #${ISSUE_NO} on ${TARGET}"
+          git push origin "HEAD:${TARGET}"
+          SHA="$(git rev-parse HEAD)"
+          echo "commit_sha=${SHA}" >> "$GITHUB_OUTPUT"
+
+      - name: Ensure draft PR exists for target branch
+        id: ensure_pr
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const branch = '${{ needs.autostart.outputs.target_branch }}';
+            const issueNo = '${{ needs.autostart.outputs.issue_number }}';
+            const pulls = await github.rest.pulls.list({ owner, repo, state: 'open', head: `${owner}:${branch}` });
+            if (pulls.data.length > 0) {
+              core.setOutput('pr_url', pulls.data[0].html_url);
+              return;
+            }
+            const created = await github.rest.pulls.create({
+              owner,
+              repo,
+              title: `[autostart] ${branch} execution for issue #${issueNo}`,
+              head: branch,
+              base: 'main',
+              body: `Auto-opened from handoff issue #${issueNo}.`,
+              draft: true
+            });
+            core.setOutput('pr_url', created.data.html_url);
+
+      - name: Link commit + PR back to issue
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const issueNumber = Number('${{ needs.autostart.outputs.issue_number }}');
+            const sha = '${{ steps.kickoff.outputs.commit_sha }}';
+            const prUrl = '${{ steps.ensure_pr.outputs.pr_url }}';
+            const branch = '${{ needs.autostart.outputs.target_branch }}';
+            const lines = [
+              `Execution kickoff branch: \`${branch}\``,
+              sha ? `Kickoff commit: https://github.com/${owner}/${repo}/commit/${sha}` : 'Kickoff commit: no file delta (already present)',
+              prUrl ? `Draft PR: ${prUrl}` : 'Draft PR: not available'
+            ];
+            await github.rest.issues.createComment({
+              owner,
+              repo,
+              issue_number: issueNumber,
+              body: lines.join('\n')
             });
