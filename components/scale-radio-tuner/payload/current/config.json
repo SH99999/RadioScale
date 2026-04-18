@@ -160,7 +160,7 @@
     "type": "boolean"
   },
   "stationActivationDebounceMs": {
-    "value": 50,
+    "value": 110,
     "type": "number"
   },
   "stationActivationCooldownMs": {
