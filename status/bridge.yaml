@@ -1,0 +1,4 @@
+component: bridge
+status: open
+branch: dev/bridge
+summary: Active development lane for bridge runtime and plugin deployment.

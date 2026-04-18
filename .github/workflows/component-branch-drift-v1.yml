@@ -1,0 +1,17 @@
+name: component-branch-drift-v1
+
+on:
+  schedule:
+    - cron: '23 * * * *'
+  workflow_dispatch:
+
+jobs:
+  drift-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Check component branch drift
+        run: bash tools/ci/check_component_drift_v1.sh

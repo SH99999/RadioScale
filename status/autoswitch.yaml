@@ -1,0 +1,4 @@
+component: autoswitch
+status: backlog
+branch: dev/autoswitch
+summary: Autoswitch work remains queued until dependency signals are ready.

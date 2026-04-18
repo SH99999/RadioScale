@@ -1,0 +1,4 @@
+component: hardware
+status: backlog
+branch: dev/hardware
+summary: Hardware-specific improvements queued for next implementation package.
