@@ -1,0 +1,26 @@
+{
+  "topic": "scale and tuner activation slider shows middle state after installation",
+  "created_at_utc": "2026-04-18T00:00:00Z",
+  "summary": "After installation of scale and tuner, the plugin activation slider on the plugin page shows an intermediate/middle state instead of clear on/off.",
+  "requests": [
+    {
+      "id": "REQ-001",
+      "components": ["scale", "tuner"],
+      "summary": "Investigate and fix the post-install plugin activation state so the plugin page slider no longer shows an in-between state after installation.",
+      "constraints": [
+        "preserve exact user-observed symptom: slider shows middle state, not on and not off",
+        "Codex must determine the correct internal component/branch mapping if repo naming differs from owner wording",
+        "fix should work after installation without manual corrective steps on the Pi shell"
+      ],
+      "acceptance": [
+        "after installation, the plugin page activation slider shows a valid stable state",
+        "state is clearly on or clearly off, never intermediate",
+        "state remains consistent after install/enable flow"
+      ],
+      "depends_on": [],
+      "deploy_required": true,
+      "test_required": true,
+      "asset_refs": []
+    }
+  ]
+}
