@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>RadioScale Owner Dashboard v1</title>
+  <style>
+    body { font-family: Inter, Arial, sans-serif; margin: 0; background: #0b1220; color: #e6edf6; }
+    .wrap { max-width: 980px; margin: 0 auto; padding: 24px; }
+    h1 { margin: 0 0 12px; }
+    .grid { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+    .card { background: #111a2e; border: 1px solid #223150; border-radius: 10px; padding: 14px; }
+    a { color: #7cc4ff; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    code { background: #0e1627; padding: 2px 6px; border-radius: 6px; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>RadioScale Owner Dashboard v1</h1>
+    <p>One-click links for operations, decisions, status, and GitHub issue views.</p>
+
+    <div class="grid">
+      <div class="card">
+        <h3>Operations</h3>
+        <ul>
+          <li><a href="../../docs/operations/autodeploy_and_rollout_v1.md">Autodeploy &amp; Rollout Runbook</a></li>
+          <li><a href="https://github.com/SH99999/RadioScale/actions/workflows/component-test-deploy-v10.yml">Run Deploy Workflow</a></li>
+          <li><a href="https://github.com/SH99999/RadioScale/actions/workflows/component-test-rollback-v10.yml">Run Rollback Workflow</a></li>
+          <li><a href="https://github.com/SH99999/RadioScale/actions/workflows/component-test-release-slot-v3.yml">Run Slot Release Workflow</a></li>
+                  <li><a href="https://github.com/SH99999/RadioScale/issues/new?template=operating-intake.yml">Operating Intake Template</a></li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Issue Views (URL Query)</h3>
+        <ul>
+          <li><a href="https://github.com/SH99999/RadioScale/issues?q=is%3Aissue+is%3Aopen+label%3Acomponent%2Ftuner">Open Tuner Issues</a></li>
+          <li><a href="https://github.com/SH99999/RadioScale/issues?q=is%3Aissue+is%3Aopen+label%3Acomponent%2Fbridge">Open Bridge Issues</a></li>
+          <li><a href="https://github.com/SH99999/RadioScale/issues?q=is%3Aissue+is%3Aopen+label%3Acomponent%2Ffun-line">Open Fun-Line Issues</a></li>
+          <li><a href="https://github.com/SH99999/RadioScale/issues?q=is%3Aissue+is%3Aopen+label%3Astatus%2Fon_hold">On Hold Issues</a></li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Governance & Contracts</h3>
+        <ul>
+          <li><a href="../../contracts/STARTVERSION_contract_stack_v1.md">STARTVERSION Contract Stack</a></li>
+          <li><a href="../../contracts/repo/STARTVERSION_repo_operating_contract_v1.md">Repo Operating Contract</a></li>
+          <li><a href="../../contracts/integrations/chatgpt_v1.md">ChatGPT Integration Contract</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <p style="margin-top:16px;">Truth rule: <code>main</code> is accepted truth. Development happens on <code>dev/*</code> or scoped <code>si/*</code> branches.</p>
+  </div>
+</body>
+</html>

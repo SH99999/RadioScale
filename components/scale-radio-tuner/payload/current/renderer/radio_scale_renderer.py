@@ -15,7 +15,7 @@ playback handling.
 Release 1.10.2 keeps the resident renderer path but hardens it for
 shared-overlay appliance use. Hidden standby becomes true deep idle with no
 draw loop, visible mode is capped to a Pi-friendly frame rate, and the
-renderer honours `/tmp/mediastreamer_active_overlay.json` so other overlays
+renderer honours `/tmp/radioscale_active_overlay.json` so other overlays
 (such as fun_linea) can force Scale FM into deep idle without changing any
 existing public call methods or service paths.
 """
@@ -48,7 +48,7 @@ SETTINGS_PATH = RUNTIME_DIR / 'settings.json'
 STATE_PATH = RUNTIME_DIR / 'state.json'
 READY_PATH = RUNTIME_DIR / 'renderer_ready.json'
 PID_PATH = RUNTIME_DIR / 'renderer.pid'
-OWNER_PATH = Path('/tmp/mediastreamer_active_overlay.json')
+OWNER_PATH = Path('/tmp/radioscale_active_overlay.json')
 THEMES_DIR = PLUGIN_DIR / 'renderer' / 'themes'
 
 RUNNING = True

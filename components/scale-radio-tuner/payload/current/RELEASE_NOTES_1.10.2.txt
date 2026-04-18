@@ -8,7 +8,7 @@ Highlights
 - no full redraw while hidden
 - coarse hidden runtime reload cadence to minimise CPU load
 - hard visible FPS cap for Pi-friendly rendering
-- shared overlay owner marker support via `/tmp/mediastreamer_active_overlay.json`
+- shared overlay owner marker support via `/tmp/radioscale_active_overlay.json`
 - public call methods unchanged
 - resident service path unchanged
 - classic spawn fallback kept intact

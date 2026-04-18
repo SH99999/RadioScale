@@ -9,7 +9,7 @@ Scope of this release
 - Runtime JSON reload cadence is coarse while hidden to keep CPU load minimal.
 - Visible rendering is hard-capped to a Pi-friendly frame rate.
 - Scale FM now also honours the shared overlay owner marker:
-  `/tmp/mediastreamer_active_overlay.json`
+  `/tmp/radioscale_active_overlay.json`
 - Existing public call methods stay unchanged:
   `gpio13OpenScale`, `encoder1ShortPress`, `encoder1LongPress`,
   `setScaleMode`, `setNormalMode`, `getControlStatus`
@@ -103,7 +103,7 @@ GPIO reference used by the current project
 Shared overlay owner marker
 ---------------------------
 Marker file:
-- `/tmp/mediastreamer_active_overlay.json`
+- `/tmp/radioscale_active_overlay.json`
 
 Owner semantics:
 - `owner = scale_fm`  -> Scale FM may render actively
