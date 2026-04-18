@@ -1,6 +1,11 @@
 name: archive-handoff-auto-route-v1
 
 on:
+  push:
+    branches:
+      - ops/chat-archive
+    paths:
+      - 'handoff/open/*.json'
   schedule:
     - cron: '*/1 * * * *'
   workflow_dispatch:

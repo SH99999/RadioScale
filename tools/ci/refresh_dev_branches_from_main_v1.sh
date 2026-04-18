@@ -11,7 +11,7 @@ is_excluded() {
   return 1
 }
 
-git fetch origin main 'dev/*' --quiet
+git fetch origin main '+refs/heads/dev/*:refs/remotes/origin/dev/*' --quiet
 
 while IFS= read -r ref; do
   branch="${ref#origin/}"

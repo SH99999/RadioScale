@@ -23,7 +23,7 @@ Operating rules live only in `contracts/operating_model_v1.md`.
 - archive branch content is input/archive only, never product truth
 - owner does not shuttle files between branches
 - Codex maps intake into `dev/*` implementation branches
-- `archive-handoff-auto-route-v1` runs every minute from `main`, reads `ops/chat-archive/handoff/open/*.json`, and creates/updates routing issues
+- `archive-handoff-auto-route-v1` runs on `push` to `ops/chat-archive/handoff/open/*.json` and also every minute from `main`; it reads archive handoff JSONs and creates/updates routing issues
 - `issue-autostart-v1` runs on those issues, sets `status/in_progress`, starts kickoff commit on target `dev/*`, ensures draft PR, and links commit/PR back to issue
 - this listener chain is part of the regular process, not an exception path
 
