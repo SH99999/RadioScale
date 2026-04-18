@@ -279,8 +279,12 @@ def main() -> int:
                         pr_urls.append(url)
                         print(f"pr: {url}")
                 except urllib.error.HTTPError as exc:
+                    body = exc.read().decode("utf-8", errors="replace")
+                    if exc.code == 422 and ("No commits between" in body or "A pull request already exists" in body or "no history in common" in body.lower()):
+                        print(f"pr SKIP ({branch}): {exc.code} {body.strip()}")
+                        continue
                     failures += 1
-                    print(f"pr ERROR ({branch}): {exc}")
+                    print(f"pr ERROR ({branch}): {exc} {body.strip()}")
 
     if args.json_output:
         payload = {
