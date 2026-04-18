@@ -1,0 +1,26 @@
+{
+  "topic": "fun-line animation quality improvement",
+  "created_at_utc": "2026-04-18T00:00:00Z",
+  "summary": "Fun-line animations must be improved. The current graphics/assets used are not at the required standard.",
+  "requests": [
+    {
+      "id": "REQ-001",
+      "component": "fun-line",
+      "summary": "Improve fun-line animations so the visual quality of the graphics/assets reaches the expected project standard.",
+      "constraints": [
+        "focus on the graphics/assets and resulting animation quality",
+        "current graphics used are below the required standard",
+        "the improvement must raise the visual standard rather than only making technical fixes"
+      ],
+      "acceptance": [
+        "fun-line animations are visibly improved",
+        "graphics/assets used for the animations are at a higher standard than the current version",
+        "the resulting animation quality is no longer below project expectations"
+      ],
+      "depends_on": [],
+      "deploy_required": true,
+      "test_required": true,
+      "asset_refs": []
+    }
+  ]
+}
