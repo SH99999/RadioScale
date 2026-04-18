@@ -1,0 +1,108 @@
+name: dev-autodeploy-on-push-v1
+
+on:
+  push:
+    branches:
+      - dev/tuner
+      - dev/bridge
+      - dev/fun-line
+    paths:
+      - 'components/**'
+      - 'tools/deploy/**'
+      - '.github/workflows/dev-autodeploy-on-push-v1.yml'
+  workflow_dispatch:
+    inputs:
+      branch_ref:
+        description: "Branch ref to deploy (defaults to triggering ref)"
+        required: false
+        default: ""
+      target:
+        description: "Target Pi slot identifier"
+        required: true
+        default: "primary"
+      test_hold_minutes:
+        description: "Minutes to reserve slot for testing"
+        required: true
+        default: "120"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: radioscale-${{ github.event.inputs.target || 'primary' }}-deploy-slot
+  cancel-in-progress: false
+
+jobs:
+  autodeploy:
+    runs-on: [self-hosted, radioscale, pi]
+    env:
+      PI_SUDO_PASSWORD: ${{ secrets.PI_SUDO_PASSWORD }}
+      REF_NAME: ${{ github.event.inputs.branch_ref || github.ref_name }}
+      TARGET_SLOT: ${{ github.event.inputs.target || 'primary' }}
+      HOLD_MINUTES: ${{ github.event.inputs.test_hold_minutes || '120' }}
+    steps:
+      - name: Resolve component from branch
+        id: resolve
+        shell: bash
+        run: |
+          ref="${REF_NAME#refs/heads/}"
+          case "$ref" in
+            dev/tuner) component="tuner" ;;
+            dev/bridge) component="bridge" ;;
+            dev/fun-line) component="fun-line" ;;
+            *)
+              echo "Unsupported autodeploy branch: $ref"
+              exit 2
+              ;;
+          esac
+          echo "component=$component" >> "$GITHUB_OUTPUT"
+          echo "branch_ref=$ref" >> "$GITHUB_OUTPUT"
+
+      - name: Checkout selected dev branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ steps.resolve.outputs.branch_ref }}
+
+      - name: Bootstrap Pi dependencies and paths (repo-controlled)
+        shell: bash
+        run: |
+          bash tools/deploy/pi-bootstrap-v1.sh deploy
+
+      - name: Acquire target deploy slot
+        id: acquire_slot
+        shell: bash
+        run: |
+          bash tools/deploy/pi-test-slot-v3.sh acquire-deploy "${TARGET_SLOT}" "${{ steps.resolve.outputs.component }}" "${{ steps.resolve.outputs.branch_ref }}" "current_dev" "autodeploy:${GITHUB_RUN_ID}" "${HOLD_MINUTES}"
+
+      - name: Deploy selected component payload
+        id: apply_payload
+        shell: bash
+        run: |
+          bash tools/deploy/sr-deploy-wrapper-v3.sh deploy "${{ steps.resolve.outputs.component }}" "current_dev" "$GITHUB_WORKSPACE"
+
+      - name: Mark target slot as test_open
+        if: success()
+        shell: bash
+        run: |
+          bash tools/deploy/pi-test-slot-v3.sh mark-test-open "${TARGET_SLOT}" "${{ steps.resolve.outputs.component }}" "${{ steps.resolve.outputs.branch_ref }}" "current_dev" "autodeploy:${GITHUB_RUN_ID}" "${HOLD_MINUTES}"
+
+      - name: Roll back selected payload on failure
+        id: rollback_on_failure
+        if: failure()
+        shell: bash
+        run: |
+          bash tools/deploy/pi-test-slot-v3.sh acquire-rollback "${TARGET_SLOT}" "${{ steps.resolve.outputs.component }}" "${{ steps.resolve.outputs.branch_ref }}" "current_dev" "autodeploy-failure-rollback:${GITHUB_RUN_ID}"
+          bash tools/deploy/sr-deploy-wrapper-v3.sh rollback "${{ steps.resolve.outputs.component }}" "current_dev" "$GITHUB_WORKSPACE"
+
+      - name: Release target slot after successful failure rollback
+        if: always() && steps.apply_payload.outcome == 'failure' && steps.rollback_on_failure.outcome == 'success'
+        shell: bash
+        run: |
+          bash tools/deploy/pi-test-slot-v3.sh release "${TARGET_SLOT}" "${{ steps.resolve.outputs.component }}" "${{ steps.resolve.outputs.branch_ref }}" "current_dev" "autodeploy-failure-rollback:${GITHUB_RUN_ID}" "deploy_failed_rollback_completed"
+
+      - name: Mark target slot blocked when deploy/rollback did not complete cleanly
+        if: always() && steps.apply_payload.outcome == 'failure' && steps.rollback_on_failure.outcome != 'success'
+        shell: bash
+        run: |
+          bash tools/deploy/pi-test-slot-v3.sh mark-blocked "${TARGET_SLOT}" "${{ steps.resolve.outputs.component }}" "${{ steps.resolve.outputs.branch_ref }}" "current_dev" "autodeploy:${GITHUB_RUN_ID}" "deploy_or_failure_rollback_incomplete"

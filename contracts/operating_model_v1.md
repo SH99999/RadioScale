@@ -11,6 +11,7 @@ This is the single operating-model truth for this repository.
 
 ## Delivery model
 - Codex develops on `dev/*`, tests, and prepares PRs to `main`.
+- Commits on supported delivery branches (`dev/tuner`, `dev/bridge`, `dev/fun-line`) trigger repo-controlled Pi autodeploy from that branch (`dev-autodeploy-on-push-v1`).
 - One package may touch multiple components.
 - Owner can hand over directly in Codex chat.
 - Optional file handoff exists on `ops/chat-archive`.
